@@ -1,0 +1,22 @@
+Creatures
+    Ice Elemental
+    Frost Wyrm
+        Small, very fast
+        Latches onto player
+        Slowly drains health, hunger, or warmth
+    Goat
+    Mammoth
+
+Mechanics
+    Cold
+        Works similarly to hunger
+        Certain types of armor slow drain
+        Water in Glacios rapidly speeds up
+        Fire blocks increase, torches maintain
+    Longer Nights
+
+Environment
+    Huge cave systems (similar to Nether)
+    (Possibly) heigher height limit
+        Would be for compensating for larger cave systems
+    
