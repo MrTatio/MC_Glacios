@@ -1,0 +1,14 @@
+[{
+    "modid": "glacios",
+    "name": "Glacios",
+    "description": "Ice dimension mod!",
+    "version": "${version}",
+    "mcversion": "${mcversion}",
+    "url": "",
+    "updateUrl": "",
+    "authors": ["Roundaround"],
+    "credits": "Uhhhh...",
+    "logoFile": "",
+    "screenshots": [],
+    "dependencies": []
+}]
