@@ -4,6 +4,9 @@ import net.minecraft.entity.Entity;
 import net.minecraft.util.MathHelper;
 import net.minecraft.util.Vec3;
 import net.minecraft.world.WorldProvider;
+import net.minecraft.world.biome.BiomeGenBase;
+import net.minecraft.world.biome.WorldChunkManagerHell;
+import net.minecraft.world.chunk.IChunkProvider;
 import net.minecraftforge.client.ForgeHooksClient;
 import net.minecraftforge.client.IRenderHandler;
 import roundaround.mcmods.glacios.Glacios;
@@ -23,6 +26,17 @@ public class WorldProviderGlacios extends WorldProvider {
         if (side == Side.CLIENT) {
             this.skyRenderer = Glacios.skyRenderer;
         }
+    }
+    
+    @Override
+    public void registerWorldChunkManager() {
+        this.worldChunkMgr = new WorldChunkManagerHell(BiomeGenBase.desertHills, 0.1F);
+        this.dimensionId = Glacios.DIMID;
+    }
+    
+    @Override
+    public IChunkProvider createChunkGenerator() {
+        return new ChunkProviderGlacios(worldObj, worldObj.getSeed(), true);
     }
 
     @Override
