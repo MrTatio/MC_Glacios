@@ -43,6 +43,7 @@ import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.terraingen.ChunkProviderEvent;
 import net.minecraftforge.event.terraingen.PopulateChunkEvent;
 import net.minecraftforge.event.terraingen.TerrainGen;
+import roundaround.mcmods.glacios.GlaciosBlocks;
 import cpw.mods.fml.common.eventhandler.Event.Result;
 
 public class ChunkProviderGlacios implements IChunkProvider {
@@ -190,7 +191,7 @@ public class ChunkProviderGlacios implements IChunkProvider {
 
                             for (int k3 = 0; k3 < 4; ++k3) {
                                 if ((d15 += d16) > 0.0D) {
-                                    p_147424_3_[j3 += short1] = Blocks.stone;
+                                    p_147424_3_[j3 += short1] = GlaciosBlocks.slate;
                                 } else if (k2 * 8 + l2 < b0) {
                                     p_147424_3_[j3 += short1] = Blocks.water;
                                 } else {
