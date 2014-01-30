@@ -21,4 +21,31 @@ Environment
     Huge cave systems (similar to Nether)
     (Possibly) heigher height limit
         Would be for compensating for larger cave systems
+    BIOMES (Bases):
+        Extreme Hills
+        Floating Island
+        Lake
+        Ocean
+        Plains
+        Plateau
+        Taiga
+        Underworld
+        Volcano
+        
+Blocks
+    Trees:
+        Life/Soul
+            Pale Blue Color, Glows, Emits Particles
+        Taiga
+    Foliage/Bushes/Flora:
+        Life/Soul Vine
+        Razer Grass
+        Some kind of bush that covers large area and slows entities (not as much as web)
+    Base Blocks:
+        Slate
+        Ash
+        Ash Stone
+        White Obsidian
+        Crystal Water
+            Super cold water that instantly freezes - counter to lava.  Heats into white obsidian
     
