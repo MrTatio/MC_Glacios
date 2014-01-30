@@ -19,6 +19,11 @@ public class WorldGenGlaciosTallGrass extends WorldGeneratorGlacios {
     }
 
     @Override
+    public boolean generate(World world, Random rand, int x, int y, int z) {
+        return false;
+    }
+
+    @Override
     public void doGeneration(World world, Random random, Field worldGeneratorField, WorldGenerator worldGenerator, BiomeGenBase biome,
             IGlaciosDecoration bopDecoration, int randX, int randZ) throws Exception {
     }
