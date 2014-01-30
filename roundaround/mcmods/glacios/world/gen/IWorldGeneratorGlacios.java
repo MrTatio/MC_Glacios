@@ -9,5 +9,6 @@ import net.minecraft.world.gen.feature.WorldGenerator;
 import roundaround.mcmods.glacios.world.decoration.IGlaciosDecoration;
 
 public interface IWorldGeneratorGlacios {
-    public void doGeneration(World world, Random random, Field worldGeneratorField, WorldGenerator worldGenerator, BiomeGenBase biome, IGlaciosDecoration bopDecoration, int randX, int randZ) throws Exception;
+    public void doGeneration(World world, Random random, Field worldGeneratorField, WorldGenerator worldGenerator, BiomeGenBase biome,
+            IGlaciosDecoration bopDecoration, int randX, int randZ) throws Exception;
 }
