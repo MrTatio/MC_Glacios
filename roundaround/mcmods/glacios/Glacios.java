@@ -23,6 +23,7 @@ public class Glacios {
 	@EventHandler
 	public void preload(FMLPreInitializationEvent evnt) {
         GlaciosBlocks.init();
+        GlaciosBiomes.init();
 	}
 	
 	@EventHandler
