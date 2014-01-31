@@ -14,7 +14,7 @@ import cpw.mods.fml.relauncher.SideOnly;
 public class Glacios {
     public static final String NAME = "Glacios";
 	public static final String MODID = "glacios";
-	public static final String VERS = "0.01a";
+	public static final String VERS = "0.03a";
 	public static final int DIMID = 17;
 	
 	@SideOnly(Side.CLIENT)
