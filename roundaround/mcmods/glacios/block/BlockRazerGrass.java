@@ -9,7 +9,7 @@ import cpw.mods.fml.relauncher.SideOnly;
 
 public class BlockRazerGrass extends BlockTallGrass {
 
-    private IIcon icon;
+    private IIcon[] icons = new IIcon[2];
 
     public BlockRazerGrass() {
         super();
@@ -18,12 +18,15 @@ public class BlockRazerGrass extends BlockTallGrass {
     @Override
     @SideOnly(Side.CLIENT)
     public IIcon func_149691_a(int side, int meta) {
-        return icon;
+        if (meta == 0)
+            return icons[0];
+        return icons[1];
     }
 
     @Override
     @SideOnly(Side.CLIENT)
     public void func_149651_a(IIconRegister iconRegister) {
-        this.icon = iconRegister.registerIcon(Glacios.MODID + ":" + this.func_149739_a().substring(5));
+        this.icons[0] = iconRegister.registerIcon(Glacios.MODID + ":" + this.func_149739_a().substring(5));
+        this.icons[1] = iconRegister.registerIcon(Glacios.MODID + ":" + this.func_149739_a().substring(5) + "Tall");
     }
 }
