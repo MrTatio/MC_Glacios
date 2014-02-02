@@ -15,6 +15,12 @@ Mechanics
         Certain types of armor slow drain
         Water in Glacios rapidly speeds up
         Fire blocks increase, torches maintain
+        Multiple configurable difficulties
+        Easy: No cold meter.
+        Normal: It's like a second hunger bar.
+        Hard: Faster and more punishing, but nothing especially vicious or unique.
+        Hardcore: THIS IS THE REAL GLACIOS! When you're cold, you move slower, you get hungry faster, 
+        and you take more damage. Don't freeze. :)
     Longer Nights
 
 Environment
