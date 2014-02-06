@@ -77,7 +77,7 @@ public class WorldProviderGlacios extends WorldProvider {
     public float getCloudHeight() {
         double angle = (this.worldObj.getWorldTime() % 24000L) / 24000D;
         
-        return (float)(((Math.sin(angle * 2 * Math.PI) + 1) * 96D) + 96D);
+        return (float)(((Math.sin(angle * 2 * Math.PI) + 1) * 48D) + 96D);
     }
 
     @Override
