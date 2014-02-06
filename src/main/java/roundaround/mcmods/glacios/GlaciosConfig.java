@@ -11,5 +11,7 @@ public class GlaciosConfig {
     public static int biome_plateau = 0;
 
     public static int gen_razorGrass = 8;
+    
+    public static int spawnSearchRadius = 1024;
 
 }

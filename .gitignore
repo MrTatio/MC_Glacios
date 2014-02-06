@@ -1,4 +1,16 @@
 #################
+## Minecraft Forge
+#################
+
+.gradle/
+eclipse/
+gradle/
+gradlew
+gradlew.bat
+build.gradle
+
+
+#################
 ## Eclipse
 #################
 

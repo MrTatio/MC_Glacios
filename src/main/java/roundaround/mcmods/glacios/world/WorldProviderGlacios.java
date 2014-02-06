@@ -4,13 +4,12 @@ import net.minecraft.entity.Entity;
 import net.minecraft.util.MathHelper;
 import net.minecraft.util.Vec3;
 import net.minecraft.world.WorldProvider;
-import net.minecraft.world.biome.BiomeGenBase;
-import net.minecraft.world.biome.WorldChunkManagerHell;
 import net.minecraft.world.chunk.IChunkProvider;
 import net.minecraftforge.client.ForgeHooksClient;
 import net.minecraftforge.client.IRenderHandler;
 import roundaround.mcmods.glacios.Glacios;
 import roundaround.mcmods.glacios.GlaciosConfig;
+import roundaround.mcmods.glacios.world.biome.WorldChunkManagerGlacios;
 import roundaround.mcmods.glacios.world.gen.ChunkProviderGlacios;
 import cpw.mods.fml.common.FMLCommonHandler;
 import cpw.mods.fml.relauncher.Side;
@@ -32,7 +31,7 @@ public class WorldProviderGlacios extends WorldProvider {
     
     @Override
     public void registerWorldChunkManager() {
-        this.worldChunkMgr = new WorldChunkManagerHell(BiomeGenBase.desertHills, 0.1F);
+        this.worldChunkMgr = new WorldChunkManagerGlacios(this.worldObj);
         this.dimensionId = GlaciosConfig.dimID;
     }
     
@@ -76,7 +75,9 @@ public class WorldProviderGlacios extends WorldProvider {
     @Override
     @SideOnly(Side.CLIENT)
     public float getCloudHeight() {
-        return super.getCloudHeight();
+        double angle = (this.worldObj.getWorldTime() % 24000L) / 24000D;
+        
+        return (float)(((Math.sin(angle * 2 * Math.PI) + 1) * 96D) + 96D);
     }
 
     @Override
