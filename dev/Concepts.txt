@@ -25,8 +25,10 @@ Mechanics
 
 Environment
     Huge cave systems (similar to Nether)
-    (Possibly) heigher height limit
+    (Possibly) higher height limit
         Would be for compensating for larger cave systems
+    Ice Lens
+        Pockets of frozen water underground.
     BIOMES (Bases):
         Extreme Hills
         Floating Island
@@ -45,7 +47,7 @@ Blocks
         Taiga
     Foliage/Bushes/Flora:
         Life/Soul Vine
-        Razer Grass
+        Razor Grass
         Some kind of bush that covers large area and slows entities (not as much as web)
     Base Blocks:
         Slate
@@ -57,4 +59,6 @@ Blocks
         Essence Shard
             Crystalline shard that emits light.  Randomly chooses color
             Possible colors are blue, red, green, and purple.
+        Gelisol
+            A classification of soil that contain permafrost, a layer of soil near the surface that is frozen year-round.
     
