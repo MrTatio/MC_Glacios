@@ -56,7 +56,7 @@ Blocks
         White Obsidian
         Crystal Water
             Super cold water that instantly freezes - counter to lava.  Heats into white obsidian
-        Essence Shard
+        Prism Shard
             Crystalline shard that emits light.  Randomly chooses color
             Possible colors are blue, red, green, and purple.
         Gelisol

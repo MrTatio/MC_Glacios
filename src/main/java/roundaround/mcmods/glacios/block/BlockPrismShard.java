@@ -2,9 +2,9 @@ package roundaround.mcmods.glacios.block;
 
 import net.minecraft.block.BlockBush;
 
-public class BlockEssenceShard extends BlockBush {
+public class BlockPrismShard extends BlockBush {
 
-    public BlockEssenceShard() {
+    public BlockPrismShard() {
         super();
     }
 
