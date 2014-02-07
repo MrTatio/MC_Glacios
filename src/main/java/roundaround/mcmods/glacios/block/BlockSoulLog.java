@@ -7,12 +7,12 @@ import roundaround.mcmods.glacios.Glacios;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 
-public class BlockLifeLog extends BlockLog {
+public class BlockSoulLog extends BlockLog {
 
     private IIcon iconTop;
     private IIcon iconSide;
 
-    public BlockLifeLog() {
+    public BlockSoulLog() {
         super();
     }
 

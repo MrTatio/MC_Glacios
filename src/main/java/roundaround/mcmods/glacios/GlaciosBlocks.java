@@ -3,17 +3,18 @@ package roundaround.mcmods.glacios;
 import net.minecraft.block.Block;
 import roundaround.mcmods.glacios.block.BlockAsh;
 import roundaround.mcmods.glacios.block.BlockAshStone;
-import roundaround.mcmods.glacios.block.BlockLifeLog;
 import roundaround.mcmods.glacios.block.BlockPortalGlacios;
 import roundaround.mcmods.glacios.block.BlockRazorGrass;
 import roundaround.mcmods.glacios.block.BlockSlate;
 import roundaround.mcmods.glacios.block.BlockSoulLeaves;
+import roundaround.mcmods.glacios.block.BlockSoulLog;
 import cpw.mods.fml.common.registry.GameRegistry;
 
 public class GlaciosBlocks {
     public static Block razorGrass;
-    public static Block lifeLog;
+    public static Block soulLog;
     public static Block soulLeaves;
+    public static Block saplingGlacios;
     public static Block ash;
     public static Block ashStone;
     public static Block slate;
@@ -21,7 +22,7 @@ public class GlaciosBlocks {
     
     public static void init() {
         razorGrass = new BlockRazorGrass().func_149663_c("razorGrass").func_149658_d(Glacios.MODID + ":razorGrass");
-        lifeLog = new BlockLifeLog().func_149663_c("lifeLog").func_149658_d(Glacios.MODID + ":lifeLog");
+        soulLog = new BlockSoulLog().func_149663_c("soulLog").func_149658_d(Glacios.MODID + ":soulLog");
         soulLeaves = new BlockSoulLeaves().func_149663_c("soulLeaves").func_149658_d(Glacios.MODID + ":soulLeaves");
         ash = new BlockAsh().func_149663_c("ash").func_149658_d(Glacios.MODID + ":ash");
         ashStone = new BlockAshStone().func_149663_c("ashStone").func_149658_d(Glacios.MODID + ":ashStone");
@@ -29,7 +30,7 @@ public class GlaciosBlocks {
         portalGlacios = new BlockPortalGlacios().func_149663_c("portalGlacios").func_149658_d(Glacios.MODID + ":portalGlacios");
         
         registerBlock(razorGrass);
-        registerBlock(lifeLog);
+        registerBlock(soulLog);
         registerBlock(soulLeaves);
         registerBlock(ash);
         registerBlock(ashStone);
