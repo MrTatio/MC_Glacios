@@ -25,55 +25,52 @@ public class WorldGenGlaciosSoulTree extends WorldGenAbstractTree {
     @Override
     public boolean generate(World world, Random rand, int x, int y, int z) {
         int treeHeight = rand.nextInt(3) + 6;
-        boolean flag = true;
+        boolean validLocation = true;
 
         if (y >= 1 && y + treeHeight + 1 <= 256) {
-            byte b0;
+            byte width;
             int posY;
-            Block block;
 
-            for (int i1 = y; i1 <= y + 1 + treeHeight; ++i1) {
-                b0 = 1;
+            for (int ycheck = y; ycheck <= y + 1 + treeHeight; ++ycheck) {
+                width = 1;
 
-                if (i1 == y) {
-                    b0 = 0;
+                if (ycheck == y) {
+                    width = 0;
                 }
 
-                if (i1 >= y + 1 + treeHeight - 2) {
-                    b0 = 2;
+                if (ycheck >= y + 1 + treeHeight - 2) {
+                    width = 2;
                 }
 
-                for (int j1 = x - b0; j1 <= x + b0 && flag; ++j1) {
-                    for (posY = z - b0; posY <= z + b0 && flag; ++posY) {
-                        if (i1 >= 0 && i1 < 256) {
-                            block = world.func_147439_a(j1, i1, posY);
-
-                            if (!this.isReplaceable(world, j1, i1, posY)) {
-                                flag = false;
+                for (int j1 = x - width; j1 <= x + width && validLocation; ++j1) {
+                    for (posY = z - width; posY <= z + width && validLocation; ++posY) {
+                        if (ycheck >= 0 && ycheck < 256) {
+                            if (!this.isReplaceable(world, j1, ycheck, posY)) {
+                                validLocation = false;
                             }
                         } else {
-                            flag = false;
+                            validLocation = false;
                         }
                     }
                 }
             }
 
-            if (!flag) {
+            if (!validLocation) {
                 return false;
             } else {
-                Block block2 = world.func_147439_a(x, y - 1, z);
+                Block baseBlock = world.func_147439_a(x, y - 1, z);
 
-                boolean isSoil = block2.canSustainPlant(world, x, y - 1, z, ForgeDirection.UP, (BlockSoulSapling) GlaciosBlocks.soulSapling);
+                boolean isSoil = baseBlock.canSustainPlant(world, x, y - 1, z, ForgeDirection.UP, (BlockSoulSapling) GlaciosBlocks.soulSapling);
                 if (isSoil && y < 256 - treeHeight - 1) {
-                    block2.onPlantGrow(world, x, y - 1, z, x, y, z);
-                    b0 = 3;
+                    baseBlock.onPlantGrow(world, x, y - 1, z, x, y, z);
+                    width = 3;
                     byte b1 = 0;
                     int l1;
                     int posX;
                     int j2;
                     int i3;
 
-                    for (posY = y - b0 + treeHeight; posY <= y + treeHeight; ++posY) {
+                    for (posY = y - width + treeHeight; posY <= y + treeHeight; ++posY) {
                         i3 = posY - (y + treeHeight);
                         l1 = b1 + 1 - i3 / 2;
 
@@ -95,7 +92,7 @@ public class WorldGenGlaciosSoulTree extends WorldGenAbstractTree {
                     }
 
                     for (posY = 0; posY < treeHeight; ++posY) {
-                        block = world.func_147439_a(x, y + posY, z);
+                        Block block = world.func_147439_a(x, y + posY, z);
 
                         if (block.isAir(world, x, y + posY, z) || block.isLeaves(world, x, y + posY, z)) {
                             this.func_150516_a(world, x, y + posY, z, GlaciosBlocks.soulLog, 0);
@@ -159,21 +156,18 @@ public class WorldGenGlaciosSoulTree extends WorldGenAbstractTree {
         }
     }
 
-    /**
-     * Grows vines downward from the given block for a given length. Args: World, x, starty, z, vine-length
-     */
-    private void growVines(World par1World, int par2, int par3, int par4, int par5) {
-        this.func_150516_a(par1World, par2, par3, par4, GlaciosBlocks.iceVine, par5);
+    private void growVines(World world, int x, int starty, int z, int meta) {
+        this.func_150516_a(world, x, starty, z, GlaciosBlocks.iceVine, meta);
         int i1 = 4;
 
         while (true) {
-            --par3;
+            --starty;
 
-            if (par1World.func_147439_a(par2, par3, par4).isAir(par1World, par2, par3, par4) || i1 <= 0) {
+            if (world.func_147439_a(x, starty, z).isAir(world, x, starty, z) || i1 <= 0) {
                 return;
             }
 
-            this.func_150516_a(par1World, par2, par3, par4, GlaciosBlocks.iceVine, par5);
+            this.func_150516_a(world, x, starty, z, GlaciosBlocks.iceVine, meta);
             --i1;
         }
     }
