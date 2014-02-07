@@ -2,6 +2,7 @@
 ## Minecraft Forge
 #################
 
+build/
 .gradle/
 eclipse/
 gradle/
