@@ -15,6 +15,7 @@ public class BlockGelisolFrost extends BlockDirt {
     private IIcon iconTop;
 
     public BlockGelisolFrost() {
+        super();
     }
 
     @Override

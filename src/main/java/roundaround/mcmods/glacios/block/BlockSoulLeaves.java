@@ -196,7 +196,7 @@ public class BlockSoulLeaves extends BlockLeavesBase implements IShearable {
             double randZ = z + rand.nextFloat();
             world.spawnParticle("dripWater", randX, randY, randZ, 0.0D, 0.0D, 0.0D);
         }
-        
+
         // TODO: Glow particles!
     }
 
