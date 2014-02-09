@@ -11,12 +11,6 @@ public class BlockIceVine extends BlockVine {
         super();
     }
 
-    // @Override
-    // @SideOnly(Side.CLIENT)
-    // public void registerBlockIcons(IIconRegister iconRegister) {
-    // this.blockIcon = iconRegister.registerIcon(Glacios.MODID + ":" + this.getUnlocalizedName().substring(5));
-    // }
-
     @Override
     @SideOnly(Side.CLIENT)
     public int getBlockColor() {
