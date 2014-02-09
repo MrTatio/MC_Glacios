@@ -74,7 +74,7 @@ public class ChunkProviderGlacios implements IChunkProvider {
     private final boolean mapFeaturesEnabled;
     private WorldType worldType;
     private final double[] field_147434_q;
-    private final float[] field_147433_r;
+    private final float[] parabolicField;
     private double[] stoneNoise = new double[256];
     private MapGenBase caveGenerator = new MapGenCaves();
     /**
@@ -126,12 +126,12 @@ public class ChunkProviderGlacios implements IChunkProvider {
         this.noiseGen6 = new NoiseGeneratorOctaves(this.rand, 16);
         this.mobSpawnerNoise = new NoiseGeneratorOctaves(this.rand, 8);
         this.field_147434_q = new double[825];
-        this.field_147433_r = new float[25];
+        this.parabolicField = new float[25];
 
         for (int j = -2; j <= 2; ++j) {
             for (int k = -2; k <= 2; ++k) {
                 float f = 10.0F / MathHelper.sqrt_float(j * j + k * k + 0.2F);
-                this.field_147433_r[j + 2 + (k + 2) * 5] = f;
+                this.parabolicField[j + 2 + (k + 2) * 5] = f;
             }
         }
 
@@ -223,7 +223,7 @@ public class ChunkProviderGlacios implements IChunkProvider {
         for (int k = 0; k < 16; ++k) {
             for (int l = 0; l < 16; ++l) {
                 BiomeGenBase biomegenbase = biomeArray[l + k * 16];
-                biomegenbase.func_150573_a(this.worldObj, this.rand, blockArray, metaArray, chunkX * 16 + k, chunkZ * 16 + l, this.stoneNoise[l + k * 16]);
+                biomegenbase.genTerrainBlocks(this.worldObj, this.rand, blockArray, metaArray, chunkX * 16 + k, chunkZ * 16 + l, this.stoneNoise[l + k * 16]);
             }
         }
     }
@@ -287,17 +287,17 @@ public class ChunkProviderGlacios implements IChunkProvider {
                 for (int l1 = -b0; l1 <= b0; ++l1) {
                     for (int i2 = -b0; i2 <= b0; ++i2) {
                         BiomeGenBase biomegenbase1 = this.biomesForGeneration[j1 + l1 + 2 + (k1 + i2 + 2) * 10];
-                        float f3 = biomegenbase1.minHeight;
-                        float f4 = biomegenbase1.maxHeight;
+                        float f3 = biomegenbase1.rootHeight;
+                        float f4 = biomegenbase1.heightVariation;
 
-                        if (this.worldType == WorldType.field_151360_e && f3 > 0.0F) {
+                        if (this.worldType == WorldType.AMPLIFIED && f3 > 0.0F) {
                             f3 = 1.0F + f3 * 2.0F;
                             f4 = 1.0F + f4 * 4.0F;
                         }
 
-                        float f5 = this.field_147433_r[l1 + 2 + (i2 + 2) * 5] / (f3 + 2.0F);
+                        float f5 = this.parabolicField[l1 + 2 + (i2 + 2) * 5] / (f3 + 2.0F);
 
-                        if (biomegenbase1.minHeight > biomegenbase.minHeight) {
+                        if (biomegenbase1.rootHeight > biomegenbase.rootHeight) {
                             f5 /= 2.0F;
                         }
 
@@ -353,7 +353,7 @@ public class ChunkProviderGlacios implements IChunkProvider {
                     double d7 = this.noiseData2[l] / 512.0D;
                     double d8 = this.noiseData3[l] / 512.0D;
                     double d9 = (this.noiseData1[l] / 10.0D + 1.0D) / 2.0D;
-                    double d10 = MathHelper.func_151238_b(d7, d8, d9) - d6;
+                    double d10 = MathHelper.denormalizeClamp(d7, d8, d9) - d6;
 
                     if (j2 > 29) {
                         double d11 = (j2 - 29) / 3.0F;
@@ -380,7 +380,7 @@ public class ChunkProviderGlacios implements IChunkProvider {
      */
     @Override
     public void populate(IChunkProvider chunkProvider, int chunkX, int chunkZ) {
-        BlockFalling.field_149832_M = true;
+        BlockFalling.fallInstantly = true;
         int posX = chunkX * 16;
         int posZ = chunkZ * 16;
         BiomeGenBase biomegenbase = this.worldObj.getBiomeGenForCoords(posX + 16, posZ + 16);
@@ -436,18 +436,18 @@ public class ChunkProviderGlacios implements IChunkProvider {
                 int randZ = this.worldObj.getPrecipitationHeight(posX + xShift, posZ + zShift);
 
                 if (this.worldObj.isBlockFreezable(xShift + posX, randZ - 1, zShift + posZ)) {
-                    this.worldObj.func_147465_d(xShift + posX, randZ - 1, zShift + posZ, Blocks.ice, 0, 2);
+                    this.worldObj.setBlock(xShift + posX, randZ - 1, zShift + posZ, Blocks.ice, 0, 2);
                 }
 
                 if (this.worldObj.func_147478_e(xShift + posX, randZ, zShift + posZ, true)) {
-                    this.worldObj.func_147465_d(xShift + posX, randZ, zShift + posZ, Blocks.snow_layer, 0, 2);
+                    this.worldObj.setBlock(xShift + posX, randZ, zShift + posZ, Blocks.snow_layer, 0, 2);
                 }
             }
         }
 
         MinecraftForge.EVENT_BUS.post(new PopulateChunkEvent.Post(chunkProvider, worldObj, rand, chunkX, chunkZ, generateStructures));
 
-        BlockFalling.field_149832_M = false;
+        BlockFalling.fallInstantly = false;
     }
 
     /**

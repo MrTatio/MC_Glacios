@@ -20,21 +20,21 @@ public class BlockGelisolFrost extends BlockDirt {
 
     @Override
     @SideOnly(Side.CLIENT)
-    public IIcon func_149691_a(int side, int meta) {
-        return side == 1 ? this.iconTop : (side == 0 ? GlaciosBlocks.gelisol.func_149733_h(side) : this.field_149761_L);
+    public IIcon getIcon(int side, int meta) {
+        return side == 1 ? this.iconTop : (side == 0 ? GlaciosBlocks.gelisol.getBlockTextureFromSide(side) : this.blockIcon);
     }
 
     @Override
     @SideOnly(Side.CLIENT)
-    public IIcon func_149673_e(IBlockAccess blockAccess, int x, int y, int z, int side) {
-        return side == 1 ? this.iconTop : (side == 0 ? GlaciosBlocks.gelisol.func_149733_h(side) : this.field_149761_L);
+    public IIcon getIcon(IBlockAccess blockAccess, int x, int y, int z, int side) {
+        return side == 1 ? this.iconTop : (side == 0 ? GlaciosBlocks.gelisol.getBlockTextureFromSide(side) : this.blockIcon);
     }
 
     @Override
     @SideOnly(Side.CLIENT)
-    public void func_149651_a(IIconRegister register) {
-        this.field_149761_L = register.registerIcon(Glacios.MODID + ":" + this.func_149739_a().substring(5) + "Side");
-        this.iconTop = register.registerIcon(Glacios.MODID + ":" + this.func_149739_a().substring(5) + "Top");
+    public void registerBlockIcons(IIconRegister register) {
+        this.blockIcon = register.registerIcon(Glacios.MODID + ":" + this.getUnlocalizedName().substring(5) + "Side");
+        this.iconTop = register.registerIcon(Glacios.MODID + ":" + this.getUnlocalizedName().substring(5) + "Top");
     }
 
 }

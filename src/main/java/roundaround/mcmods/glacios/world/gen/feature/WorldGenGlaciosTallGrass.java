@@ -23,7 +23,7 @@ public class WorldGenGlaciosTallGrass extends WorldGeneratorGlacios {
         Block block;
 
         do {
-            block = world.func_147439_a(x, y, z);
+            block = world.getBlock(x, y, z);
             if (!(block.isLeaves(world, x, y, z) || block.isAir(world, x, y, z))) {
                 break;
             }
@@ -35,8 +35,8 @@ public class WorldGenGlaciosTallGrass extends WorldGeneratorGlacios {
             int posY = y + rand.nextInt(4) - rand.nextInt(4);
             int posZ = z + rand.nextInt(8) - rand.nextInt(8);
 
-            if (world.func_147437_c(posX, posY, posZ) && this.genBlock.func_149718_j(world, posX, posY, posZ)) {
-                world.func_147449_b(posX, posY, posZ, this.genBlock);
+            if (world.isAirBlock(posX, posY, posZ) && this.genBlock.canBlockStay(world, posX, posY, posZ)) {
+                world.setBlock(posX, posY, posZ, this.genBlock);
             }
         }
 

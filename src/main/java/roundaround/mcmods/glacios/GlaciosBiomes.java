@@ -14,6 +14,6 @@ public class GlaciosBiomes {
     public static BiomeGenBase taiga;
 
     public static void init() {
-        taiga = new BiomeGenGlaciosTaiga(taigaId).func_150570_a(taigaHeight).setBiomeName("Taiga");
+        taiga = new BiomeGenGlaciosTaiga(taigaId).setHeight(taigaHeight).setBiomeName("Taiga");
     }
 }

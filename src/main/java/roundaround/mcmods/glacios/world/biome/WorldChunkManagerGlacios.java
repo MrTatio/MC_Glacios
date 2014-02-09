@@ -15,9 +15,9 @@ public class WorldChunkManagerGlacios extends WorldChunkManager {
     }
 
     @Override
-    public ChunkPosition func_150795_a(int x, int z, int radius, List biomesToSpawnIn, Random random) {
+    public ChunkPosition findBiomePosition(int x, int z, int radius, List biomesToSpawnIn, Random random) {
         int spawnSearchRadius = GlaciosConfig.spawnSearchRadius;
 
-        return super.func_150795_a(x, z, spawnSearchRadius, biomesToSpawnIn, random);
+        return super.findBiomePosition(x, z, spawnSearchRadius, biomesToSpawnIn, random);
     }
 }

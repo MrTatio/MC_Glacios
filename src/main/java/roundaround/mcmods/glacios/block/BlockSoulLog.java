@@ -17,20 +17,20 @@ public class BlockSoulLog extends BlockLog {
     }
 
     @Override
-    public void func_149651_a(IIconRegister iconRegister) {
-        iconTop = iconRegister.registerIcon(Glacios.MODID + ":" + this.func_149739_a().substring(5) + "Top");
-        iconSide = iconRegister.registerIcon(Glacios.MODID + ":" + this.func_149739_a().substring(5) + "Side");
+    public void registerBlockIcons(IIconRegister iconRegister) {
+        iconTop = iconRegister.registerIcon(Glacios.MODID + ":" + this.getUnlocalizedName().substring(5) + "Top");
+        iconSide = iconRegister.registerIcon(Glacios.MODID + ":" + this.getUnlocalizedName().substring(5) + "Side");
     }
 
     @Override
     @SideOnly(Side.CLIENT)
-    protected IIcon func_150163_b(int p_150163_1_) {
+    protected IIcon getSideIcon(int meta) {
         return iconSide;
     }
 
     @Override
     @SideOnly(Side.CLIENT)
-    protected IIcon func_150161_d(int p_150161_1_) {
+    protected IIcon getTopIcon(int meta) {
         return iconTop;
     }
 

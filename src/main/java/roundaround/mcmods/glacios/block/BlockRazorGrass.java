@@ -2,6 +2,7 @@ package roundaround.mcmods.glacios.block;
 
 import java.util.List;
 
+import net.minecraft.block.Block;
 import net.minecraft.block.BlockTallGrass;
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.creativetab.CreativeTabs;
@@ -22,7 +23,7 @@ public class BlockRazorGrass extends BlockTallGrass {
 
     @Override
     @SideOnly(Side.CLIENT)
-    public IIcon func_149691_a(int side, int meta) {
+    public IIcon getIcon(int side, int meta) {
         if (meta >= this.icons.length)
             meta = 0;
         return this.icons[meta];
@@ -30,16 +31,21 @@ public class BlockRazorGrass extends BlockTallGrass {
 
     @Override
     @SideOnly(Side.CLIENT)
-    public void func_149651_a(IIconRegister iconRegister) {
-        this.icons[0] = iconRegister.registerIcon(Glacios.MODID + ":" + this.func_149739_a().substring(5));
-        this.icons[1] = iconRegister.registerIcon(Glacios.MODID + ":" + this.func_149739_a().substring(5) + "Tall");
+    public void registerBlockIcons(IIconRegister iconRegister) {
+        this.icons[0] = iconRegister.registerIcon(Glacios.MODID + ":" + this.getUnlocalizedName().substring(5));
+        this.icons[1] = iconRegister.registerIcon(Glacios.MODID + ":" + this.getUnlocalizedName().substring(5) + "Tall");
     }
 
     @Override
     @SideOnly(Side.CLIENT)
-    public void func_149666_a(Item item, CreativeTabs tab, List list) {
+    public void getSubBlocks(Item item, CreativeTabs tab, List list) {
         for (int i = 1; i < icons.length; ++i) {
             list.add(new ItemStack(item, 1, i));
         }
+    }
+
+    @Override
+    protected boolean canPlaceBlockOn(Block block) {
+        return block.renderAsNormalBlock();
     }
 }

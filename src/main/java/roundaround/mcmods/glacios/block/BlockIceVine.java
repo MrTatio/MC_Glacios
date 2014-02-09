@@ -5,6 +5,7 @@ import net.minecraft.block.BlockVine;
 public class BlockIceVine extends BlockVine {
 
     public BlockIceVine() {
+        super();
     }
 
 }

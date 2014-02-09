@@ -21,19 +21,19 @@ public class BlockSoulSapling extends BlockSapling {
 
     @Override
     @SideOnly(Side.CLIENT)
-    public IIcon func_149691_a(int side, int meta) {
+    public IIcon getIcon(int side, int meta) {
         return this.icon;
     }
 
     @Override
     @SideOnly(Side.CLIENT)
-    public void func_149651_a(IIconRegister iconRegister) {
-        this.icon = iconRegister.registerIcon(Glacios.MODID + ":" + this.func_149739_a().substring(5));
+    public void registerBlockIcons(IIconRegister iconRegister) {
+        this.icon = iconRegister.registerIcon(Glacios.MODID + ":" + this.getUnlocalizedName().substring(5));
     }
 
     @Override
     @SideOnly(Side.CLIENT)
-    public void func_149666_a(Item item, CreativeTabs tab, List list) {
+    public void getSubBlocks(Item item, CreativeTabs tab, List list) {
         list.add(new ItemStack(item, 1, 0));
     }
 

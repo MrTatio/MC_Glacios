@@ -32,19 +32,19 @@ public class GlaciosBlocks {
     public static Block portalGlacios;
     
     public static void init() {
-        razorGrass = new BlockRazorGrass().func_149663_c("razorGrass").func_149658_d(Glacios.MODID + ":razorGrass");
-        soulLog = new BlockSoulLog().func_149663_c("soulLog").func_149658_d(Glacios.MODID + ":soulLog");
-        soulLeaves = new BlockSoulLeaves().func_149663_c("soulLeaves").func_149658_d(Glacios.MODID + ":soulLeaves");
-        soulSapling = new BlockSoulSapling().func_149663_c("soulSapling").func_149658_d(Glacios.MODID + ":soulSapling");
-        iceVine = new BlockIceVine().func_149663_c("iceVine").func_149658_d(Glacios.MODID + ":iceVine");
-        ash = new BlockAsh().func_149663_c("ash").func_149658_d(Glacios.MODID + ":ash");
-        ashStone = new BlockAshStone().func_149663_c("ashStone").func_149658_d(Glacios.MODID + ":ashStone");
-        slate = new BlockSlate().func_149663_c("slate").func_149658_d(Glacios.MODID + ":slate");
-        gelisol = new BlockGelisol().func_149663_c("gelisol").func_149658_d(Glacios.MODID + ":gelisol");
-        gelisolFrost = new BlockGelisolFrost().func_149663_c("gelisolFrost").func_149658_d(Glacios.MODID + ":gelisolFrost");
-        prismShard = new BlockPrismShard().func_149663_c("prismShard").func_149658_d(Glacios.MODID + ":prismShard");
-        whiteObsidian = new BlockWhiteObsidian().func_149663_c("whiteObsidian").func_149658_d(Glacios.MODID + ":whiteObsidian");
-        portalGlacios = new BlockPortalGlacios().func_149663_c("portalGlacios").func_149658_d(Glacios.MODID + ":portalGlacios");
+        razorGrass = new BlockRazorGrass().setBlockName("razorGrass").setBlockTextureName(Glacios.MODID + ":razorGrass");
+        soulLog = new BlockSoulLog().setBlockName("soulLog").setBlockTextureName(Glacios.MODID + ":soulLog");
+        soulLeaves = new BlockSoulLeaves().setBlockName("soulLeaves").setBlockTextureName(Glacios.MODID + ":soulLeaves");
+        soulSapling = new BlockSoulSapling().setBlockName("soulSapling").setBlockTextureName(Glacios.MODID + ":soulSapling");
+        iceVine = new BlockIceVine().setBlockName("iceVine").setBlockTextureName(Glacios.MODID + ":iceVine");
+        ash = new BlockAsh().setBlockName("ash").setBlockTextureName(Glacios.MODID + ":ash");
+        ashStone = new BlockAshStone().setBlockName("ashStone").setBlockTextureName(Glacios.MODID + ":ashStone");
+        slate = new BlockSlate().setBlockName("slate").setBlockTextureName(Glacios.MODID + ":slate");
+        gelisol = new BlockGelisol().setBlockName("gelisol").setBlockTextureName(Glacios.MODID + ":gelisol");
+        gelisolFrost = new BlockGelisolFrost().setBlockName("gelisolFrost").setBlockTextureName(Glacios.MODID + ":gelisolFrost");
+        prismShard = new BlockPrismShard().setBlockName("prismShard").setBlockTextureName(Glacios.MODID + ":prismShard");
+        whiteObsidian = new BlockWhiteObsidian().setBlockName("whiteObsidian").setBlockTextureName(Glacios.MODID + ":whiteObsidian");
+        portalGlacios = new BlockPortalGlacios().setBlockName("portalGlacios").setBlockTextureName(Glacios.MODID + ":portalGlacios");
         
         registerBlock(razorGrass);
         registerBlock(soulLog);
@@ -62,7 +62,7 @@ public class GlaciosBlocks {
     }
     
     private static void registerBlock(Block block) {
-        GameRegistry.registerBlock(block, block.func_149739_a().substring(5));
+        GameRegistry.registerBlock(block, block.getUnlocalizedName().substring(5));
     }
 
 }
