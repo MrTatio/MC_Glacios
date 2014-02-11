@@ -5,21 +5,20 @@ import java.util.Random;
 import net.minecraft.block.Block;
 import net.minecraft.world.World;
 import net.minecraft.world.gen.feature.WorldGenAbstractTree;
-import net.minecraftforge.common.util.ForgeDirection;
 import roundaround.mcmods.glacios.GlaciosBlocks;
 import roundaround.mcmods.glacios.block.BlockSoulSapling;
 
 public class WorldGenGlaciosSoulTree extends WorldGenAbstractTree {
 
-    private final boolean vinesGrow;
+    private final boolean huge;
 
     public WorldGenGlaciosSoulTree(boolean doBlockNotify) {
         this(doBlockNotify, false);
     }
 
-    public WorldGenGlaciosSoulTree(boolean doBlockNotify, boolean vinesGrow) {
+    public WorldGenGlaciosSoulTree(boolean doBlockNotify, boolean huge) {
         super(doBlockNotify);
-        this.vinesGrow = vinesGrow;
+        this.huge = huge;
     }
 
     @Override
@@ -55,9 +54,11 @@ public class WorldGenGlaciosSoulTree extends WorldGenAbstractTree {
                 return false;
             } else {
                 Block baseBlock = world.getBlock(startX, startY - 1, startZ);
-
-                boolean isSoil = baseBlock.canSustainPlant(world, startX, startY - 1, startZ, ForgeDirection.UP, (BlockSoulSapling) GlaciosBlocks.soulSapling);
-                if (isSoil && startY < 256 - treeHeight - 1) {
+                
+                if (!((BlockSoulSapling)GlaciosBlocks.soulSapling).isSupportedByBlock(baseBlock))
+                    return false;
+                
+                if (startY < 256 - treeHeight - 1) {
                     baseBlock.onPlantGrow(world, startX, startY - 1, startZ, startX, startY, startZ);
                     int offset;
                     int heightDiff;
@@ -85,54 +86,54 @@ public class WorldGenGlaciosSoulTree extends WorldGenAbstractTree {
                         if (block.isAir(world, startX, startY + posY, startZ) || block.isLeaves(world, startX, startY + posY, startZ)) {
                             this.setBlockAndNotifyAdequately(world, startX, startY + posY, startZ, GlaciosBlocks.soulLog, 0);
 
-                            if (this.vinesGrow && posY > 0) {
-                                if (rand.nextInt(3) > 0 && world.isAirBlock(startX - 1, startY + posY, startZ)) {
-                                    this.setBlockAndNotifyAdequately(world, startX - 1, startY + posY, startZ, GlaciosBlocks.iceVine, 8);
-                                }
-
-                                if (rand.nextInt(3) > 0 && world.isAirBlock(startX + 1, startY + posY, startZ)) {
-                                    this.setBlockAndNotifyAdequately(world, startX + 1, startY + posY, startZ, GlaciosBlocks.iceVine, 2);
-                                }
-
-                                if (rand.nextInt(3) > 0 && world.isAirBlock(startX, startY + posY, startZ - 1)) {
-                                    this.setBlockAndNotifyAdequately(world, startX, startY + posY, startZ - 1, GlaciosBlocks.iceVine, 1);
-                                }
-
-                                if (rand.nextInt(3) > 0 && world.isAirBlock(startX, startY + posY, startZ + 1)) {
-                                    this.setBlockAndNotifyAdequately(world, startX, startY + posY, startZ + 1, GlaciosBlocks.iceVine, 4);
-                                }
-                            }
+//                            if (this.vinesGrow && posY > 0) {
+//                                if (rand.nextInt(3) > 0 && world.isAirBlock(startX - 1, startY + posY, startZ)) {
+//                                    this.setBlockAndNotifyAdequately(world, startX - 1, startY + posY, startZ, GlaciosBlocks.iceVine, 8);
+//                                }
+//
+//                                if (rand.nextInt(3) > 0 && world.isAirBlock(startX + 1, startY + posY, startZ)) {
+//                                    this.setBlockAndNotifyAdequately(world, startX + 1, startY + posY, startZ, GlaciosBlocks.iceVine, 2);
+//                                }
+//
+//                                if (rand.nextInt(3) > 0 && world.isAirBlock(startX, startY + posY, startZ - 1)) {
+//                                    this.setBlockAndNotifyAdequately(world, startX, startY + posY, startZ - 1, GlaciosBlocks.iceVine, 1);
+//                                }
+//
+//                                if (rand.nextInt(3) > 0 && world.isAirBlock(startX, startY + posY, startZ + 1)) {
+//                                    this.setBlockAndNotifyAdequately(world, startX, startY + posY, startZ + 1, GlaciosBlocks.iceVine, 4);
+//                                }
+//                            }
                         }
                     }
 
-                    if (this.vinesGrow) {
-                        for (int posY = startY - 3 + treeHeight; posY <= startY + treeHeight; ++posY) {
-                            heightDiff = posY - (startY + treeHeight);
-                            offset = 2 - heightDiff / 2;
-
-                            for (int posX = startX - offset; posX <= startX + offset; ++posX) {
-                                for (int posZ = startZ - offset; posZ <= startZ + offset; ++posZ) {
-                                    if (world.getBlock(posX, posY, posZ).isLeaves(world, posX, posY, posZ)) {
-                                        if (rand.nextInt(4) == 0 && world.getBlock(posX - 1, posY, posZ).isAir(world, posX - 1, posY, posZ)) {
-                                            this.growVines(world, posX - 1, posY, posZ, 8);
-                                        }
-
-                                        if (rand.nextInt(4) == 0 && world.getBlock(posX + 1, posY, posZ).isAir(world, posX + 1, posY, posZ)) {
-                                            this.growVines(world, posX + 1, posY, posZ, 2);
-                                        }
-
-                                        if (rand.nextInt(4) == 0 && world.getBlock(posX, posY, posZ - 1).isAir(world, posX, posY, posZ - 1)) {
-                                            this.growVines(world, posX, posY, posZ - 1, 1);
-                                        }
-
-                                        if (rand.nextInt(4) == 0 && world.getBlock(posX, posY, posZ + 1).isAir(world, posX, posY, posZ + 1)) {
-                                            this.growVines(world, posX, posY, posZ + 1, 4);
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                    }
+//                    if (this.vinesGrow) {
+//                        for (int posY = startY - 3 + treeHeight; posY <= startY + treeHeight; ++posY) {
+//                            heightDiff = posY - (startY + treeHeight);
+//                            offset = 2 - heightDiff / 2;
+//
+//                            for (int posX = startX - offset; posX <= startX + offset; ++posX) {
+//                                for (int posZ = startZ - offset; posZ <= startZ + offset; ++posZ) {
+//                                    if (world.getBlock(posX, posY, posZ).isLeaves(world, posX, posY, posZ)) {
+//                                        if (rand.nextInt(4) == 0 && world.getBlock(posX - 1, posY, posZ).isAir(world, posX - 1, posY, posZ)) {
+//                                            this.growVines(world, posX - 1, posY, posZ, 8);
+//                                        }
+//
+//                                        if (rand.nextInt(4) == 0 && world.getBlock(posX + 1, posY, posZ).isAir(world, posX + 1, posY, posZ)) {
+//                                            this.growVines(world, posX + 1, posY, posZ, 2);
+//                                        }
+//
+//                                        if (rand.nextInt(4) == 0 && world.getBlock(posX, posY, posZ - 1).isAir(world, posX, posY, posZ - 1)) {
+//                                            this.growVines(world, posX, posY, posZ - 1, 1);
+//                                        }
+//
+//                                        if (rand.nextInt(4) == 0 && world.getBlock(posX, posY, posZ + 1).isAir(world, posX, posY, posZ + 1)) {
+//                                            this.growVines(world, posX, posY, posZ + 1, 4);
+//                                        }
+//                                    }
+//                                }
+//                            }
+//                        }
+//                    }
 
                     return true;
                 } else {

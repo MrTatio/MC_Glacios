@@ -1,21 +1,28 @@
 package roundaround.mcmods.glacios.block;
 
-import net.minecraft.block.BlockDirt;
+import java.util.Random;
+
+import net.minecraft.block.Block;
+import net.minecraft.block.material.Material;
 import net.minecraft.client.renderer.texture.IIconRegister;
+import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.util.IIcon;
 import net.minecraft.world.IBlockAccess;
+import net.minecraft.world.World;
 import roundaround.mcmods.glacios.Glacios;
 import roundaround.mcmods.glacios.GlaciosBlocks;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 
-public class BlockGelisolFrost extends BlockDirt {
+public class BlockGelisolFrost extends Block {
 
     @SideOnly(Side.CLIENT)
     private IIcon iconTop;
 
     public BlockGelisolFrost() {
-        super();
+        super(Material.ground);
+        this.setTickRandomly(true);
+        this.setCreativeTab(CreativeTabs.tabBlock);
     }
 
     @Override
@@ -35,6 +42,18 @@ public class BlockGelisolFrost extends BlockDirt {
     public void registerBlockIcons(IIconRegister register) {
         this.blockIcon = register.registerIcon(Glacios.MODID + ":" + this.getUnlocalizedName().substring(5) + "Side");
         this.iconTop = register.registerIcon(Glacios.MODID + ":" + this.getUnlocalizedName().substring(5) + "Top");
+    }
+
+    @Override
+    public void updateTick(World world, int x, int y, int z, Random rand) {
+        if (!world.isRemote) { // TODO: Add warmth detection.
+//            world.setBlock(x, y, z, GlaciosBlocks.gelisol);
+        }
+    }
+
+    @Override
+    public void onPlantGrow(World world, int x, int y, int z, int sourceX, int sourceY, int sourceZ) {
+        world.setBlock(x, y, z, GlaciosBlocks.gelisol, 0, 2);
     }
 
 }

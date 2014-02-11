@@ -72,9 +72,8 @@ public class BlockSoulLeaves extends BlockLeavesBase implements IShearable {
     // Bypass BlockLeavesBase.shouldSideBeRendered
     @SideOnly(Side.CLIENT)
     public boolean superShouldSideBeRendered(IBlockAccess blockAccess, int x, int y, int z, int side) {
-        return side == 0 && this.minY > 0.0D ? true : (side == 1 && this.maxY < 1.0D ? true : (side == 2 && this.minZ > 0.0D ? true : (side == 3
-                && this.maxZ < 1.0D ? true : (side == 4 && this.minX > 0.0D ? true : (side == 5 && this.maxX < 1.0D ? true : !blockAccess
-                .getBlock(x, y, z).isOpaqueCube())))));
+        return side == 0 && this.minY > 0.0D ? true : (side == 1 && this.maxY < 1.0D ? true : (side == 2 && this.minZ > 0.0D ? true : (side == 3 && this.maxZ < 1.0D ? true
+                : (side == 4 && this.minX > 0.0D ? true : (side == 5 && this.maxX < 1.0D ? true : !blockAccess.getBlock(x, y, z).isOpaqueCube())))));
     }
 
     @Override
@@ -215,6 +214,11 @@ public class BlockSoulLeaves extends BlockLeavesBase implements IShearable {
         ArrayList<ItemStack> ret = new ArrayList<ItemStack>();
         ret.add(new ItemStack(this, 1, world.getBlockMetadata(x, y, z) & 3));
         return ret;
+    }
+
+    @Override
+    public boolean isLeaves(IBlockAccess world, int x, int y, int z) {
+        return true;
     }
 
 }
