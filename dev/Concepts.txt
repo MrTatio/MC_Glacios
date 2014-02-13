@@ -2,7 +2,7 @@ Old ideapad: http://roundaround.titanpad.com/1
 
 Creatures
     Ice Elemental
-    Frost Wyrm
+    Arctic Wyrm
         Small, very fast
         Latches onto player
         Slowly drains health, hunger, or warmth
