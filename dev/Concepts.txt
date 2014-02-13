@@ -8,6 +8,10 @@ Creatures
         Slowly drains health, hunger, or warmth
     Goat
     Mammoth
+    Will o' Whisp
+    Grick
+    Illithid
+    Drake
 
 Mechanics
     Cold
