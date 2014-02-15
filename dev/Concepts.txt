@@ -59,7 +59,7 @@ Blocks
         Ash Stone
         White Obsidian
         Crystal Water
-            Super cold water that instantly freezes - counter to lava.  Heats into white obsidian
+            Super cold water - counter to lava.  Heats into white obsidian
         Prism Shard
             Crystalline shard that emits light.  Randomly chooses color
             Possible colors are blue, red, green, and purple.
