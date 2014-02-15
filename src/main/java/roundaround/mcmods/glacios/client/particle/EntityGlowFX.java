@@ -1,15 +1,17 @@
-package glacios.client.particle;
-
-import glacios.core.Glacios;
+package roundaround.mcmods.glacios.client.particle;
 
 import java.util.HashSet;
 import java.util.Set;
 
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.particle.EntityFX;
 import net.minecraft.world.EnumSkyBlock;
 import net.minecraft.world.World;
+import cpw.mods.fml.client.FMLClientHandler;
 
 public class EntityGlowFX extends EntityFX {
+    
+    private static Minecraft mc = FMLClientHandler.instance().getClient();
 
     class LitBLock {
         public int x, y, z, light;
@@ -72,7 +74,7 @@ public class EntityGlowFX extends EntityFX {
             return;
         }
         for (LitBLock block : resets) {
-            Glacios.mc.theWorld.markBlocksDirtyVertical(block.x, block.z, block.y - 2, block.y + 2);
+            mc.theWorld.markBlocksDirtyVertical(block.x, block.z, block.y - 2, block.y + 2);
         }
     }
 
@@ -81,15 +83,15 @@ public class EntityGlowFX extends EntityFX {
             return;
         }
         for (LitBLock block : lights) {
-            int light = (int) (15.0F * Glacios.mc.theWorld.getLightBrightness(block.x, block.y, block.z));
+            int light = (int) (15.0F * mc.theWorld.getLightBrightness(block.x, block.y, block.z));
             light += light <= 15 - block.light ? block.light : 15 - light;
-            Glacios.mc.theWorld.setLightValue(EnumSkyBlock.Sky, block.x, block.y, block.z, light);
-            Glacios.mc.theWorld.updateLightByType(EnumSkyBlock.Sky, block.x - 1, block.y, block.z);
-            Glacios.mc.theWorld.updateLightByType(EnumSkyBlock.Sky, block.x + 1, block.y, block.z);
-            Glacios.mc.theWorld.updateLightByType(EnumSkyBlock.Sky, block.x, block.y - 1, block.z);
-            Glacios.mc.theWorld.updateLightByType(EnumSkyBlock.Sky, block.x, block.y + 1, block.z);
-            Glacios.mc.theWorld.updateLightByType(EnumSkyBlock.Sky, block.x, block.y, block.z - 1);
-            Glacios.mc.theWorld.updateLightByType(EnumSkyBlock.Sky, block.x, block.y, block.z + 1);
+            mc.theWorld.setLightValue(EnumSkyBlock.Sky, block.x, block.y, block.z, light);
+            mc.theWorld.updateLightByType(EnumSkyBlock.Sky, block.x - 1, block.y, block.z);
+            mc.theWorld.updateLightByType(EnumSkyBlock.Sky, block.x + 1, block.y, block.z);
+            mc.theWorld.updateLightByType(EnumSkyBlock.Sky, block.x, block.y - 1, block.z);
+            mc.theWorld.updateLightByType(EnumSkyBlock.Sky, block.x, block.y + 1, block.z);
+            mc.theWorld.updateLightByType(EnumSkyBlock.Sky, block.x, block.y, block.z - 1);
+            mc.theWorld.updateLightByType(EnumSkyBlock.Sky, block.x, block.y, block.z + 1);
         }
     }
 

@@ -1,4 +1,14 @@
-package glacios.client.renderer;
+package roundaround.mcmods.glacios.client.renderer;
+
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.multiplayer.WorldClient;
+import net.minecraft.client.renderer.RenderGlobal;
+import net.minecraft.client.renderer.RenderHelper;
+import net.minecraft.client.renderer.Tessellator;
+import net.minecraft.util.MathHelper;
+import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.Vec3;
+import net.minecraftforge.client.IRenderHandler;
 
 import org.lwjgl.opengl.GL11;
 
@@ -6,14 +16,6 @@ import cpw.mods.fml.client.FMLClientHandler;
 import cpw.mods.fml.common.ObfuscationReflectionHelper;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
-import net.minecraft.client.Minecraft;
-import net.minecraft.client.multiplayer.WorldClient;
-import net.minecraft.client.renderer.RenderGlobal;
-import net.minecraft.client.renderer.RenderHelper;
-import net.minecraft.client.renderer.Tessellator;
-import net.minecraft.util.MathHelper;
-import net.minecraft.util.Vec3;
-import net.minecraftforge.client.IRenderHandler;
 
 public class SkyRendererGlacios extends IRenderHandler {
 
@@ -112,7 +114,7 @@ public class SkyRendererGlacios extends IRenderHandler {
 		GL11.glRotatef(-90.0F, 0.0F, 1.0F, 0.0F);
 		GL11.glRotatef(world.getCelestialAngle(partialTicks) * 360.0F, 1.0F, 0.0F, 0.0F);
 		float sunSize = 10.0F;
-		minecraft.renderEngine.bindTexture("/environment/sun.png");
+		minecraft.renderEngine.bindTexture(new ResourceLocation("/environment/sun.png"));
 		tessellator.startDrawingQuads();
 		tessellator.addVertexWithUV((-sunSize), 100.0D, (-sunSize), 0.0D, 0.0D);
 		tessellator.addVertexWithUV(sunSize, 100.0D, (-sunSize), 1.0D, 0.0D);
@@ -120,7 +122,7 @@ public class SkyRendererGlacios extends IRenderHandler {
 		tessellator.addVertexWithUV((-sunSize), 100.0D, sunSize, 0.0D, 1.0D);
 		tessellator.draw();
 		float moonSize = 30.0F;
-		minecraft.renderEngine.bindTexture("/environment/moon.png");
+		minecraft.renderEngine.bindTexture(new ResourceLocation("/environment/moon.png"));
 		tessellator.startDrawingQuads();
 		tessellator.addVertexWithUV((-moonSize), -100.0D, moonSize, 0.0D, 0.0D);
 		tessellator.addVertexWithUV(moonSize, -100.0D, moonSize, 1.0D, 0.0D);
