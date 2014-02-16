@@ -20,7 +20,7 @@ public class WorldProviderGlacios extends WorldProvider {
 
     @SideOnly(Side.CLIENT)
     private IRenderHandler skyRenderer;
-    
+
     @SideOnly(Side.CLIENT)
     private IRenderHandler cloudRenderer;
 
