@@ -12,6 +12,7 @@ import net.minecraftforge.client.IRenderHandler;
 
 import org.lwjgl.opengl.GL11;
 
+import roundaround.mcmods.glacios.Glacios;
 import cpw.mods.fml.client.FMLClientHandler;
 import cpw.mods.fml.common.ObfuscationReflectionHelper;
 import cpw.mods.fml.relauncher.Side;
@@ -118,7 +119,8 @@ public class SkyRendererGlacios extends IRenderHandler {
 		GL11.glRotatef(-90.0F, 0.0F, 1.0F, 0.0F);
 		GL11.glRotatef(world.getCelestialAngle(partialTicks) * 360.0F, 1.0F, 0.0F, 0.0F);
 		float sunSize = 10.0F;
-		minecraft.renderEngine.bindTexture(new ResourceLocation("/environment/sun.png"));
+//		minecraft.renderEngine.bindTexture(new ResourceLocation(Glacios.MODID, "textures/environment/sun.png"));
+        minecraft.renderEngine.bindTexture(new ResourceLocation("textures/environment/sun.png"));
 		tessellator.startDrawingQuads();
 		tessellator.addVertexWithUV((-sunSize), 100.0D, (-sunSize), 0.0D, 0.0D);
 		tessellator.addVertexWithUV(sunSize, 100.0D, (-sunSize), 1.0D, 0.0D);
@@ -126,7 +128,7 @@ public class SkyRendererGlacios extends IRenderHandler {
 		tessellator.addVertexWithUV((-sunSize), 100.0D, sunSize, 0.0D, 1.0D);
 		tessellator.draw();
 		float moonSize = 30.0F;
-		minecraft.renderEngine.bindTexture(new ResourceLocation("/environment/moon.png"));
+		minecraft.renderEngine.bindTexture(new ResourceLocation(Glacios.MODID, "textures/environment/moon1.png"));
 		tessellator.startDrawingQuads();
 		tessellator.addVertexWithUV((-moonSize), -100.0D, moonSize, 0.0D, 0.0D);
 		tessellator.addVertexWithUV(moonSize, -100.0D, moonSize, 1.0D, 0.0D);

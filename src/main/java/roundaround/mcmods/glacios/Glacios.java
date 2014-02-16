@@ -11,7 +11,7 @@ import cpw.mods.fml.common.event.FMLPreInitializationEvent;
 public class Glacios {
     public static final String NAME = "Glacios";
 	public static final String MODID = "glacios";
-	public static final String VERS = "0.12a";
+	public static final String VERS = "0.15a";
 	
 	@EventHandler
 	public void preload(FMLPreInitializationEvent evnt) {

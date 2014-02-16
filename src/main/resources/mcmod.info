@@ -2,13 +2,13 @@
     "modid": "glacios",
     "name": "Glacios",
     "description": "Ice dimension mod!",
-    "version": "0.10a",
+    "version": "0.15a",
     "mcversion": "${mcversion}",
     "url": "",
     "updateUrl": "",
     "authors": ["Roundaround"],
     "credits": "Uhhhh...",
-    "logoFile": "",
+    "logoFile": "modlogo.png",
     "screenshots": [],
     "dependencies": []
 }]

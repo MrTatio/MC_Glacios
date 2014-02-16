@@ -38,7 +38,8 @@ public class CloudRendererGlacios extends IRenderHandler {
 			int j = MathHelper.floor_double(d2 / 2048.0D);
 			d1 -= i * 2048;
 			d2 -= j * 2048;
-			mc.renderEngine.bindTexture(new ResourceLocation("/environment/clouds.png"));
+//			mc.renderEngine.bindTexture(new ResourceLocation(Glacios.MODID, "textures/environment/clouds.png"));
+            mc.renderEngine.bindTexture(new ResourceLocation("textures/environment/clouds.png"));
 			GL11.glEnable(GL11.GL_BLEND);
 			GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
 			Vec3 cloudColor = world.getCloudColour(partialTicks);
@@ -200,7 +201,8 @@ public class CloudRendererGlacios extends IRenderHandler {
 			byte b0 = 32;
 			int i = 256 / b0;
 			Tessellator tessellator = Tessellator.instance;
-			mc.renderEngine.bindTexture(new ResourceLocation("/environment/clouds.png"));
+//            mc.renderEngine.bindTexture(new ResourceLocation(Glacios.MODID, "textures/environment/clouds.png"));
+			mc.renderEngine.bindTexture(new ResourceLocation("textures/environment/clouds.png"));
 			GL11.glEnable(GL11.GL_BLEND);
 			GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
 			Vec3 vec3 = world.getCloudColour(partialTicks);
