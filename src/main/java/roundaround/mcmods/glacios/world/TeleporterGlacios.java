@@ -445,14 +445,11 @@ public class TeleporterGlacios extends Teleporter {
     }
 
     public class PortalPosition extends ChunkCoordinates {
-        /**
-         * The worldtime at which this PortalPosition was last verified
-         */
         public long lastUpdateTime;
 
-        public PortalPosition(int par2, int par3, int par4, long par5) {
-            super(par2, par3, par4);
-            this.lastUpdateTime = par5;
+        public PortalPosition(int x, int y, int z, long worldTime) {
+            super(x, y, z);
+            this.lastUpdateTime = worldTime;
         }
     }
 

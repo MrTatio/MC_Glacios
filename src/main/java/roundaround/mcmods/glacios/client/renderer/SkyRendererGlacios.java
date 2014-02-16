@@ -22,6 +22,10 @@ public class SkyRendererGlacios extends IRenderHandler {
 	private int starGLCallList;
 	private int glSkyList;
 	private int glSkyList2;
+	
+	private int myStarGLCallList;
+	private int myGLSkyList;
+	private int myGLSkyList2;
 
 	public SkyRendererGlacios() {
 		RenderGlobal renderGlobal = FMLClientHandler.instance().getClient().renderGlobal;

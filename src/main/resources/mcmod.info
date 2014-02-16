@@ -2,6 +2,7 @@
     "modid": "glacios",
     "name": "Glacios",
     "description": "Ice dimension mod!",
+    "version": "0.10a",
     "mcversion": "${mcversion}",
     "url": "",
     "updateUrl": "",
