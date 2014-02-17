@@ -103,20 +103,20 @@ public class WorldProviderGlacios extends WorldProvider {
     }
 
     // To be reviewed.
-    // @Override
-    // public float calculateCelestialAngle(long worldTime, float partialTicks) {
-    // int timeOfDay = (int) (worldTime % 24000L);
-    // float angleMagnitude = (timeOfDay + partialTicks) / 24000.0F - 0.2083F;
-    //
-    // if (angleMagnitude < 0.0F) {
-    // ++angleMagnitude;
-    // }
-    // if (angleMagnitude > 1.0F) {
-    // --angleMagnitude;
-    // }
-    //
-    // return (1.0F / 4.5F) * ((float)Math.pow((2.0D * angleMagnitude) - 1.0D, 3) + 1.0F + 2.5F * angleMagnitude);
-    // }
+    @Override
+    public float calculateCelestialAngle(long worldTime, float partialTicks) {
+        int timeOfDay = (int) (worldTime % 24000L);
+        float angleMagnitude = (timeOfDay + partialTicks) / 24000.0F - 0.2083F;
+
+        if (angleMagnitude < 0.0F) {
+            ++angleMagnitude;
+        }
+        if (angleMagnitude > 1.0F) {
+            --angleMagnitude;
+        }
+
+        return (1.0F / 4.5F) * ((float) Math.pow((2.0D * angleMagnitude) - 1.0D, 3) + 1.0F + 2.5F * angleMagnitude);
+    }
 
     @Override
     @SideOnly(Side.CLIENT)
@@ -178,23 +178,23 @@ public class WorldProviderGlacios extends WorldProvider {
         return intensity * intensity * 0.8F;
     }
 
-    @Override
-    @SideOnly(Side.CLIENT)
-    public Vec3 getFogColor(float celestialAngle, float partialTicks) {
-        float intensity = (1.0F - MathHelper.cos(celestialAngle * (float) Math.PI * 2.0F)) * 0.2F + 0.4F;
-
-        if (intensity < 0.4F) {
-            intensity = 0.4F;
-        }
-        if (intensity > 0.8F) {
-            intensity = 0.8F;
-        }
-
-        float cR = 0.7529412F;
-        float cG = 0.84705883F;
-        float cB = 1.0F;
-        return this.worldObj.getWorldVec3Pool().getVecFromPool((double) cR * intensity, (double) cG * intensity, (double) cB * intensity);
-    }
+//    @Override
+//    @SideOnly(Side.CLIENT)
+//    public Vec3 getFogColor(float celestialAngle, float partialTicks) {
+//        float intensity = (1.0F - MathHelper.cos(celestialAngle * (float) Math.PI * 2.0F)) * 0.2F + 0.4F;
+//
+//        if (intensity < 0.4F) {
+//            intensity = 0.4F;
+//        }
+//        if (intensity > 0.8F) {
+//            intensity = 0.8F;
+//        }
+//
+//        float cR = 0.7529412F;
+//        float cG = 0.84705883F;
+//        float cB = 1.0F;
+//        return this.worldObj.getWorldVec3Pool().getVecFromPool((double) cR * intensity, (double) cG * intensity, (double) cB * intensity);
+//    }
 
     @Override
     @SideOnly(Side.CLIENT)
