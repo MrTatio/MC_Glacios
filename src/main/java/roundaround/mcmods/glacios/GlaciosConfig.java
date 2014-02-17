@@ -17,10 +17,9 @@ public class GlaciosConfig {
     public static int dimID = 17;
 
     public static int biome_plateau = 81;
+    public static int biome_ocean = 82;
 
     public static int gen_razorGrass = 8;
-
-    public static int spawnSearchRadius = 1024;
 
     public static Configuration config;
 
@@ -44,6 +43,7 @@ public class GlaciosConfig {
         dimID = config.get(MAIN, "dimID", dimID).getInt();
         
         biome_plateau = config.get(BIOME, "plateau", biome_plateau).getInt();
+        biome_ocean = config.get(BIOME, "ocean", biome_ocean).getInt();
         
         gen_razorGrass = config.get(GEN, "razorGrass", gen_razorGrass).getInt();
     }
