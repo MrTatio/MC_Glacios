@@ -80,13 +80,13 @@ public abstract class BiomeGenGlacios extends BiomeGenBase implements IGlaciosDe
                             }
 
                             if (l1 < 63 && (block == null || block.getMaterial() == Material.air)) {
-                                if (this.getFloatTemperature(p_150573_5_, l1, p_150573_6_) < 0.15F) {
-                                    block = Blocks.ice;
+//                                if (this.getFloatTemperature(p_150573_5_, l1, p_150573_6_) < 0.15F) {
+//                                    block = Blocks.ice;
+//                                    b0 = 0;
+//                                } else {
+                                    block = GlaciosBlocks.crystalWater;
                                     b0 = 0;
-                                } else {
-                                    block = Blocks.water;
-                                    b0 = 0;
-                                }
+//                                }
                             }
 
                             k = l;

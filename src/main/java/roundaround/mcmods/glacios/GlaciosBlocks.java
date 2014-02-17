@@ -1,8 +1,10 @@
 package roundaround.mcmods.glacios;
 
 import net.minecraft.block.Block;
+import net.minecraft.block.material.Material;
 import roundaround.mcmods.glacios.block.BlockAsh;
 import roundaround.mcmods.glacios.block.BlockAshStone;
+import roundaround.mcmods.glacios.block.BlockDynamicLiquidGlacios;
 import roundaround.mcmods.glacios.block.BlockGelisol;
 import roundaround.mcmods.glacios.block.BlockGelisolFrost;
 import roundaround.mcmods.glacios.block.BlockIceVine;
@@ -13,6 +15,7 @@ import roundaround.mcmods.glacios.block.BlockSlate;
 import roundaround.mcmods.glacios.block.BlockSoulLeaves;
 import roundaround.mcmods.glacios.block.BlockSoulLog;
 import roundaround.mcmods.glacios.block.BlockSoulSapling;
+import roundaround.mcmods.glacios.block.BlockStaticLiquidGlacios;
 import roundaround.mcmods.glacios.block.BlockWhiteObsidian;
 import cpw.mods.fml.common.registry.GameRegistry;
 
@@ -30,7 +33,9 @@ public class GlaciosBlocks {
     public static Block prismShard;
     public static Block whiteObsidian;
     public static Block portalGlacios;
-    
+    public static Block crystalWater;
+    public static Block flowing_crystalWater;
+
     public static void init() {
         razorGrass = new BlockRazorGrass().setBlockName("razorGrass").setBlockTextureName(Glacios.MODID + ":razorGrass");
         soulLog = new BlockSoulLog().setBlockName("soulLog").setBlockTextureName(Glacios.MODID + ":soulLog");
@@ -45,22 +50,24 @@ public class GlaciosBlocks {
         prismShard = new BlockPrismShard().setBlockName("prismShard").setBlockTextureName(Glacios.MODID + ":prismShard");
         whiteObsidian = new BlockWhiteObsidian().setBlockName("whiteObsidian").setBlockTextureName(Glacios.MODID + ":whiteObsidian");
         portalGlacios = new BlockPortalGlacios().setBlockName("portalGlacios").setBlockTextureName(Glacios.MODID + ":portalGlacios");
-        
+        crystalWater = new BlockStaticLiquidGlacios(Material.water).setBlockName("crystalWater").setBlockTextureName(Glacios.MODID + ":crystalWater_still");
+        flowing_crystalWater = new BlockDynamicLiquidGlacios(Material.water).setBlockName("crystalWater").setBlockTextureName(Glacios.MODID + ":crystalWater_flow");
+
         registerBlock(razorGrass);
         registerBlock(soulLog);
         registerBlock(soulLeaves);
-        //registerBlock(soulSapling);
+        // registerBlock(soulSapling);
         registerBlock(iceVine);
         registerBlock(ash);
         registerBlock(ashStone);
         registerBlock(slate);
         registerBlock(gelisol);
         registerBlock(gelisolFrost);
-        //registerBlock(prismShard);
-        //registerBlock(whiteObsidian);
+        // registerBlock(prismShard);
+        // registerBlock(whiteObsidian);
         registerBlock(portalGlacios);
     }
-    
+
     private static void registerBlock(Block block) {
         GameRegistry.registerBlock(block, block.getUnlocalizedName().substring(5));
     }

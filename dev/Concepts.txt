@@ -1,5 +1,9 @@
 Old ideapad: http://roundaround.titanpad.com/1
 
+Credits
+    #tropicraft
+    Biomes O Plenty
+
 Creatures
     Ice Elemental
     Arctic Wyrm

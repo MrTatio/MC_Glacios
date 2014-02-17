@@ -5,8 +5,8 @@ import net.minecraft.block.material.Material;
 
 public class BlockStaticLiquidGlacios extends BlockStaticLiquid {
 
-    public BlockStaticLiquidGlacios(Material p_i45429_1_) {
-        super(p_i45429_1_);
+    public BlockStaticLiquidGlacios(Material material) {
+        super(material);
     }
 
 }
