@@ -50,8 +50,8 @@ public class GlaciosBlocks {
         prismShard = new BlockPrismShard().setBlockName("prismShard").setBlockTextureName(Glacios.MODID + ":prismShard");
         whiteObsidian = new BlockWhiteObsidian().setBlockName("whiteObsidian").setBlockTextureName(Glacios.MODID + ":whiteObsidian");
         portalGlacios = new BlockPortalGlacios().setBlockName("portalGlacios").setBlockTextureName(Glacios.MODID + ":portalGlacios");
-        crystalWater = new BlockStaticLiquidGlacios(Material.water).setBlockName("crystalWater").setBlockTextureName(Glacios.MODID + ":crystalWater_still");
-        flowing_crystalWater = new BlockDynamicLiquidGlacios(Material.water).setBlockName("crystalWater").setBlockTextureName(Glacios.MODID + ":crystalWater_flow");
+        crystalWater = new BlockStaticLiquidGlacios(Material.water).setBlockName("crystalWater_still").setBlockTextureName(Glacios.MODID + ":crystalWater_still");
+        flowing_crystalWater = new BlockDynamicLiquidGlacios(Material.water).setBlockName("crystalWater_flow").setBlockTextureName(Glacios.MODID + ":crystalWater_flow");
 
         registerBlock(razorGrass);
         registerBlock(soulLog);
@@ -66,6 +66,8 @@ public class GlaciosBlocks {
         // registerBlock(prismShard);
         // registerBlock(whiteObsidian);
         registerBlock(portalGlacios);
+        registerBlock(crystalWater);
+        registerBlock(flowing_crystalWater);
     }
 
     private static void registerBlock(Block block) {

@@ -7,9 +7,7 @@ import static net.minecraftforge.event.terraingen.InitMapGenEvent.EventType.SCAT
 import static net.minecraftforge.event.terraingen.InitMapGenEvent.EventType.STRONGHOLD;
 import static net.minecraftforge.event.terraingen.InitMapGenEvent.EventType.VILLAGE;
 import static net.minecraftforge.event.terraingen.PopulateChunkEvent.Populate.EventType.DUNGEON;
-import static net.minecraftforge.event.terraingen.PopulateChunkEvent.Populate.EventType.ICE;
 import static net.minecraftforge.event.terraingen.PopulateChunkEvent.Populate.EventType.LAKE;
-import static net.minecraftforge.event.terraingen.PopulateChunkEvent.Populate.EventType.LAVA;
 
 import java.util.List;
 import java.util.Random;
@@ -17,7 +15,6 @@ import java.util.Random;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockFalling;
 import net.minecraft.entity.EnumCreatureType;
-import net.minecraft.init.Blocks;
 import net.minecraft.util.IProgressUpdate;
 import net.minecraft.util.MathHelper;
 import net.minecraft.world.ChunkPosition;
@@ -191,7 +188,7 @@ public class ChunkProviderGlacios implements IChunkProvider {
                                 if ((d15 += d16) > 0.0D) {
                                     p_147424_3_[j3 += short1] = GlaciosBlocks.slate;
                                 } else if (k2 * 8 + l2 < b0) {
-                                    p_147424_3_[j3 += short1] = Blocks.water;
+                                    p_147424_3_[j3 += short1] = GlaciosBlocks.crystalWater;
                                 } else {
                                     p_147424_3_[j3 += short1] = null;
                                 }
@@ -404,17 +401,7 @@ public class ChunkProviderGlacios implements IChunkProvider {
             int randX = posX + this.rand.nextInt(16) + 8;
             int randY = this.rand.nextInt(256);
             int randZ = posZ + this.rand.nextInt(16) + 8;
-            (new WorldGenLakes(Blocks.water)).generate(this.worldObj, this.rand, randX, randY, randZ);
-        }
-
-        if (TerrainGen.populate(chunkProvider, worldObj, rand, chunkX, chunkZ, generateStructures, LAVA) && !generateStructures && this.rand.nextInt(8) == 0) {
-            int randX = posX + this.rand.nextInt(16) + 8;
-            int randY = this.rand.nextInt(this.rand.nextInt(248) + 8);
-            int randZ = posZ + this.rand.nextInt(16) + 8;
-
-            if (randY < 63 || this.rand.nextInt(10) == 0) {
-                (new WorldGenLakes(Blocks.lava)).generate(this.worldObj, this.rand, randX, randY, randZ);
-            }
+            (new WorldGenLakes(GlaciosBlocks.crystalWater)).generate(this.worldObj, this.rand, randX, randY, randZ);
         }
 
         boolean doGen = TerrainGen.populate(chunkProvider, worldObj, rand, chunkX, chunkZ, generateStructures, DUNGEON);
@@ -427,23 +414,6 @@ public class ChunkProviderGlacios implements IChunkProvider {
 
         biomegenbase.decorate(this.worldObj, this.rand, posX, posZ);
         SpawnerAnimals.performWorldGenSpawning(this.worldObj, biomegenbase, posX + 8, posZ + 8, 16, 16, this.rand);
-        posX += 8;
-        posZ += 8;
-
-        doGen = TerrainGen.populate(chunkProvider, worldObj, rand, chunkX, chunkZ, generateStructures, ICE);
-        for (int xShift = 0; doGen && xShift < 16; ++xShift) {
-            for (int zShift = 0; zShift < 16; ++zShift) {
-                int randZ = this.worldObj.getPrecipitationHeight(posX + xShift, posZ + zShift);
-
-                if (this.worldObj.isBlockFreezable(xShift + posX, randZ - 1, zShift + posZ)) {
-                    this.worldObj.setBlock(xShift + posX, randZ - 1, zShift + posZ, Blocks.ice, 0, 2);
-                }
-
-                if (this.worldObj.func_147478_e(xShift + posX, randZ, zShift + posZ, true)) {
-                    this.worldObj.setBlock(xShift + posX, randZ, zShift + posZ, Blocks.snow_layer, 0, 2);
-                }
-            }
-        }
 
         MinecraftForge.EVENT_BUS.post(new PopulateChunkEvent.Post(chunkProvider, worldObj, rand, chunkX, chunkZ, generateStructures));
 
