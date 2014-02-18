@@ -42,7 +42,7 @@ public class WorldGenGlaciosFlora extends WorldGeneratorGlacios {
             // TODO: isAirBlock()
             if (world.isAirBlock(i1, j1, k1)
                     && (!world.provider.hasNoSky || j1 < 255)
-                    && (flora == Blocks.web ? world.getBlock(i1, j1 + 1, k1) == GlaciosBlocks.soulLeaves
+                    && (flora == Blocks.web ? world.getBlock(i1, j1 + 1, k1) == GlaciosBlocks.leaves
                             || world.getBlock(i1, j1 - 1, k1) == Blocks.grass : this.flora.canReplace(world, i1, j1, k1, 0,
                             new ItemStack(flora, 1, floraMeta)))) {
                 // TODO: setBlock()

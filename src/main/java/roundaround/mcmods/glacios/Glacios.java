@@ -18,6 +18,7 @@ public class Glacios {
         GlaciosConfig.init(evnt.getSuggestedConfigurationFile());
         
         GlaciosBlocks.init();
+        GlaciosItems.init();
         GlaciosBiomes.init();
 	}
 	

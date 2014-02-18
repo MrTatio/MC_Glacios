@@ -33,7 +33,7 @@ public class BlockRazorGrass extends BlockTallGrass {
     @SideOnly(Side.CLIENT)
     public void registerBlockIcons(IIconRegister iconRegister) {
         this.icons[0] = iconRegister.registerIcon(Glacios.MODID + ":" + this.getUnlocalizedName().substring(5));
-        this.icons[1] = iconRegister.registerIcon(Glacios.MODID + ":" + this.getUnlocalizedName().substring(5) + "Tall");
+        this.icons[1] = iconRegister.registerIcon(Glacios.MODID + ":" + this.getUnlocalizedName().substring(5) + "_tall");
     }
 
     @Override

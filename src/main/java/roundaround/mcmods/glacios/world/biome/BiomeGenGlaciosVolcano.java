@@ -5,7 +5,7 @@ package roundaround.mcmods.glacios.world.biome;
 public class BiomeGenGlaciosVolcano extends BiomeGenGlacios {
 
     public BiomeGenGlaciosVolcano(int biomeId) {
-        super(biomeId);
+        this(biomeId, true);
     }
 
     public BiomeGenGlaciosVolcano(int biomeId, boolean register) {

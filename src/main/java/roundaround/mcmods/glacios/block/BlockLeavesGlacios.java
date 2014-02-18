@@ -12,21 +12,25 @@ import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.IIcon;
+import net.minecraft.util.MathHelper;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import net.minecraftforge.common.IShearable;
-import roundaround.mcmods.glacios.Glacios;
-import roundaround.mcmods.glacios.GlaciosBlocks;
 import cpw.mods.fml.client.FMLClientHandler;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 
-public class BlockSoulLeaves extends BlockLeavesBase implements IShearable {
+public class BlockLeavesGlacios extends BlockLeavesBase implements IShearable {
 
-    private IIcon icon[] = new IIcon[2];
+    public static final int soul = 0;
+    public static final int taigaGiant = 1;
+
+    public static final String[] names = new String[] { "soul", "taigaGiant" };
+
+    private static final IIcon[][] blockIcons = new IIcon[names.length][2];
     private int[] distances;
 
-    public BlockSoulLeaves() {
+    public BlockLeavesGlacios() {
         super(Material.leaves, false);
         this.setTickRandomly(true);
         this.setCreativeTab(CreativeTabs.tabDecorations);
@@ -44,22 +48,26 @@ public class BlockSoulLeaves extends BlockLeavesBase implements IShearable {
     @SideOnly(Side.CLIENT)
     public IIcon getIcon(int side, int meta) {
         if (!this.isOpaqueCube())
-            return this.icon[0];
+            return this.blockIcons[MathHelper.clamp_int(meta, 0, names.length - 1)][0];
         else
-            return this.icon[1];
+            return this.blockIcons[MathHelper.clamp_int(meta, 0, names.length - 1)][1];
     }
 
     @Override
     @SideOnly(Side.CLIENT)
     public void registerBlockIcons(IIconRegister iconRegister) {
-        this.icon[0] = iconRegister.registerIcon(Glacios.MODID + ":" + this.getUnlocalizedName().substring(5));
-        this.icon[1] = iconRegister.registerIcon(Glacios.MODID + ":" + this.getUnlocalizedName().substring(5) + "Opaque");
+        for (int i = 0; i < this.names.length; ++i) {
+            this.blockIcons[i][0] = iconRegister.registerIcon(this.getTextureName() + "_" + names[i]);
+            this.blockIcons[i][1] = iconRegister.registerIcon(this.getTextureName() + "_" + names[i] + "_opaque");
+        }
     }
 
     @Override
     @SideOnly(Side.CLIENT)
     public void getSubBlocks(Item item, CreativeTabs tab, List list) {
-        list.add(new ItemStack(item, 1, 0));
+        for (int i = 0; i < names.length; i++) {
+            list.add(new ItemStack(item, 1, i));
+        }
     }
 
     @Override
@@ -200,8 +208,13 @@ public class BlockSoulLeaves extends BlockLeavesBase implements IShearable {
     }
 
     @Override
-    public Item getItemDropped(int p_149650_1_, Random rand, int p_149650_3_) {
-        return Item.getItemFromBlock(GlaciosBlocks.soulSapling);
+    public int damageDropped(int meta) {
+        return super.damageDropped(meta) + 4;
+    }
+
+    @Override
+    public int getDamageValue(World world, int x, int y, int z) {
+        return world.getBlockMetadata(x, y, z) & 3;
     }
 
     @Override

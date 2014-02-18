@@ -2,6 +2,7 @@ package roundaround.mcmods.glacios;
 
 import net.minecraft.world.biome.BiomeGenBase;
 import roundaround.mcmods.glacios.world.biome.BiomeGenGlacios;
+import roundaround.mcmods.glacios.world.biome.BiomeGenGlaciosLake;
 import roundaround.mcmods.glacios.world.biome.BiomeGenGlaciosOcean;
 import roundaround.mcmods.glacios.world.biome.BiomeGenGlaciosPlateau;
 
@@ -25,10 +26,12 @@ public class GlaciosBiomes {
     public static final BiomeGenBase.Height height_PartiallySubmerged = new BiomeGenBase.Height(-0.2F, 0.1F);
     
     public static BiomeGenGlacios plateau;
+    public static BiomeGenGlacios lake;
     public static BiomeGenGlacios ocean;
 
     public static void init() {
         plateau = (BiomeGenGlacios) new BiomeGenGlaciosPlateau(GlaciosConfig.biome_plateau).setHeight(height_MidPlateaus).setBiomeName("Plateau");
+        lake = (BiomeGenGlacios) new BiomeGenGlaciosLake(GlaciosConfig.biome_lake).setHeight(height_ShallowWaters).setBiomeName("Lake");
         ocean = (BiomeGenGlacios) new BiomeGenGlaciosOcean(GlaciosConfig.biome_ocean).setHeight(height_Oceans).setBiomeName("Ocean");
     }
     

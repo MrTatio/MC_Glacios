@@ -40,8 +40,8 @@ public class BlockGelisolFrost extends Block {
     @Override
     @SideOnly(Side.CLIENT)
     public void registerBlockIcons(IIconRegister register) {
-        this.blockIcon = register.registerIcon(Glacios.MODID + ":" + this.getUnlocalizedName().substring(5) + "Side");
-        this.iconTop = register.registerIcon(Glacios.MODID + ":" + this.getUnlocalizedName().substring(5) + "Top");
+        this.blockIcon = register.registerIcon(Glacios.MODID + ":" + this.getUnlocalizedName().substring(5) + "_side");
+        this.iconTop = register.registerIcon(Glacios.MODID + ":" + this.getUnlocalizedName().substring(5) + "_top");
     }
 
     @Override

@@ -5,11 +5,12 @@ package roundaround.mcmods.glacios.world.biome;
 public class BiomeGenGlaciosOcean extends BiomeGenGlacios {
 
     public BiomeGenGlaciosOcean(int biomeId) {
-        super(biomeId);
+        this(biomeId, true);
     }
 
     public BiomeGenGlaciosOcean(int biomeId, boolean register) {
         super(biomeId, register);
+        this.spawnableCreatureList.clear();
     }
 
 }

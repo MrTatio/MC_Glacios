@@ -17,7 +17,9 @@ public class GlaciosConfig {
     public static int dimID = 17;
 
     public static int biome_plateau = 81;
-    public static int biome_ocean = 82;
+    public static int biome_lake = 82;
+    public static int biome_ocean = 83;
+    public static int biome_volcano = 84;
 
     public static int gen_razorGrass = 8;
 
@@ -43,7 +45,9 @@ public class GlaciosConfig {
         dimID = config.get(MAIN, "dimID", dimID).getInt();
         
         biome_plateau = config.get(BIOME, "plateau", biome_plateau).getInt();
+        biome_lake = config.get(BIOME, "lake", biome_lake).getInt();
         biome_ocean = config.get(BIOME, "ocean", biome_ocean).getInt();
+        biome_volcano = config.get(BIOME, "volcano", biome_volcano).getInt();
         
         gen_razorGrass = config.get(GEN, "razorGrass", gen_razorGrass).getInt();
     }
