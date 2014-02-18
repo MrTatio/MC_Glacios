@@ -33,10 +33,18 @@ public class WorldGenTaigaGiant extends WorldGenAbstractTree {
 
     @Override
     public boolean generate(World world, Random random, int x, int y, int z) {
-        int l = random.nextInt(this.heightVariance) + this.minHeight;
-        int i1 = 1 + random.nextInt(2);
-        int j1 = l - i1;
-        int k1 = 2 + random.nextInt(2);
+        int l = random.nextInt(heightVariance) + minHeight;
+
+        int i1, j1, k1;
+        if (this.huge) {
+            i1 = 10 + random.nextInt(5);
+            j1 = l - i1;
+            k1 = 4;
+        } else {
+            i1 = 1 + random.nextInt(2);
+            j1 = l - i1;
+            k1 = 2 + random.nextInt(2);
+        }
 
         if (y < 1 || y + l + 1 > 256)
             return false;
@@ -66,56 +74,130 @@ public class WorldGenTaigaGiant extends WorldGenAbstractTree {
             }
         }
 
-        Block baseBlock = world.getBlock(x, y - 1, z);
-        if (!BlockSaplingGlacios.isSupportedByBlock(baseBlock, BlockSaplingGlacios.taigaGiant))
-            return false;
+        if (this.huge) {
+            Block block1 = world.getBlock(x, y - 1, z);
+            Block block2 = world.getBlock(x + 1, y - 1, z);
+            Block block3 = world.getBlock(x - 1, y - 1, z);
+            Block block4 = world.getBlock(x, y - 1, z + 1);
+            Block block5 = world.getBlock(x, y - 1, z - 1);
 
-        baseBlock.onPlantGrow(world, x, y - 1, z, x, y, z);
-        l3 = random.nextInt(2);
-        i2 = 1;
-        byte b0 = 0;
-        int k2;
-        int i4;
+            if (!BlockSaplingGlacios.isSupportedByBlock(block1, BlockSaplingGlacios.taigaGiant) || !BlockSaplingGlacios.isSupportedByBlock(block2, BlockSaplingGlacios.taigaGiant)
+                    || !BlockSaplingGlacios.isSupportedByBlock(block3, BlockSaplingGlacios.taigaGiant)
+                    || !BlockSaplingGlacios.isSupportedByBlock(block4, BlockSaplingGlacios.taigaGiant)
+                    || !BlockSaplingGlacios.isSupportedByBlock(block5, BlockSaplingGlacios.taigaGiant))
+                return false;
 
-        for (i4 = 0; i4 <= j1; ++i4) {
-            k2 = y + l - i4;
+            block1.onPlantGrow(world, x, y - 1, z, x, y, z);
+            block2.onPlantGrow(world, x + 1, y - 1, z, x + 1, y, z);
+            block3.onPlantGrow(world, x - 1, y - 1, z, x - 1, y, z);
+            block4.onPlantGrow(world, x, y - 1, z + 1, x, y, z + 1);
+            block5.onPlantGrow(world, x, y - 1, z - 1, x, y, z - 1);
+            
+            l3 = random.nextInt(2);
+            i2 = 1;
+            byte b0 = 0;
+            int k2;
+            int i4;
 
-            for (int l2 = x - l3; l2 <= x + l3; ++l2) {
-                int i3 = l2 - x;
+            for (i4 = 0; i4 <= j1; ++i4) {
+                k2 = y + l - i4;
 
-                for (int j3 = z - l3; j3 <= z + l3; ++j3) {
-                    int k3 = j3 - z;
+                for (int l2 = x - l3; l2 <= x + l3; ++l2) {
+                    int i3 = l2 - x;
 
-                    if ((Math.abs(i3) != l3 || Math.abs(k3) != l3 || l3 <= 0) && world.getBlock(l2, k2, j3).canBeReplacedByLeaves(world, l2, k2, j3)) {
-                        this.setBlockAndNotifyAdequately(world, l2, k2, j3, GlaciosBlocks.leaves, BlockLeavesGlacios.taigaGiant);
+                    for (int j3 = z - l3; j3 <= z + l3; ++j3) {
+                        int k3 = j3 - z;
+
+                        if ((Math.abs(i3) != l3 || Math.abs(k3) != l3 || l3 <= 0) && world.getBlock(l2, k2, j3).canBeReplacedByLeaves(world, l2, k2, j3)) {
+                            this.setBlockAndNotifyAdequately(world, l2, k2, j3, GlaciosBlocks.leaves, BlockLeavesGlacios.taigaGiant);
+                            this.setBlockAndNotifyAdequately(world, l2 + 1, k2, j3, GlaciosBlocks.leaves, BlockLeavesGlacios.taigaGiant);
+                            this.setBlockAndNotifyAdequately(world, l2 - 1, k2, j3, GlaciosBlocks.leaves, BlockLeavesGlacios.taigaGiant);
+                            this.setBlockAndNotifyAdequately(world, l2, k2, j3 + 1, GlaciosBlocks.leaves, BlockLeavesGlacios.taigaGiant);
+                            this.setBlockAndNotifyAdequately(world, l2, k2, j3 - 1, GlaciosBlocks.leaves, BlockLeavesGlacios.taigaGiant);
+                        }
                     }
                 }
-            }
 
-            if (l3 >= i2) {
-                l3 = b0;
-                b0 = 1;
-                ++i2;
+                if (l3 >= i2) {
+                    l3 = b0;
+                    b0 = 1;
+                    ++i2;
 
-                if (i2 > k1) {
-                    i2 = k1;
+                    if (i2 > k1) {
+                        i2 = k1;
+                    }
+                } else {
+                    ++l3;
                 }
-            } else {
-                ++l3;
             }
-        }
 
-        i4 = random.nextInt(3);
+            i4 = random.nextInt(3);
 
-        for (k2 = 0; k2 < l - i4; ++k2) {
-            Block block2 = world.getBlock(x, y + k2, z);
+            for (int i = 0; i < l - i4; ++i) {
+                Block block6 = world.getBlock(x, y + i, z);
 
-            if (block2.isAir(world, x, y + k2, z) || block2.isLeaves(world, x, y + k2, z)) {
-                this.setBlockAndNotifyAdequately(world, x, y + k2, z, GlaciosBlocks.log, BlockLogGlacios.taigaGiant);
+                if (block6.isAir(world, x, y + i, z) || block6.isLeaves(world, x, y + i, z)) {
+                    this.setBlockAndNotifyAdequately(world, x, y + i, z, GlaciosBlocks.log, BlockLogGlacios.taigaGiant);
+                    this.setBlockAndNotifyAdequately(world, x + 1, y + i, z, GlaciosBlocks.log, BlockLogGlacios.taigaGiant);
+                    this.setBlockAndNotifyAdequately(world, x - 1, y + i, z, GlaciosBlocks.log, BlockLogGlacios.taigaGiant);
+                    this.setBlockAndNotifyAdequately(world, x, y + i, z + 1, GlaciosBlocks.log, BlockLogGlacios.taigaGiant);
+                    this.setBlockAndNotifyAdequately(world, x, y + i, z - 1, GlaciosBlocks.log, BlockLogGlacios.taigaGiant);
+                }
             }
-        }
 
-        return true;
+            return true;
+        } else {
+            Block baseBlock = world.getBlock(x, y - 1, z);
+            if (!BlockSaplingGlacios.isSupportedByBlock(baseBlock, BlockSaplingGlacios.taigaGiant))
+                return false;
+
+            baseBlock.onPlantGrow(world, x, y - 1, z, x, y, z);
+            
+            l3 = random.nextInt(2);
+            i2 = 1;
+            byte b0 = 0;
+            int k2;
+            int i4;
+
+            for (i4 = 0; i4 <= j1; ++i4) {
+                k2 = y + l - i4;
+
+                for (int l2 = x - l3; l2 <= x + l3; ++l2) {
+                    int i3 = l2 - x;
+
+                    for (int j3 = z - l3; j3 <= z + l3; ++j3) {
+                        int k3 = j3 - z;
+
+                        if ((Math.abs(i3) != l3 || Math.abs(k3) != l3 || l3 <= 0) && world.getBlock(l2, k2, j3).canBeReplacedByLeaves(world, l2, k2, j3)) {
+                            this.setBlockAndNotifyAdequately(world, l2, k2, j3, GlaciosBlocks.leaves, BlockLeavesGlacios.taigaGiant);
+                        }
+                    }
+                }
+
+                if (l3 >= i2) {
+                    l3 = b0;
+                    b0 = 1;
+                    ++i2;
+
+                    if (i2 > k1) {
+                        i2 = k1;
+                    }
+                } else {
+                    ++l3;
+                }
+            }
+
+            i4 = random.nextInt(3);
+
+            for (k2 = 0; k2 < l - i4; ++k2) {
+                Block block2 = world.getBlock(x, y + k2, z);
+
+                if (block2.isAir(world, x, y + k2, z) || block2.isLeaves(world, x, y + k2, z)) {
+                    this.setBlockAndNotifyAdequately(world, x, y + k2, z, GlaciosBlocks.log, BlockLogGlacios.taigaGiant);
+                }
+            }
+
+            return true;
+        }
     }
-
 }

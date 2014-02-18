@@ -58,13 +58,34 @@ public class WorldGenSoulTree extends WorldGenAbstractTree {
                 }
             }
         }
-
-        Block baseBlock = world.getBlock(x, y - 1, z);
-        if (!BlockSaplingGlacios.isSupportedByBlock(baseBlock, BlockSaplingGlacios.soul))
-            return false;
-
-        baseBlock.onPlantGrow(world, x, y - 1, z, x, y, z);
+        
         if (thick) {
+            Block[] baseBlocks = new Block[13];
+            int index = 0;
+            for (int posX = -2; posX <= 2; posX++) {
+                for (int posZ = -2; posZ <= 2; posZ++) {
+                    if (posX == 0 || posZ == 0 || (Math.abs(posX) < 2 && Math.abs(posZ) < 2))
+                        baseBlocks[index++] = world.getBlock(x + posX, y - 1, z + posZ);
+                }
+            }
+            
+            index = 0;
+            for (int posX = -2; posX <= 2; posX++) {
+                for (int posZ = -2; posZ <= 2; posZ++) {
+                    if (posX == 0 || posZ == 0 || (Math.abs(posX) < 2 && Math.abs(posZ) < 2))
+                        if (!BlockSaplingGlacios.isSupportedByBlock(baseBlocks[index++], BlockSaplingGlacios.soul))
+                            return false;
+                }
+            }
+            
+            index = 0;
+            for (int posX = -2; posX <= 2; posX++) {
+                for (int posZ = -2; posZ <= 2; posZ++) {
+                    if (posX == 0 || posZ == 0 || (Math.abs(posX) < 2 && Math.abs(posZ) < 2))
+                        baseBlocks[index++].onPlantGrow(world, x + posX, y - 1, z + posZ, x + posX, y, z + posZ);
+                }
+            }
+            
             int l1;
             int l2;
             int k2;
@@ -87,9 +108,9 @@ public class WorldGenSoulTree extends WorldGenAbstractTree {
             }
 
             for (k2 = 0; k2 < l; ++k2) {
-                Block block2 = world.getBlock(x, y + k2, z);
+                Block tempBlock = world.getBlock(x, y + k2, z);
 
-                if (block2.isAir(world, x, y + k2, z) || block2.isLeaves(world, x, y + k2, z)) {
+                if (tempBlock.isAir(world, x, y + k2, z) || tempBlock.isLeaves(world, x, y + k2, z)) {
                     this.setBlockAndNotifyAdequately(world, x, y + k2, z, GlaciosBlocks.log, BlockLogGlacios.soul);
                     this.setBlockAndNotifyAdequately(world, x - 1, y + k2, z, GlaciosBlocks.log, BlockLogGlacios.soul);
                     this.setBlockAndNotifyAdequately(world, x + 1, y + k2, z, GlaciosBlocks.log, BlockLogGlacios.soul);
@@ -124,6 +145,25 @@ public class WorldGenSoulTree extends WorldGenAbstractTree {
 
             return true;
         } else {
+            Block block1 = world.getBlock(x, y - 1, z);
+            Block block2 = world.getBlock(x - 1, y - 1, z);
+            Block block3 = world.getBlock(x + 1, y - 1, z);
+            Block block4 = world.getBlock(x, y - 1, z - 1);
+            Block block5 = world.getBlock(x, y - 1, z + 1);
+
+            if (!BlockSaplingGlacios.isSupportedByBlock(block1, BlockSaplingGlacios.soul)
+                    || !BlockSaplingGlacios.isSupportedByBlock(block2, BlockSaplingGlacios.soul)
+                    || !BlockSaplingGlacios.isSupportedByBlock(block3, BlockSaplingGlacios.soul)
+                    || !BlockSaplingGlacios.isSupportedByBlock(block4, BlockSaplingGlacios.soul)
+                    || !BlockSaplingGlacios.isSupportedByBlock(block5, BlockSaplingGlacios.soul))
+                return false;
+
+            block1.onPlantGrow(world, x, y - 1, z, x, y, z);
+            block2.onPlantGrow(world, x + 1, y - 1, z, x + 1, y, z);
+            block3.onPlantGrow(world, x - 1, y - 1, z, x - 1, y, z);
+            block4.onPlantGrow(world, x, y - 1, z + 1, x, y, z + 1);
+            block5.onPlantGrow(world, x, y - 1, z - 1, x, y, z - 1);
+            
             int l1;
             int l2;
             int k2;
@@ -146,9 +186,9 @@ public class WorldGenSoulTree extends WorldGenAbstractTree {
             }
 
             for (k2 = 0; k2 < l; ++k2) {
-                Block block2 = world.getBlock(x, y + k2, z);
+                Block tempBlock = world.getBlock(x, y + k2, z);
 
-                if (block2.isAir(world, x, y + k2, z) || block2.isLeaves(world, x, y + k2, z)) {
+                if (tempBlock.isAir(world, x, y + k2, z) || tempBlock.isLeaves(world, x, y + k2, z)) {
                     this.setBlockAndNotifyAdequately(world, x, y + k2, z, GlaciosBlocks.log, BlockLogGlacios.soul);
                     this.setBlockAndNotifyAdequately(world, x - 1, y, z, GlaciosBlocks.log, BlockLogGlacios.soul + 4);
                     this.setBlockAndNotifyAdequately(world, x + 1, y, z, GlaciosBlocks.log, BlockLogGlacios.soul + 4);
