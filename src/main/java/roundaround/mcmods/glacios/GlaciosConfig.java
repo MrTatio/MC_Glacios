@@ -20,8 +20,7 @@ public class GlaciosConfig {
     public static int biome_lake = 82;
     public static int biome_ocean = 83;
     public static int biome_volcano = 84;
-
-    public static int gen_razorGrass = 8;
+    public static int biome_taiga = 85;
 
     public static Configuration config;
 
@@ -48,8 +47,7 @@ public class GlaciosConfig {
         biome_lake = config.get(BIOME, "lake", biome_lake).getInt();
         biome_ocean = config.get(BIOME, "ocean", biome_ocean).getInt();
         biome_volcano = config.get(BIOME, "volcano", biome_volcano).getInt();
-        
-        gen_razorGrass = config.get(GEN, "razorGrass", gen_razorGrass).getInt();
+        biome_taiga = config.get(BIOME, "taiga", biome_taiga).getInt();
     }
 
 }

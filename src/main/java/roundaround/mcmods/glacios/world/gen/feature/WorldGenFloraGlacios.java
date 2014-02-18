@@ -12,21 +12,21 @@ import net.minecraft.world.gen.feature.WorldGenerator;
 import roundaround.mcmods.glacios.GlaciosBlocks;
 import roundaround.mcmods.glacios.GlaciosConfig;
 
-public class WorldGenGlaciosFlora extends WorldGeneratorGlacios {
+public class WorldGenFloraGlacios extends WorldGeneratorGlacios {
 
     public Block flora;
     public int floraMeta;
     private int groupCount = 64;
 
-    public WorldGenGlaciosFlora() {
+    public WorldGenFloraGlacios() {
     }
 
-    public WorldGenGlaciosFlora(Block flora, int floraMeta) {
+    public WorldGenFloraGlacios(Block flora, int floraMeta) {
         this.flora = flora;
         this.floraMeta = floraMeta;
     }
 
-    public WorldGenGlaciosFlora(Block flora, int floraMeta, int groupCount) {
+    public WorldGenFloraGlacios(Block flora, int floraMeta, int groupCount) {
         this.flora = flora;
         this.floraMeta = floraMeta;
         this.groupCount = groupCount;

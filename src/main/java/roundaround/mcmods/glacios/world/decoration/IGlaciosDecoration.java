@@ -4,12 +4,12 @@ import java.util.HashMap;
 import java.util.Random;
 
 import net.minecraft.world.gen.feature.WorldGenerator;
-import roundaround.mcmods.glacios.world.gen.feature.WorldGenGlaciosFlora;
+import roundaround.mcmods.glacios.world.gen.feature.WorldGenFloraGlacios;
 
 public interface IGlaciosDecoration {
-    public WorldGenGlaciosFlora getRandomWorldGenForFlowers(Random random);
+    public WorldGenFloraGlacios getRandomWorldGenForFlowers(Random random);
 
     public HashMap<WorldGenerator, Double> getWeightedWorldGenForGrass();
 
-    public HashMap<WorldGenGlaciosFlora, Integer> getWeightedWorldGenForFlowers();
+    public HashMap<WorldGenFloraGlacios, Integer> getWeightedWorldGenForFlowers();
 }

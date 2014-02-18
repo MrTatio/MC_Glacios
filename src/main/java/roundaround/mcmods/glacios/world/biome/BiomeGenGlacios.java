@@ -12,6 +12,8 @@ import net.minecraft.world.gen.feature.WorldGenerator;
 import roundaround.mcmods.glacios.GlaciosBlocks;
 
 public abstract class BiomeGenGlacios extends BiomeGenBase {
+    
+    protected BiomeDecoratorGlacios theGlaciosBiomeDecorator;
 
     public BiomeGenGlacios(int biomeId) {
         this(biomeId, true);
@@ -19,6 +21,7 @@ public abstract class BiomeGenGlacios extends BiomeGenBase {
 
     public BiomeGenGlacios(int biomeId, boolean register) {
         super(biomeId, register);
+        this.theGlaciosBiomeDecorator = new BiomeDecoratorGlacios();
         this.topBlock = GlaciosBlocks.gelisolFrost;
         this.fillerBlock = GlaciosBlocks.gelisol;
         this.field_150604_aj = 0;
@@ -29,18 +32,8 @@ public abstract class BiomeGenGlacios extends BiomeGenBase {
     }
 
     @Override
-    public void decorate(World world, Random random, int x, int z) {
-        try {
-            super.decorate(world, random, x, z);
-        } catch (Exception e) {
-            Throwable cause = e.getCause();
-
-            if (e.getMessage() != null && e.getMessage().equals("Already decorating!!")
-                    || (cause != null && cause.getMessage() != null && cause.getMessage().equals("Already decorating!!"))) {
-            } else {
-                e.printStackTrace();
-            }
-        }
+    public void decorate(World world, Random rand, int x, int z) {
+        this.theGlaciosBiomeDecorator.decorateChunk(world, rand, this, x, z);
     }
 
     @Override

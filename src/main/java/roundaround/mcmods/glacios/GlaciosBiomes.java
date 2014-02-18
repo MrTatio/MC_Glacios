@@ -5,6 +5,8 @@ import roundaround.mcmods.glacios.world.biome.BiomeGenGlacios;
 import roundaround.mcmods.glacios.world.biome.BiomeGenGlaciosLake;
 import roundaround.mcmods.glacios.world.biome.BiomeGenGlaciosOcean;
 import roundaround.mcmods.glacios.world.biome.BiomeGenGlaciosPlateau;
+import roundaround.mcmods.glacios.world.biome.BiomeGenGlaciosTaiga;
+import roundaround.mcmods.glacios.world.biome.BiomeGenGlaciosVolcano;
 
 public class GlaciosBiomes {
     
@@ -28,14 +30,18 @@ public class GlaciosBiomes {
     public static BiomeGenGlacios plateau;
     public static BiomeGenGlacios lake;
     public static BiomeGenGlacios ocean;
+    public static BiomeGenGlacios volcano;
+    public static BiomeGenGlacios taiga;
 
     public static void init() {
         plateau = (BiomeGenGlacios) new BiomeGenGlaciosPlateau(GlaciosConfig.biome_plateau).setHeight(height_MidPlateaus).setBiomeName("Plateau");
         lake = (BiomeGenGlacios) new BiomeGenGlaciosLake(GlaciosConfig.biome_lake).setHeight(height_ShallowWaters).setBiomeName("Lake");
         ocean = (BiomeGenGlacios) new BiomeGenGlaciosOcean(GlaciosConfig.biome_ocean).setHeight(height_Oceans).setBiomeName("Ocean");
+        volcano = (BiomeGenGlacios) new BiomeGenGlaciosVolcano(GlaciosConfig.biome_volcano).setHeight(height_HugeHills).setBiomeName("Volcano");
+        taiga = (BiomeGenGlacios) new BiomeGenGlaciosTaiga(GlaciosConfig.biome_taiga).setHeight(height_MidHills).setBiomeName("Taiga");
     }
     
     public static BiomeGenBase[] getBiomeList() {
-        return new BiomeGenBase[] { plateau, ocean };
+        return new BiomeGenBase[] { plateau, lake, ocean, volcano, taiga };
     }
 }

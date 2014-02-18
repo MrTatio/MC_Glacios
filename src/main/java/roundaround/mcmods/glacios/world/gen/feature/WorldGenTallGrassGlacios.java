@@ -9,11 +9,11 @@ import net.minecraft.world.biome.BiomeGenBase;
 import net.minecraft.world.gen.feature.WorldGenerator;
 import roundaround.mcmods.glacios.GlaciosConfig;
 
-public class WorldGenGlaciosTallGrass extends WorldGeneratorGlacios {
+public class WorldGenTallGrassGlacios extends WorldGeneratorGlacios {
 
     private Block genBlock;
 
-    public WorldGenGlaciosTallGrass(Block block) {
+    public WorldGenTallGrassGlacios(Block block) {
         super();
         this.genBlock = block;
     }

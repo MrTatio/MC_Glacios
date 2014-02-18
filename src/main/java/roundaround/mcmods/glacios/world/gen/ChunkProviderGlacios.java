@@ -396,7 +396,7 @@ public class ChunkProviderGlacios implements IChunkProvider {
             this.scatteredFeatureGenerator.generateStructuresInChunk(this.worldObj, this.rand, chunkX, chunkZ);
         }
 
-        if (biomegenbase != BiomeGenBase.desert && biomegenbase != BiomeGenBase.desertHills && !generateStructures && this.rand.nextInt(4) == 0
+        if (!generateStructures && this.rand.nextInt(4) == 0
                 && TerrainGen.populate(chunkProvider, worldObj, rand, chunkX, chunkZ, generateStructures, LAKE)) {
             int randX = posX + this.rand.nextInt(16) + 8;
             int randY = this.rand.nextInt(256);
