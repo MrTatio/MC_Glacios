@@ -21,6 +21,7 @@ public class GlaciosConfig {
     public static int biome_ocean = 83;
     public static int biome_volcano = 84;
     public static int biome_taiga = 85;
+    public static int biome_hills = 86;
 
     public static Configuration config;
 
@@ -48,6 +49,7 @@ public class GlaciosConfig {
         biome_ocean = config.get(BIOME, "ocean", biome_ocean).getInt();
         biome_volcano = config.get(BIOME, "volcano", biome_volcano).getInt();
         biome_taiga = config.get(BIOME, "taiga", biome_taiga).getInt();
+        biome_hills = config.get(BIOME, "hills", biome_hills).getInt();
     }
 
 }

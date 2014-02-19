@@ -81,7 +81,8 @@ public class WorldGenTaigaGiant extends WorldGenAbstractTree {
             Block block4 = world.getBlock(x, y - 1, z + 1);
             Block block5 = world.getBlock(x, y - 1, z - 1);
 
-            if (!BlockSaplingGlacios.isSupportedByBlock(block1, BlockSaplingGlacios.taigaGiant) || !BlockSaplingGlacios.isSupportedByBlock(block2, BlockSaplingGlacios.taigaGiant)
+            if (!BlockSaplingGlacios.isSupportedByBlock(block1, BlockSaplingGlacios.taigaGiant)
+                    || !BlockSaplingGlacios.isSupportedByBlock(block2, BlockSaplingGlacios.taigaGiant)
                     || !BlockSaplingGlacios.isSupportedByBlock(block3, BlockSaplingGlacios.taigaGiant)
                     || !BlockSaplingGlacios.isSupportedByBlock(block4, BlockSaplingGlacios.taigaGiant)
                     || !BlockSaplingGlacios.isSupportedByBlock(block5, BlockSaplingGlacios.taigaGiant))

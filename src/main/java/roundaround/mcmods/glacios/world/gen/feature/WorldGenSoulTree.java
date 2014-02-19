@@ -25,7 +25,7 @@ public class WorldGenSoulTree extends WorldGenAbstractTree {
 
     @Override
     public boolean generate(World world, Random random, int x, int y, int z) {
-        int l = random.nextInt(5) + 7;
+        int l = random.nextInt(5) + 5;
 
         if (y < 1 || y + l + 1 > 256)
             return false;
