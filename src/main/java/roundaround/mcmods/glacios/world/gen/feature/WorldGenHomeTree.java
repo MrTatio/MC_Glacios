@@ -8,6 +8,9 @@ import net.minecraft.util.MathHelper;
 import net.minecraft.world.World;
 import net.minecraft.world.gen.feature.WorldGenAbstractTree;
 import roundaround.mcmods.glacios.GlaciosBlocks;
+import roundaround.mcmods.glacios.block.BlockLeavesGlacios;
+import roundaround.mcmods.glacios.block.BlockLogGlacios;
+import roundaround.mcmods.glacios.block.BlockSaplingGlacios;
 
 public class WorldGenHomeTree extends WorldGenAbstractTree {
     static final byte[] otherCoordPairs = new byte[] { (byte) 2, (byte) 0, (byte) 0, (byte) 1, (byte) 2, (byte) 1 };
@@ -29,8 +32,8 @@ public class WorldGenHomeTree extends WorldGenAbstractTree {
     int leafDistanceLimit = 5;
     int[][] leafNodes;
 
-    public WorldGenHomeTree(boolean par1) {
-        super(par1);
+    public WorldGenHomeTree(boolean doBlockNotify) {
+        super(doBlockNotify);
     }
 
     @Override
@@ -127,7 +130,7 @@ public class WorldGenHomeTree extends WorldGenAbstractTree {
         System.arraycopy(var2, 0, leafNodes, 0, var4);
     }
 
-    void genTreeLayer(int par1, int par2, int par3, float par4, byte par5, Block leaves) {
+    void genTreeLayer(int par1, int par2, int par3, float par4, byte par5, Block leaves, int meta) {
         int var7 = (int) (par4 + 0.618D);
         byte var8 = otherCoordPairs[par5];
         byte var9 = otherCoordPairs[par5 + 3];
@@ -152,7 +155,7 @@ public class WorldGenHomeTree extends WorldGenAbstractTree {
                     if (block != Blocks.air && block != leaves) {
                         ++var13;
                     } else {
-                        this.func_150515_a(worldObj, var11[0], var11[1], var11[2], leaves);
+                        this.setBlockAndNotifyAdequately(worldObj, var11[0], var11[1], var11[2], leaves, meta);
                         ++var13;
                     }
                 }
@@ -190,11 +193,11 @@ public class WorldGenHomeTree extends WorldGenAbstractTree {
 
         for (int var5 = par2 + leafDistanceLimit; var4 < var5; ++var4) {
             float var6 = this.leafSize(var4 - par2);
-            this.genTreeLayer(par1, var4, par3, var6, (byte) 1, GlaciosBlocks.leaves);
+            this.genTreeLayer(par1, var4, par3, var6, (byte) 1, GlaciosBlocks.leaves, BlockLeavesGlacios.soul);
         }
     }
 
-    void placeBlockLine(int[] par1ArrayOfInteger, int[] par2ArrayOfInteger, Block par3) {
+    void placeBlockLine(int[] par1ArrayOfInteger, int[] par2ArrayOfInteger, Block par3, int meta) {
         int[] var4 = new int[] { 0, 0, 0 };
         byte var5 = 0;
         byte var6;
@@ -227,16 +230,16 @@ public class WorldGenHomeTree extends WorldGenAbstractTree {
                 var14[var6] = MathHelper.floor_double(par1ArrayOfInteger[var6] + var15 + 0.5D);
                 var14[var7] = MathHelper.floor_double(par1ArrayOfInteger[var7] + var15 * var10 + 0.5D);
                 var14[var8] = MathHelper.floor_double(par1ArrayOfInteger[var8] + var15 * var12 + 0.5D);
-                byte var17 = 0;
+                byte var17 = (byte) (meta & 3);
                 int var18 = Math.abs(var14[0] - par1ArrayOfInteger[0]);
                 int var19 = Math.abs(var14[2] - par1ArrayOfInteger[2]);
                 int var20 = Math.max(var18, var19);
 
                 if (var20 > 0) {
                     if (var18 == var20) {
-                        var17 = 4;
+                        var17 |= 4;
                     } else if (var19 == var20) {
-                        var17 = 8;
+                        var17 |= 8;
                     }
                 }
 
@@ -278,7 +281,7 @@ public class WorldGenHomeTree extends WorldGenAbstractTree {
                     if (!(i == -2 && j == -2) && !(i == -2 && j == 2) && !(i == 2 && j == -2) && !(i == 2 && j == 2)) {
                         var5[2] = var4 + j;
                         var6[2] = var4 + j;
-                        this.placeBlockLine(var5, var6, GlaciosBlocks.log);
+                        this.placeBlockLine(var5, var6, GlaciosBlocks.log, BlockLogGlacios.soul);
                     }
                 }
             }
@@ -296,7 +299,7 @@ public class WorldGenHomeTree extends WorldGenAbstractTree {
             int var6 = var3[1] - basePos[1];
 
             if (this.leafNodeNeedsBase(var6)) {
-                this.placeBlockLine(var3, var5, GlaciosBlocks.log);
+                this.placeBlockLine(var3, var5, GlaciosBlocks.log, BlockLogGlacios.soul);
             }
         }
     }
@@ -338,7 +341,6 @@ public class WorldGenHomeTree extends WorldGenAbstractTree {
                 var13[var6] = MathHelper.floor_double(par1ArrayOfInteger[var6] + var14 * var9);
                 var13[var7] = MathHelper.floor_double(par1ArrayOfInteger[var7] + var14 * var11);
 
-                // TODO: getBlock()
                 Block block = worldObj.getBlock(var13[0], var13[1], var13[2]);
 
                 if (block != Blocks.air && block != GlaciosBlocks.leaves) {
@@ -356,7 +358,7 @@ public class WorldGenHomeTree extends WorldGenAbstractTree {
 
         Block block = worldObj.getBlock(basePos[0], basePos[1] - 1, basePos[2]);
 
-        if (block != Blocks.dirt && block != Blocks.grass)
+        if (!BlockSaplingGlacios.isSupportedByBlock(block, BlockSaplingGlacios.soul))
             return false;
         else {
             int var4 = this.checkBlockLine(var1, var2);
