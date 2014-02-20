@@ -33,7 +33,16 @@ public abstract class BiomeGenGlacios extends BiomeGenBase {
 
     @Override
     public void decorate(World world, Random rand, int x, int z) {
-        this.theGlaciosBiomeDecorator.decorateChunk(world, rand, this, x, z);
+        int attempts = 0;
+        while (attempts < 10) {
+            try {
+                this.theGlaciosBiomeDecorator.decorateChunk(world, rand, this, x, z);
+                attempts = 10;
+            } catch (RuntimeException e) {
+                if (attempts++ >= 10)
+                    throw e;
+            }
+        }
     }
 
     @Override

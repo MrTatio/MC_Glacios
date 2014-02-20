@@ -45,6 +45,6 @@ public class GlaciosBiomes {
     }
     
     public static BiomeGenBase[] getBiomeList() {
-        return new BiomeGenBase[] { /*plateau, lake, ocean, volcano, taiga, */hills };
+        return new BiomeGenBase[] { plateau, lake, ocean, volcano, taiga, hills };
     }
 }

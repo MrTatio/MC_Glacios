@@ -17,12 +17,11 @@ public class WorldGenHomeTree extends WorldGenAbstractTree {
 
     int[] basePos = new int[] { 0, 0, 0 };
 
-    final double heightAttenuation = 0.65D;
-    final double branchDensity = 2.0D;
-    final double branchSlope = 0.8D;
-    final double minHeightScaler = 12D;
+    final double heightAttenuation = 0.45D;
+    final double branchDensity = 3.0D;
+    final double branchSlope = 0.45D;
+    final double minHeightScaler = 38D;
     final double heightVarianceScaler = 12D;
-    final int trunkSize = 2;
 
     int heightLimit;
     int height;
@@ -136,17 +135,17 @@ public class WorldGenHomeTree extends WorldGenAbstractTree {
         System.arraycopy(aint, 0, this.leafNodes, 0, k);
     }
 
-    void genTreeLayer(int p_150529_1_, int p_150529_2_, int p_150529_3_, float p_150529_4_, byte p_150529_5_, Block p_150529_6_) {
+    void genTreeLayer(int posX, int posY, int posZ, float p_150529_4_, byte p_150529_5_, Block block) {
         int l = (int) (p_150529_4_ + 0.618D);
         byte b1 = otherCoordPairs[p_150529_5_];
         byte b2 = otherCoordPairs[p_150529_5_ + 3];
-        int[] aint = new int[] { p_150529_1_, p_150529_2_, p_150529_3_ };
-        int[] aint1 = new int[] { 0, 0, 0 };
+        int[] basePos = new int[] { posX, posY, posZ };
+        int[] posOffset = new int[] { 0, 0, 0 };
         int i1 = -l;
         int j1 = -l;
 
-        for (aint1[p_150529_5_] = aint[p_150529_5_]; i1 <= l; ++i1) {
-            aint1[b1] = aint[b1] + i1;
+        for (posOffset[p_150529_5_] = basePos[p_150529_5_]; i1 <= l; ++i1) {
+            posOffset[b1] = basePos[b1] + i1;
             j1 = -l;
 
             while (j1 <= l) {
@@ -155,13 +154,13 @@ public class WorldGenHomeTree extends WorldGenAbstractTree {
                 if (d0 > p_150529_4_ * p_150529_4_) {
                     ++j1;
                 } else {
-                    aint1[b2] = aint[b2] + j1;
-                    Block block1 = this.worldObj.getBlock(aint1[0], aint1[1], aint1[2]);
+                    posOffset[b2] = basePos[b2] + j1;
+                    Block block1 = this.worldObj.getBlock(posOffset[0], posOffset[1], posOffset[2]);
 
-                    if (!block1.isAir(worldObj, aint1[0], aint1[1], aint1[2]) && !block1.isLeaves(worldObj, aint1[0], aint1[1], aint1[2])) {
+                    if (!block1.isAir(worldObj, posOffset[0], posOffset[1], posOffset[2]) && !block1.isLeaves(worldObj, posOffset[0], posOffset[1], posOffset[2])) {
                         ++j1;
                     } else {
-                        this.setBlockAndNotifyAdequately(this.worldObj, aint1[0], aint1[1], aint1[2], p_150529_6_, meta);
+                        this.setBlockAndNotifyAdequately(this.worldObj, posOffset[0], posOffset[1], posOffset[2], block, this.meta);
                         ++j1;
                     }
                 }
@@ -203,53 +202,81 @@ public class WorldGenHomeTree extends WorldGenAbstractTree {
         }
     }
 
-    void placeBlockLine(int[] p_150530_1_, int[] p_150530_2_, Block p_150530_3_) {
-        int[] aint2 = new int[] { 0, 0, 0 };
-        byte b0 = 0;
-        byte b1;
+    void placeBlockLine(int[] startPos, int[] endPos, Block block, int[][] wideners, boolean surroundWithLeaves) {
+        int[] posOffset = new int[] { 0, 0, 0 };
+        byte currIndex = 0;
+        byte maxIndex;
 
-        for (b1 = 0; b0 < 3; ++b0) {
-            aint2[b0] = p_150530_2_[b0] - p_150530_1_[b0];
+        for (maxIndex = 0; currIndex < 3; ++currIndex) {
+            posOffset[currIndex] = endPos[currIndex] - startPos[currIndex];
 
-            if (Math.abs(aint2[b0]) > Math.abs(aint2[b1])) {
-                b1 = b0;
+            if (Math.abs(posOffset[currIndex]) > Math.abs(posOffset[maxIndex])) {
+                maxIndex = currIndex;
             }
         }
 
-        if (aint2[b1] != 0) {
-            byte b2 = otherCoordPairs[b1];
-            byte b3 = otherCoordPairs[b1 + 3];
+        if (posOffset[maxIndex] != 0) {
+            byte b2 = otherCoordPairs[maxIndex];
+            byte b3 = otherCoordPairs[maxIndex + 3];
             byte b4;
 
-            if (aint2[b1] > 0) {
+            if (posOffset[maxIndex] > 0) {
                 b4 = 1;
             } else {
                 b4 = -1;
             }
 
-            double d0 = (double) aint2[b2] / (double) aint2[b1];
-            double d1 = (double) aint2[b3] / (double) aint2[b1];
-            int[] aint3 = new int[] { 0, 0, 0 };
+            double d0 = (double) posOffset[b2] / (double) posOffset[maxIndex];
+            double d1 = (double) posOffset[b3] / (double) posOffset[maxIndex];
+            int[] blockPos = new int[] { 0, 0, 0 };
             int i = 0;
 
-            for (int j = aint2[b1] + b4; i != j; i += b4) {
-                aint3[b1] = MathHelper.floor_double(p_150530_1_[b1] + i + 0.5D);
-                aint3[b2] = MathHelper.floor_double(p_150530_1_[b2] + i * d0 + 0.5D);
-                aint3[b3] = MathHelper.floor_double(p_150530_1_[b3] + i * d1 + 0.5D);
-                byte b5 = (byte) meta;
-                int k = Math.abs(aint3[0] - p_150530_1_[0]);
-                int l = Math.abs(aint3[2] - p_150530_1_[2]);
-                int i1 = Math.max(k, l);
+            for (int j = posOffset[maxIndex] + b4; i != j; i += b4) {
+                blockPos[maxIndex] = MathHelper.floor_double(startPos[maxIndex] + i + 0.5D);
+                blockPos[b2] = MathHelper.floor_double(startPos[b2] + i * d0 + 0.5D);
+                blockPos[b3] = MathHelper.floor_double(startPos[b3] + i * d1 + 0.5D);
+                byte blockMeta = (byte) this.meta;
+                int distX = Math.abs(blockPos[0] - startPos[0]);
+                int distZ = Math.abs(blockPos[2] - startPos[2]);
+                int maxDist = Math.max(distX, distZ);
 
-                if (i1 > 0) {
-                    if (k == i1) {
-                        b5 |= 4;
-                    } else if (l == i1) {
-                        b5 |= 8;
+                if (maxDist > 0) {
+                    if (distX == maxDist) {
+                        blockMeta += 4;
+                    } else {
+                        blockMeta += 8;
                     }
                 }
-
-                this.setBlockAndNotifyAdequately(this.worldObj, aint3[0], aint3[1], aint3[2], p_150530_3_, b5);
+                
+                if (surroundWithLeaves) {
+                    this.setBlockAndSurroundWithLeaves(this.worldObj, blockPos[0], blockPos[1], blockPos[2], block, blockMeta);
+    
+                    for (int k = 0; k < wideners.length; k++) {
+                        this.setBlockAndSurroundWithLeaves(this.worldObj, blockPos[0] + wideners[k][0], blockPos[1] + wideners[k][1], blockPos[2]
+                                + wideners[k][2], block, blockMeta);
+                    }
+                } else {
+                    this.setBlockAndNotifyAdequately(this.worldObj, blockPos[0], blockPos[1], blockPos[2], block, blockMeta);
+    
+                    for (int k = 0; k < wideners.length; k++) {
+                        this.setBlockAndNotifyAdequately(this.worldObj, blockPos[0] + wideners[k][0], blockPos[1] + wideners[k][1], blockPos[2]
+                                + wideners[k][2], block, blockMeta);
+                    }
+                }
+            }
+        }
+    }
+    
+    void setBlockAndSurroundWithLeaves(World world, int x, int y, int z, Block block, int blockMeta) {
+        this.setBlockAndNotifyAdequately(world, x, y, z, block, blockMeta);
+        
+        for (int i = -2; i <= 2; i++) {
+            for (int j = -2; j <= 2; j++) {
+                for (int k = -2; k <= 2; k++) {
+                    if (world.isAirBlock(x + i, y + j, z + k)) {
+                        this.setBlockAndNotifyAdequately(world, x + i, y + j, z + k, GlaciosBlocks.leaves, this.meta);
+                    }
+                }
             }
         }
     }
@@ -274,21 +301,15 @@ public class WorldGenHomeTree extends WorldGenAbstractTree {
         int j = this.basePos[1];
         int k = this.basePos[1] + this.height;
         int l = this.basePos[2];
-        int[] aint = new int[] { i, j, l };
-        int[] aint1 = new int[] { i, k, l };
-        this.placeBlockLine(aint, aint1, GlaciosBlocks.log);
-
-        if (this.trunkSize == 2) {
-            ++aint[0];
-            ++aint1[0];
-            this.placeBlockLine(aint, aint1, GlaciosBlocks.log);
-            ++aint[2];
-            ++aint1[2];
-            this.placeBlockLine(aint, aint1, GlaciosBlocks.log);
-            aint[0] += -1;
-            aint1[0] += -1;
-            this.placeBlockLine(aint, aint1, GlaciosBlocks.log);
-        }
+        int[] startPos = new int[] { i, j, l };
+        int[] endPos = new int[] { i, k, l };
+        int[][] wideners = new int[][] {
+            { -1, 0, -1 }, { -1, 0, 0 }, { -1, 0, 1 },
+            { 0, 0, -1 }, { 0, 0, 1 },
+            { 1, 0, -1 }, { 1, 0, 0 }, { 1, 0, 1 }
+        };
+        
+        this.placeBlockLine(startPos, endPos, GlaciosBlocks.log, wideners, false);
     }
 
     void generateLeafNodeBases() {
@@ -302,7 +323,22 @@ public class WorldGenHomeTree extends WorldGenAbstractTree {
             int k = aint[1] - this.basePos[1];
 
             if (this.leafNodeNeedsBase(k)) {
-                this.placeBlockLine(aint, aint2, GlaciosBlocks.log);
+                byte maxDist = 0;
+                if (Math.abs(aint2[1] - aint[1]) >= Math.abs(aint2[maxDist] - aint[maxDist])) // Favor Y
+                    maxDist = 1;
+                if (Math.abs(aint2[2] - aint[2]) > Math.abs(aint2[maxDist] - aint[maxDist]))
+                    maxDist = 2;
+                
+                boolean which = rand.nextBoolean();
+                int[][] wideners = new int[][] {{ 0, 0, 0 }};
+                for (int l = 0; l < 3; l++) {
+                    if (l != maxDist) {
+                        wideners[0][l] = which ? (rand.nextInt(3) - 1) : (rand.nextBoolean() ? 1 : -1);
+                        which = !which;
+                    }
+                }
+                
+                this.placeBlockLine(aint, aint2, GlaciosBlocks.log, wideners, true);
             }
         }
     }
@@ -357,20 +393,27 @@ public class WorldGenHomeTree extends WorldGenAbstractTree {
     boolean validTreeLocation() {
         int[] aint = new int[] { this.basePos[0], this.basePos[1], this.basePos[2] };
         int[] aint1 = new int[] { this.basePos[0], this.basePos[1] + this.heightLimit - 1, this.basePos[2] };
-        Block block = this.worldObj.getBlock(this.basePos[0], this.basePos[1] - 1, this.basePos[2]);
 
         Block baseBlock = this.worldObj.getBlock(this.basePos[0], this.basePos[1] - 1, this.basePos[2]);
         if (!BlockSaplingGlacios.isSupportedByBlock(baseBlock, this.meta))
             return false;
+        
+        int baseMeta = this.worldObj.getBlockMetadata(this.basePos[0], this.basePos[1] - 1, this.basePos[2]);
+        for (int x = -1; x <= 1; x++) {
+            for (int z = -1; z <= 1; z++) {
+                if (this.isReplaceable(this.worldObj, this.basePos[0] + x, this.basePos[1] - 1, this.basePos[2] + z))
+                    this.worldObj.setBlock(this.basePos[0] + x, this.basePos[1] - 1, this.basePos[2] + z, baseBlock, baseMeta, 3);
+            }
+        }
 
-        int i = this.checkBlockLine(aint, aint1);
+        int check = this.checkBlockLine(aint, aint1);
 
-        if (i == -1) {
+        if (check == -1) {
             return true;
-        } else if (i < 6) {
+        } else if (check < 6) {
             return false;
         } else {
-            this.heightLimit = i;
+            this.heightLimit = check;
             return true;
         }
     }
@@ -381,13 +424,13 @@ public class WorldGenHomeTree extends WorldGenAbstractTree {
     }
 
     @Override
-    public void setScale(double par1, double par3, double par5) {
-        this.hightVariance = (int) (par1 * heightVarianceScaler);
-        this.minHeight = (int) (par1 * minHeightScaler);
+    public void setScale(double height, double width, double density) {
+        this.hightVariance = (int) (height * heightVarianceScaler);
+        this.minHeight = (int) (height * minHeightScaler);
 
-        this.leafDistanceLimit = par1 > 0.5D ? 5 : 4;
+        this.leafDistanceLimit = height > 0.5D ? 5 : 4;
 
-        this.scaleWidth = par3;
-        this.leafDensity = par5;
+        this.scaleWidth = width;
+        this.leafDensity = height > 0.5 ? 1.2 * density : density;
     }
 }

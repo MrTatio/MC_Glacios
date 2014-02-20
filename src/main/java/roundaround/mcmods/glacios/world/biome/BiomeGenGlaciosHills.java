@@ -18,12 +18,12 @@ public class BiomeGenGlaciosHills extends BiomeGenGlacios {
 
     public BiomeGenGlaciosHills(int biomeId, boolean register) {
         super(biomeId, register);
-        this.theGlaciosBiomeDecorator.treesPerChunk = 2;
+        this.theGlaciosBiomeDecorator.treesPerChunk = 1;
     }
 
     @Override
     public WorldGenAbstractTree func_150567_a(Random rand) {
-        return rand.nextInt(80) == 0 ? new WorldGenHomeTree(false, BlockSaplingGlacios.soul).setThisScale(2.0D, 2.0D, 1.2D)
+        return rand.nextInt(800) == 0 ? new WorldGenHomeTree(false, BlockSaplingGlacios.soul).setThisScale(2.0D, 2.0D, 1.2D)
             : new WorldGenSoulTree(false);
     }
 
