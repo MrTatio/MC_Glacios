@@ -1,5 +1,7 @@
 package roundaround.mcmods.glacios;
 
+import java.util.ArrayList;
+
 import net.minecraft.world.biome.BiomeGenBase;
 import roundaround.mcmods.glacios.world.biome.BiomeGenGlacios;
 import roundaround.mcmods.glacios.world.biome.BiomeGenGlaciosHills;
@@ -10,6 +12,8 @@ import roundaround.mcmods.glacios.world.biome.BiomeGenGlaciosTaiga;
 import roundaround.mcmods.glacios.world.biome.BiomeGenGlaciosVolcano;
 
 public class GlaciosBiomes {
+    
+    private static final ArrayList<BiomeMapping> biomes = new ArrayList<BiomeMapping>();
     
     public static final BiomeGenBase.Height height_Default = new BiomeGenBase.Height(0.1F, 0.2F);
     public static final BiomeGenBase.Height height_HighDefault = new BiomeGenBase.Height(1.2F, 0.2F);
@@ -42,9 +46,35 @@ public class GlaciosBiomes {
         volcano = (BiomeGenGlacios) new BiomeGenGlaciosVolcano(GlaciosConfig.biome_volcano).setHeight(height_HugeHills).setBiomeName("Volcano");
         taiga = (BiomeGenGlacios) new BiomeGenGlaciosTaiga(GlaciosConfig.biome_taiga).setHeight(height_MidHills).setBiomeName("Taiga");
         hills = (BiomeGenGlacios) new BiomeGenGlaciosHills(GlaciosConfig.biome_hills).setHeight(height_MidHills).setBiomeName("Hills");
+        
+        registerBiome(plateau, 3);
+        registerBiome(lake, 6);
+        registerBiome(ocean, 10);
+        registerBiome(volcano, 6);
+        registerBiome(taiga);
+        registerBiome(hills);
     }
     
-    public static BiomeGenBase[] getBiomeList() {
-        return new BiomeGenBase[] { plateau, lake, ocean, volcano, taiga, hills };
+    public static void registerBiome(BiomeGenBase biome) {
+        registerBiome(biome, 1);
+    }
+    
+    public static void registerBiome(BiomeGenBase biome, int rarity) {
+        biomes.add(new BiomeMapping(biome.biomeID, rarity));
+    }
+    
+    public static BiomeMapping[] getBiomeList() {
+        BiomeMapping[] biomesArr = new BiomeMapping[] { };
+        return biomes.toArray(biomesArr);
+    }
+    
+    public static class BiomeMapping {
+        public final int biomeId;
+        public final int rarity;
+        
+        public BiomeMapping(int biomeId, int rarity) {
+            this.biomeId = biomeId;
+            this.rarity = rarity;
+        }
     }
 }

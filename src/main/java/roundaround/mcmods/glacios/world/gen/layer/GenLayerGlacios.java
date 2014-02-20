@@ -13,7 +13,7 @@ public abstract class GenLayerGlacios extends GenLayer {
 
     public static GenLayer[] makeTheWorld(long seed, WorldType worldtype) {
 
-        GenLayer biomes = new GenLayerBiomeGlacios(1L, worldtype);
+        GenLayer biomes = new GenLayerBiomeGlacios(1L);
 
         // more GenLayerZoom = bigger biomes
         biomes = new GenLayerZoom(1000L, biomes);

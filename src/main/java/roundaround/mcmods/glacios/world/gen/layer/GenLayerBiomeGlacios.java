@@ -1,22 +1,20 @@
 package roundaround.mcmods.glacios.world.gen.layer;
 
-import roundaround.mcmods.glacios.GlaciosBiomes;
-import net.minecraft.world.WorldType;
-import net.minecraft.world.biome.BiomeGenBase;
 import net.minecraft.world.gen.layer.GenLayer;
-import net.minecraft.world.gen.layer.GenLayerBiome;
 import net.minecraft.world.gen.layer.IntCache;
+import roundaround.mcmods.glacios.GlaciosBiomes;
+import roundaround.mcmods.glacios.GlaciosBiomes.BiomeMapping;
 
 public class GenLayerBiomeGlacios extends GenLayer {
 
-    protected BiomeGenBase[] allowedBiomes;
+    protected BiomeMapping[] allowedBiomes;
 
     public GenLayerBiomeGlacios(long seed, GenLayer genlayer) {
-        super(seed);
+        this(seed);
         this.parent = genlayer;
     }
 
-    public GenLayerBiomeGlacios(long seed, WorldType worldType) {
+    public GenLayerBiomeGlacios(long seed) {
         super(seed);
         this.allowedBiomes = GlaciosBiomes.getBiomeList();
     }
@@ -24,11 +22,19 @@ public class GenLayerBiomeGlacios extends GenLayer {
     @Override
     public int[] getInts(int x, int z, int width, int depth) {
         int[] dest = IntCache.getIntCache(width * depth);
-
+        
         for (int dz = 0; dz < depth; dz++) {
             for (int dx = 0; dx < width; dx++) {
                 this.initChunkSeed(dx + x, dz + z);
-                dest[(dx + dz * width)] = this.allowedBiomes[nextInt(this.allowedBiomes.length)].biomeID;
+                
+                boolean found = false;
+                while (!found) {
+                    BiomeMapping mapping = this.allowedBiomes[nextInt(this.allowedBiomes.length)];
+                    if (nextInt(mapping.rarity) == 0) {
+                        dest[(dx + dz * width)] = mapping.biomeId;
+                        found = true;
+                    }
+                }
             }
         }
         return dest;
