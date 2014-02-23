@@ -52,6 +52,11 @@ public class BlockLeavesGlacios extends BlockLeavesBase implements IShearable {
         else
             return this.blockIcons[MathHelper.clamp_int(meta, 0, names.length - 1)][1];
     }
+    
+    @Override
+    public IIcon getIcon(IBlockAccess blockAccess, int x, int y, int z, int side) {
+        return this.getIcon(side, blockAccess.getBlockMetadata(x, y, z));
+    }
 
     @Override
     @SideOnly(Side.CLIENT)
