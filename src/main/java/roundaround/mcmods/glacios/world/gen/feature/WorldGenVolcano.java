@@ -29,7 +29,7 @@ public class WorldGenVolcano extends WorldGeneratorGlacios {
         for (int posX = x - radiusScaler; posX <= x + radiusScaler; posX++) {
             for (int posZ = z - radiusScaler; posZ <= z + radiusScaler; posZ++) {
                 int radius = (int)Math.round(Math.sqrt(Math.pow(posX - x, 2) + Math.pow(posZ - z,  2)));
-                double theta = Math.floor((Math.atan2(posZ - z, posX - x)) * 10000) / 10000;
+                double theta = Math.floor((Math.atan2(posZ - z, posX - x)) * 10000.) / 10000.;
                 double boundary;
                 
                 if (radii.containsKey(theta))
@@ -40,6 +40,7 @@ public class WorldGenVolcano extends WorldGeneratorGlacios {
                 for (int posY = y; posY <= y + height; posY++) {
                     double heightScaler = (y + height - posY) / height;
                     int adjustedBoundary = (int)Math.round(heightScaler * radiusScaler * boundary);
+                    System.out.println(adjustedBoundary);
                     
                     if (radius <= adjustedBoundary) {
                         world.setBlock(posX, posY, posZ, GlaciosBlocks.ashStone, 0, 3);

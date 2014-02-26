@@ -55,10 +55,12 @@ public class BiomeDecoratorGlacios extends BiomeDecorator {
         }
         
         for (int i = 0; doGen && i < this.volcanosPerChunk; i++) {
-            WorldGenVolcano worldGen = new WorldGenVolcano();
-            try {
-                worldGen.doGeneration(currentWorld, randomGenerator, null, biome, chunk_X, chunk_Z);
-            } catch (Exception ignore) {
+            if (randomGenerator.nextInt(20) == 0) {
+                WorldGenVolcano worldGen = new WorldGenVolcano();
+                try {
+                    worldGen.doGeneration(currentWorld, randomGenerator, null, biome, chunk_X, chunk_Z);
+                } catch (Exception ignore) {
+                }
             }
         }
         
