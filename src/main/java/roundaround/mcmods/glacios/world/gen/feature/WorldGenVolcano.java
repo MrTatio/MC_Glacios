@@ -23,8 +23,8 @@ public class WorldGenVolcano extends WorldGeneratorGlacios {
         double[] magnitudes = new double[] { firstMagnitude, 1F - firstMagnitude };
         double[] phaseShifts = new double[] { rand.nextInt(30) / (double)((rand.nextInt(4) + 1) * 3), rand.nextInt(30) / (double)((rand.nextInt(4) + 1) * 2) };
         
-        int radiusScaler = rand.nextInt(10) + 11;
-        int height = rand.nextInt(15) + 16;
+        int radiusScaler = rand.nextInt(20) + 21;
+        int height = rand.nextInt(25) + 21;
         
         for (int posX = x - radiusScaler; posX <= x + radiusScaler; posX++) {
             for (int posZ = z - radiusScaler; posZ <= z + radiusScaler; posZ++) {
@@ -56,7 +56,7 @@ public class WorldGenVolcano extends WorldGeneratorGlacios {
     public void doGeneration(World world, Random rand, Field worldGeneratorField, BiomeGenBase biome, int chunkX, int chunkZ) throws Exception {
         int randX = chunkX + rand.nextInt(16) + 8;
         int randZ = chunkZ + rand.nextInt(16) + 8;
-        int randY = rand.nextInt(world.getHeightValue(randX, randZ) * 2);
+        int randY = world.getHeightValue(randX, randZ);
 
         this.generate(world, rand, randX, randY, randZ);
     }
