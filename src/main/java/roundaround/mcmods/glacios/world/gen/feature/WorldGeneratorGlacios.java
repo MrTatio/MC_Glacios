@@ -21,6 +21,6 @@ public abstract class WorldGeneratorGlacios extends WorldGenerator implements IW
     public abstract boolean generate(World world, Random rand, int x, int y, int z);
     
     @Override
-    public abstract void doGeneration(World world, Random rand, Field worldGeneratorField, WorldGenerator worldGenerator, BiomeGenBase biome, int x, int z) throws Exception;
+    public abstract void doGeneration(World world, Random rand, Field worldGeneratorField, BiomeGenBase biome, int x, int z) throws Exception;
 
 }

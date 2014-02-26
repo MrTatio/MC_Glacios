@@ -1,11 +1,12 @@
 package roundaround.mcmods.glacios.world.gen.feature;
 
 import java.lang.reflect.Field;
+import java.util.HashMap;
 import java.util.Random;
 
 import net.minecraft.world.World;
 import net.minecraft.world.biome.BiomeGenBase;
-import net.minecraft.world.gen.feature.WorldGenerator;
+import roundaround.mcmods.glacios.GlaciosBlocks;
 
 public class WorldGenVolcano extends WorldGeneratorGlacios {
 
@@ -15,6 +16,8 @@ public class WorldGenVolcano extends WorldGeneratorGlacios {
 
     @Override
     public boolean generate(World world, Random rand, int x, int y, int z) {
+        HashMap<Double, Double> radii = new HashMap<Double, Double>();
+        
         boolean[] trigFunctions = new boolean[] { rand.nextBoolean(), rand.nextBoolean() };
         double firstMagnitude = rand.nextDouble();
         double[] magnitudes = new double[] { firstMagnitude, 1F - firstMagnitude };
@@ -25,12 +28,22 @@ public class WorldGenVolcano extends WorldGeneratorGlacios {
         
         for (int posX = x - radiusScaler; posX <= x + radiusScaler; posX++) {
             for (int posZ = z - radiusScaler; posZ <= z + radiusScaler; posZ++) {
-                double radius = Math.sqrt(Math.pow(posX - x, 2) + Math.pow(posZ - z,  2));
-                double theta = Math.atan2(posZ - z, posX - x);
-                double boundary = radius(trigFunctions, magnitudes, phaseShifts, theta);
+                int radius = (int)Math.round(Math.sqrt(Math.pow(posX - x, 2) + Math.pow(posZ - z,  2)));
+                double theta = Math.floor((Math.atan2(posZ - z, posX - x)) * 10000) / 10000;
+                double boundary;
+                
+                if (radii.containsKey(theta))
+                    boundary = radii.get(theta);
+                else
+                    boundary = radius(trigFunctions, magnitudes, phaseShifts, theta);
                 
                 for (int posY = y; posY <= y + height; posY++) {
+                    double heightScaler = (y + height - posY) / height;
+                    int adjustedBoundary = (int)Math.round(heightScaler * radiusScaler * boundary);
                     
+                    if (radius <= adjustedBoundary) {
+                        world.setBlock(posX, posY, posZ, GlaciosBlocks.ashStone, 0, 3);
+                    }
                 }
             }
         }
@@ -39,7 +52,12 @@ public class WorldGenVolcano extends WorldGeneratorGlacios {
     }
 
     @Override
-    public void doGeneration(World world, Random rand, Field worldGeneratorField, WorldGenerator worldGenerator, BiomeGenBase biome, int x, int z) throws Exception {
+    public void doGeneration(World world, Random rand, Field worldGeneratorField, BiomeGenBase biome, int chunkX, int chunkZ) throws Exception {
+        int randX = chunkX + rand.nextInt(16) + 8;
+        int randZ = chunkZ + rand.nextInt(16) + 8;
+        int randY = rand.nextInt(world.getHeightValue(randX, randZ) * 2);
+
+        this.generate(world, rand, randX, randY, randZ);
     }
     
     private double radius(boolean[] trigFunctions, double[] magnitudes, double[] phaseShifts, double theta) {

@@ -6,7 +6,6 @@ import java.util.Random;
 import net.minecraft.block.Block;
 import net.minecraft.world.World;
 import net.minecraft.world.biome.BiomeGenBase;
-import net.minecraft.world.gen.feature.WorldGenerator;
 import roundaround.mcmods.glacios.GlaciosConfig;
 
 public class WorldGenTallGrassGlacios extends WorldGeneratorGlacios {
@@ -44,15 +43,14 @@ public class WorldGenTallGrassGlacios extends WorldGeneratorGlacios {
     }
 
     @Override
-    public void doGeneration(World world, Random random, Field worldGeneratorField, WorldGenerator worldGenerator, BiomeGenBase biome,
-            int x, int z) throws Exception {
+    public void doGeneration(World world, Random random, Field worldGeneratorField, BiomeGenBase biome, int x, int z) throws Exception {
 
         for (int i = 0; i < worldGeneratorField.getInt(GlaciosConfig.instance); i++) {
             int randX = x + random.nextInt(16) + 8;
             int randZ = z + random.nextInt(16) + 8;
             int randY = random.nextInt(world.getHeightValue(randX, randZ) * 2);
 
-            worldGenerator.generate(world, random, randX, randY, randZ);
+            this.generate(world, random, randX, randY, randZ);
         }
     }
 

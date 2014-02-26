@@ -10,6 +10,7 @@ public class BiomeGenGlaciosPlateau extends BiomeGenGlacios {
 
     public BiomeGenGlaciosPlateau(int biomeId, boolean register) {
         super(biomeId, register);
+        this.theGlaciosBiomeDecorator.volcanosPerChunk = 1;
     }
 
 }

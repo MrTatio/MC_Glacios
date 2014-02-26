@@ -11,8 +11,11 @@ import net.minecraft.world.gen.feature.WorldGenAbstractTree;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.terraingen.DecorateBiomeEvent;
 import net.minecraftforge.event.terraingen.TerrainGen;
+import roundaround.mcmods.glacios.world.gen.feature.WorldGenVolcano;
 
 public class BiomeDecoratorGlacios extends BiomeDecorator {
+    
+    protected int volcanosPerChunk = 0;
 
     public BiomeDecoratorGlacios() {
         this.treesPerChunk = 0;
@@ -38,7 +41,7 @@ public class BiomeDecoratorGlacios extends BiomeDecorator {
         MinecraftForge.EVENT_BUS.post(new DecorateBiomeEvent.Pre(currentWorld, randomGenerator, chunk_X, chunk_Z));
 
         boolean doGen = TerrainGen.decorate(currentWorld, randomGenerator, chunk_X, chunk_Z, TREE);
-        for (int j = 0; doGen && j < this.treesPerChunk; ++j) {
+        for (int i = 0; doGen && i < this.treesPerChunk; ++i) {
             int posX = this.chunk_X + this.randomGenerator.nextInt(16) + 8;
             int posZ = this.chunk_Z + this.randomGenerator.nextInt(16) + 8;
             int posY = this.currentWorld.getHeightValue(posX, posZ);
@@ -50,6 +53,16 @@ public class BiomeDecoratorGlacios extends BiomeDecorator {
                 worldgenabstracttree.func_150524_b(this.currentWorld, this.randomGenerator, posX, posY, posZ);
             }
         }
+        
+        for (int i = 0; doGen && i < this.volcanosPerChunk; i++) {
+            WorldGenVolcano worldGen = new WorldGenVolcano();
+            try {
+                worldGen.doGeneration(currentWorld, randomGenerator, null, biome, chunk_X, chunk_Z);
+            } catch (Exception ignore) {
+            }
+        }
+        
+        
 
         MinecraftForge.EVENT_BUS.post(new DecorateBiomeEvent.Post(currentWorld, randomGenerator, chunk_X, chunk_Z));
     }
