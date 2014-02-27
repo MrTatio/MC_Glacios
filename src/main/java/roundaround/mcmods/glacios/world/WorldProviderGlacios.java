@@ -103,20 +103,20 @@ public class WorldProviderGlacios extends WorldProvider {
     }
 
     // To be reviewed.
-    @Override
-    public float calculateCelestialAngle(long worldTime, float partialTicks) {
-        int timeOfDay = (int) (worldTime % 24000L);
-        float angleMagnitude = (timeOfDay + partialTicks) / 24000.0F - 0.2083F;
-
-        if (angleMagnitude < 0.0F) {
-            ++angleMagnitude;
-        }
-        if (angleMagnitude > 1.0F) {
-            --angleMagnitude;
-        }
-
-        return (1.0F / 4.5F) * ((float) Math.pow((2.0D * angleMagnitude) - 1.0D, 3) + 1.0F + 2.5F * angleMagnitude);
-    }
+//    @Override
+//    public float calculateCelestialAngle(long worldTime, float partialTicks) {
+//        int timeOfDay = (int) (worldTime % 24000L);
+//        float angleMagnitude = (timeOfDay + partialTicks) / 24000.0F - 0.2083F;
+//
+//        if (angleMagnitude < 0.0F) {
+//            ++angleMagnitude;
+//        }
+//        if (angleMagnitude > 1.0F) {
+//            --angleMagnitude;
+//        }
+//
+//        return (1.0F / 4.5F) * ((float) Math.pow((2.0D * angleMagnitude) - 1.0D, 3) + 1.0F + 2.5F * angleMagnitude);
+//    }
 
     @Override
     @SideOnly(Side.CLIENT)
@@ -196,11 +196,11 @@ public class WorldProviderGlacios extends WorldProvider {
 //        return this.worldObj.getWorldVec3Pool().getVecFromPool((double) cR * intensity, (double) cG * intensity, (double) cB * intensity);
 //    }
 
-    @Override
-    @SideOnly(Side.CLIENT)
-    public boolean doesXZShowFog(int x, int z) {
-        return true;
-    }
+//    @Override
+//    @SideOnly(Side.CLIENT)
+//    public boolean doesXZShowFog(int x, int z) {
+//        return true;
+//    }
 
     @Override
     public boolean canDoLightning(Chunk chunk) {

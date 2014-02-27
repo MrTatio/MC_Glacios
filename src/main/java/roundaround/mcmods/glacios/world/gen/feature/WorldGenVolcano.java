@@ -20,9 +20,12 @@ public class WorldGenVolcano extends WorldGeneratorGlacios {
         int neededAngles = 0;
         
         boolean[] trigFunctions = new boolean[] { rand.nextBoolean(), rand.nextBoolean() };
-        double firstMagnitude = rand.nextDouble();
-        double[] magnitudes = new double[] { firstMagnitude, 1F - firstMagnitude };
-        double[] phaseShifts = new double[] { rand.nextInt(30) / (double)((rand.nextInt(4) + 1) * 3), rand.nextInt(30) / (double)((rand.nextInt(4) + 1) * 2) };
+        double firstMagnitude = rand.nextInt(21) / 20.;
+        double[] magnitudes = new double[] { firstMagnitude, 1. - firstMagnitude };
+        double[] phaseShifts = new double[] { rand.nextInt(24) / 12, rand.nextInt(16) / 8 };
+        
+        System.out.println("First sinusoid: " + magnitudes[0] + (trigFunctions[0] ? "cos" : "sin") + "(3x + " + phaseShifts[0] + "pi)");
+        System.out.println("Second sinusoid: " + magnitudes[1] + (trigFunctions[1] ? "cos" : "sin") + "(2x + " + phaseShifts[1] + "pi)");
         
         int radiusScaler = rand.nextInt(20) + 21;
         int height = rand.nextInt(25) + 21;
@@ -30,19 +33,21 @@ public class WorldGenVolcano extends WorldGeneratorGlacios {
         for (int posX = x - radiusScaler; posX <= x + radiusScaler; posX++) {
             for (int posZ = z - radiusScaler; posZ <= z + radiusScaler; posZ++) {
                 int radius = (int)Math.round(Math.sqrt(Math.pow(posX - x, 2) + Math.pow(posZ - z,  2)));
-                double theta = Math.atan2(posZ - z, posX - x);
-                long slope = (long) Math.floor(((posZ - z) / (posX - x)) * Math.pow(10, 6));
+                long slope = (long)Math.floor(((posZ - z) / (posX - x)) * Math.pow(10, 6));
                 double boundary;
                 
                 if (boundaries.containsKey(slope)) {
                     boundary = boundaries.get(slope);
                 } else {
+                    double theta = Math.atan2(posZ - z, posX - x);
+                    if (theta < 0)
+                        theta += 2 * Math.PI;
                     boundary = radius(trigFunctions, magnitudes, phaseShifts, theta);
                     boundaries.put(slope, boundary);
                 }
                 
                 for (int posY = y; posY <= y + height; posY++) {
-                    double heightScaler = (y + height - posY) / height;
+                    double heightScaler = 1 - ((posY - y) / height);
                     int adjustedBoundary = (int)Math.round(heightScaler * radiusScaler * boundary);
                     
                     if (radius <= adjustedBoundary) {
@@ -56,7 +61,8 @@ public class WorldGenVolcano extends WorldGeneratorGlacios {
         
         System.out.println("Needed: " + neededAngles + "; Calculated: " + boundaries.size());
 
-        return false;
+        System.out.println("Done 1?");
+        return true;
     }
 
     @Override
@@ -66,6 +72,7 @@ public class WorldGenVolcano extends WorldGeneratorGlacios {
         int randY = world.getHeightValue(randX, randZ);
 
         this.generate(world, rand, randX, randY, randZ);
+        System.out.println("Done 2?");
     }
     
     private double radius(boolean[] trigFunctions, double[] magnitudes, double[] phaseShifts, double theta) {
@@ -73,18 +80,18 @@ public class WorldGenVolcano extends WorldGeneratorGlacios {
         double dominant = magnitudes[1];
         
         if (trigFunctions[0]) {
-            submissive *= Math.cos(3*theta + phaseShifts[0]);
+            submissive *= Math.cos(3*theta + Math.PI*phaseShifts[0]);
         } else {
-            submissive *= Math.sin(3*theta + phaseShifts[0]);
+            submissive *= Math.sin(3*theta + Math.PI*phaseShifts[0]);
         }
         
         if (trigFunctions[1]) {
-            dominant *= Math.cos(2*theta + phaseShifts[1]);
+            dominant *= Math.cos(2*theta + Math.PI*phaseShifts[1]);
         } else {
-            dominant *= Math.sin(2*theta + phaseShifts[1]);
+            dominant *= Math.sin(2*theta + Math.PI*phaseShifts[1]);
         }
         
-        return (submissive + dominant) / 3 + 0.5;
+        return ((submissive + dominant) / 3.) + (2. / 3.);
     }
 
 }
