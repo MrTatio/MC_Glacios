@@ -16,7 +16,8 @@ public class WorldGenVolcano extends WorldGeneratorGlacios {
 
     @Override
     public boolean generate(World world, Random rand, int x, int y, int z) {
-        HashMap<Double, Double> radii = new HashMap<Double, Double>();
+        HashMap<Long, Double> boundaries = new HashMap<Long, Double>();
+        int neededAngles = 0;
         
         boolean[] trigFunctions = new boolean[] { rand.nextBoolean(), rand.nextBoolean() };
         double firstMagnitude = rand.nextDouble();
@@ -29,25 +30,31 @@ public class WorldGenVolcano extends WorldGeneratorGlacios {
         for (int posX = x - radiusScaler; posX <= x + radiusScaler; posX++) {
             for (int posZ = z - radiusScaler; posZ <= z + radiusScaler; posZ++) {
                 int radius = (int)Math.round(Math.sqrt(Math.pow(posX - x, 2) + Math.pow(posZ - z,  2)));
-                double theta = Math.floor((Math.atan2(posZ - z, posX - x)) * 10000.) / 10000.;
+                double theta = Math.atan2(posZ - z, posX - x);
+                long slope = (long) Math.floor(((posZ - z) / (posX - x)) * Math.pow(10, 6));
                 double boundary;
                 
-                if (radii.containsKey(theta))
-                    boundary = radii.get(theta);
-                else
+                if (boundaries.containsKey(slope)) {
+                    boundary = boundaries.get(slope);
+                } else {
                     boundary = radius(trigFunctions, magnitudes, phaseShifts, theta);
+                    boundaries.put(slope, boundary);
+                }
                 
                 for (int posY = y; posY <= y + height; posY++) {
                     double heightScaler = (y + height - posY) / height;
                     int adjustedBoundary = (int)Math.round(heightScaler * radiusScaler * boundary);
-                    System.out.println(adjustedBoundary);
                     
                     if (radius <= adjustedBoundary) {
                         world.setBlock(posX, posY, posZ, GlaciosBlocks.ashStone, 0, 3);
                     }
                 }
+                
+                neededAngles++;
             }
         }
+        
+        System.out.println("Needed: " + neededAngles + "; Calculated: " + boundaries.size());
 
         return false;
     }
@@ -62,8 +69,6 @@ public class WorldGenVolcano extends WorldGeneratorGlacios {
     }
     
     private double radius(boolean[] trigFunctions, double[] magnitudes, double[] phaseShifts, double theta) {
-        theta = 2 * Math.PI * theta;
-        
         double submissive = magnitudes[0];
         double dominant = magnitudes[1];
         
@@ -74,9 +79,9 @@ public class WorldGenVolcano extends WorldGeneratorGlacios {
         }
         
         if (trigFunctions[1]) {
-            submissive *= Math.cos(2*theta + phaseShifts[1]);
+            dominant *= Math.cos(2*theta + phaseShifts[1]);
         } else {
-            submissive *= Math.sin(2*theta + phaseShifts[1]);
+            dominant *= Math.sin(2*theta + phaseShifts[1]);
         }
         
         return (submissive + dominant) / 3 + 0.5;

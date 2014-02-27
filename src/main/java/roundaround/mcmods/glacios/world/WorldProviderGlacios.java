@@ -154,14 +154,14 @@ public class WorldProviderGlacios extends WorldProvider {
         return intensity;
     }
 
-    @Override
-    protected void generateLightBrightnessTable() {
-        float f = 0.8F;
-        for (int i = 0; i <= 15; ++i) {
-            float f1 = 1.0F - i / 15.0F;
-            lightBrightnessTable[i] = ((1.0F - f1) / (f1 * 3.0F + 1.0F)) * f;
-        }
-    }
+//    @Override
+//    protected void generateLightBrightnessTable() {
+//        float f = 0.8F;
+//        for (int i = 0; i <= 15; ++i) {
+//            float f1 = 1.0F - i / 15.0F;
+//            lightBrightnessTable[i] = ((1.0F - f1) / (f1 * 3.0F + 1.0F)) * f;
+//        }
+//    }
 
     @Override
     @SideOnly(Side.CLIENT)
