@@ -59,7 +59,6 @@ public class BiomeDecoratorGlacios extends BiomeDecorator {
                 WorldGenVolcano worldGen = new WorldGenVolcano();
                 try {
                     worldGen.doGeneration(currentWorld, randomGenerator, null, biome, chunk_X, chunk_Z);
-                    System.out.println("Done 3?");
                 } catch (Exception ignore) {
                 }
             }
