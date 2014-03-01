@@ -20,6 +20,7 @@ public class WorldGenVolcano extends WorldGeneratorGlacios {
         
         int radiusScaler = rand.nextInt(16) + 35;
         int height = rand.nextInt(16) + 20;
+        int capHeight = (int)Math.round(height * (1 - (double)(rand.nextInt(7) + 8) / radiusScaler));
         
         for (int posX = x - radiusScaler; posX <= x + radiusScaler; posX++) {
             for (int posZ = z - radiusScaler; posZ <= z + radiusScaler; posZ++) {
@@ -30,7 +31,7 @@ public class WorldGenVolcano extends WorldGeneratorGlacios {
                 
                 double boundary = radius(trigFunctions, phaseShifts, theta);
                 
-                for (int posY = y; posY <= y + height; posY++) {
+                for (int posY = y; posY <= y + capHeight; posY++) {
                     double heightScaler = 1 - ((double)(posY - y) / (double)height);
                     int adjustedBoundary = (int)Math.round(heightScaler * radiusScaler * boundary);
                     
