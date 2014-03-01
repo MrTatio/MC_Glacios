@@ -2,7 +2,7 @@ Old ideapad: http://roundaround.titanpad.com/1
 
 Credits
     #tropicraft
-    Biomes O Plenty
+    Biomes O' Plenty
 
 Creatures
     Ice Elemental
@@ -48,13 +48,33 @@ Environment
         Underworld
         Volcano
         
+Item
+    Ores
+        Oridecon
+            Deep blue crystalline metal that fractures into sharp edges.
+            Because of its structural nature, it tends to shatter into slivers upon forceful contact.
+            This makes for high damaging weapons and armor that lashes back at the attacker, but also makes it less durable.
+        Darksteel
+            Highly dense metallic ore that is nearly impossible to destroy.
+            Because of its density, it isn't easy to forge into proper shapes.
+            This makes for lower quality weapons and armor, though the equipment will last an absurdly long time.
+        Uru
+            Made from the core of a dying star, uru contains magical properties unlike any other.
+            While the material is typically only smeltable at extreme temperatures, priming with prism shards
+                makes the material possible to work with.  While this degrades the quality, it still proves a viable solution.
+            Uru as a smelting ore doens't make very good weapons.  However, the magical properties enhance enchantments
+                placed upon it and allow it to physically change itself when enchanted, making it more durable.
+    Prism Shard
+        Item dropped from the Prism Shard block.  Can be used to make lanterns, or in the priming of raw uru ore.
+        
 Blocks
     Trees:
-        Life/Soul
+        Soul Tree
             Pale Blue Color, Glows, Emits Particles
-        Taiga
+        Taiga Giant
+        Home Tree
     Foliage/Bushes/Flora:
-        Life/Soul Vine
+        Ice Vine
         Razor Grass
         Some kind of bush that covers large area and slows entities (not as much as web)
     Base Blocks:
