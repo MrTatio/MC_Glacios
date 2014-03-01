@@ -47,7 +47,7 @@ public class WorldGenVolcano extends WorldGeneratorGlacios {
                 }
                 
                 for (int posY = y; posY <= y + height; posY++) {
-                    double heightScaler = 1 - ((posY - y) / height);
+                    double heightScaler = 1 - ((double)(posY - y) / (double)height);
                     int adjustedBoundary = (int)Math.round(heightScaler * radiusScaler * boundary);
                     
                     if (radius <= adjustedBoundary) {
