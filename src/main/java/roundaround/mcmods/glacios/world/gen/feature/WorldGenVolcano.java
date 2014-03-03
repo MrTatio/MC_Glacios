@@ -1,6 +1,7 @@
 package roundaround.mcmods.glacios.world.gen.feature;
 
 import java.lang.reflect.Field;
+import java.util.ArrayList;
 import java.util.Random;
 
 import net.minecraft.world.World;
@@ -20,7 +21,9 @@ public class WorldGenVolcano extends WorldGeneratorGlacios {
         
         int radiusScaler = rand.nextInt(16) + 35;
         int height = rand.nextInt(16) + 20;
-        int capHeight = (int)Math.round(height * (1 - (double)(rand.nextInt(7) + 8) / radiusScaler));
+        int capDiameter = rand.nextInt(7) + 8;
+        int capHeight = (int)Math.round(height * (1 - (double)capDiameter / radiusScaler));
+        ArrayList<TopLayerBlock> topLayer = new ArrayList<TopLayerBlock>();
         
         for (int posX = x - radiusScaler; posX <= x + radiusScaler; posX++) {
             for (int posZ = z - radiusScaler; posZ <= z + radiusScaler; posZ++) {
@@ -37,6 +40,30 @@ public class WorldGenVolcano extends WorldGeneratorGlacios {
                     
                     if (radius <= adjustedBoundary) {
                         world.setBlock(posX, posY, posZ, GlaciosBlocks.ashStone, 0, 3);
+                        
+                        if (radius == adjustedBoundary || radius == adjustedBoundary - 1) {
+                            topLayer.add(new TopLayerBlock(posX, posZ));
+                        }
+                    }
+                }
+            }
+        }
+        
+        return genLavaTop(world, rand, topLayer.toArray(new TopLayerBlock[] {}), (int)Math.ceil(capDiameter / 2.), x, y + capHeight, z);
+    }
+    
+    private boolean genLavaTop(World world, Random rand, TopLayerBlock[] topLayer, int capRadius, int x, int y, int z) {
+        for (int posX = x - capRadius; posX <= x + capRadius; posX++) {
+            for (int posZ = z - capRadius; posZ <= z + capRadius; posZ++) {
+                boolean isBoundary = false;
+                for (int i = 0; i < topLayer.length; i++) {
+                    if (topLayer[i].x == posX && topLayer[i].z == posZ)
+                        isBoundary = true;
+                }
+                
+                if (!isBoundary && world.getBlock(posX, y, posZ) == GlaciosBlocks.ashStone) {
+                    for (int posY = y - rand.nextInt(3) - 1; posY <= y; posY++) {
+                        world.setBlockToAir(posX, posY, posZ);
                     }
                 }
             }
@@ -82,4 +109,13 @@ public class WorldGenVolcano extends WorldGeneratorGlacios {
         return ((submissive + dominant + noise) / 6.) + (5. / 6.);
     }
 
+    private class TopLayerBlock {
+        public final int x;
+        public final int z;
+        
+        public TopLayerBlock(int x, int z) {
+            this.x = x;
+            this.z = z;
+        }
+    }
 }
