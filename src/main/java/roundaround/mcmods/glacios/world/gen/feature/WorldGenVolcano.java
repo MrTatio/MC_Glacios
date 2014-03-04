@@ -21,10 +21,10 @@ public class WorldGenVolcano extends WorldGeneratorGlacios {
         
         int radiusScaler = rand.nextInt(16) + 35;
         int height = rand.nextInt(16) + 20;
-        int capRadius = rand.nextInt(5) + 12;
+        int capRadius = rand.nextInt(5) + 10;
         int capHeight = (int)Math.round(height * radiusAtHeight((double)capRadius / (double)radiusScaler));
         
-        y = minHeightForRadius(world, radiusScaler, x, y, z);
+        y = minHeightForRadius(world, radiusScaler, x, y, z) - 2;
         
         for (int posX = x - radiusScaler; posX <= x + radiusScaler; posX++) {
             for (int posZ = z - radiusScaler; posZ <= z + radiusScaler; posZ++) {
@@ -40,9 +40,10 @@ public class WorldGenVolcano extends WorldGeneratorGlacios {
                     int adjustedBoundary = (int)Math.round(heightScaler * radiusScaler * boundary);
                     
                     if (radius <= adjustedBoundary) {
-                        if ((adjustedBoundary - radius >= 2 && posY == y + capHeight) || adjustedBoundary - radius >= 4) {
+                        if (adjustedBoundary - radius >= 2 && posY == y + capHeight) {
                             world.setBlockToAir(posX, posY, posZ);
-                            for (int carveY = posY - rand.nextInt(3) - 1; carveY < posY; carveY++)
+                        } else if (adjustedBoundary - radius >= 4) {
+                            for (int carveY = posY - rand.nextInt(3) - 1; carveY <= posY; carveY++)
                                 world.setBlock(posX, carveY, posZ, Blocks.lava);
                         } else {
                             world.setBlock(posX, posY, posZ, GlaciosBlocks.ashStone, 0, 3);
