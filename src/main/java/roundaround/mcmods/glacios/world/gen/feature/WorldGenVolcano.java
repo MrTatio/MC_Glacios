@@ -1,7 +1,6 @@
 package roundaround.mcmods.glacios.world.gen.feature;
 
 import java.lang.reflect.Field;
-import java.util.ArrayList;
 import java.util.Random;
 
 import net.minecraft.init.Blocks;
@@ -22,9 +21,10 @@ public class WorldGenVolcano extends WorldGeneratorGlacios {
         
         int radiusScaler = rand.nextInt(16) + 35;
         int height = rand.nextInt(16) + 20;
-        int capRadius = rand.nextInt(7) + 8;
-        int capHeight = (int)Math.round(height * (1 - (double)capRadius / radiusScaler));
-        ArrayList<TopLayerBlock> topLayer = new ArrayList<TopLayerBlock>();
+        int capRadius = rand.nextInt(5) + 12;
+        int capHeight = (int)Math.round(height * radiusAtHeight((double)capRadius / (double)radiusScaler));
+        
+        y = minHeightForRadius(world, radiusScaler, x, y, z);
         
         for (int posX = x - radiusScaler; posX <= x + radiusScaler; posX++) {
             for (int posZ = z - radiusScaler; posZ <= z + radiusScaler; posZ++) {
@@ -33,44 +33,24 @@ public class WorldGenVolcano extends WorldGeneratorGlacios {
                 if (theta < 0)
                     theta += 2 * Math.PI;
                 
-                double boundary = radius(trigFunctions, phaseShifts, theta);
+                double boundary = boundary(trigFunctions, phaseShifts, theta);
                 
                 for (int posY = y; posY <= y + capHeight; posY++) {
-                    double heightScaler = 1 - ((double)(posY - y) / (double)height);
+                    double heightScaler = radiusAtHeight((double)(posY - y) / (double)height);
                     int adjustedBoundary = (int)Math.round(heightScaler * radiusScaler * boundary);
                     
                     if (radius <= adjustedBoundary) {
-                        world.setBlock(posX, posY, posZ, GlaciosBlocks.ashStone, 0, 3);
-                        
-                        if (adjustedBoundary - radius >= 2) {
-                            topLayer.add(new TopLayerBlock(posX, posZ));
+                        if ((adjustedBoundary - radius >= 2 && posY == y + capHeight) || adjustedBoundary - radius >= 4) {
+                            world.setBlockToAir(posX, posY, posZ);
+                            for (int carveY = posY - rand.nextInt(3) - 1; carveY < posY; carveY++)
+                                world.setBlock(posX, carveY, posZ, Blocks.lava);
+                        } else {
+                            world.setBlock(posX, posY, posZ, GlaciosBlocks.ashStone, 0, 3);
                         }
                     }
                 }
             }
         }
-        
-        return genLavaTop(world, rand, topLayer.toArray(new TopLayerBlock[] {}), capRadius, x, y + capHeight, z);
-    }
-    
-    private boolean genLavaTop(World world, Random rand, TopLayerBlock[] topLayer, int capRadius, int x, int y, int z) {
-        for (int posX = x - capRadius; posX <= x + capRadius; posX++) {
-            for (int posZ = z - capRadius; posZ <= z + capRadius; posZ++) {
-                boolean isBoundary = false;
-                for (int i = 0; i < topLayer.length; i++) {
-                    if (topLayer[i].x == posX && topLayer[i].z == posZ)
-                        isBoundary = true;
-                }
-                
-                if (!isBoundary && world.getBlock(posX, y, posZ) == GlaciosBlocks.ashStone) {
-                    world.setBlockToAir(posX, y, posZ);
-                    for (int posY = y - rand.nextInt(3) - 1; posY < y; posY++) {
-                        world.setBlock(posX, posY, posZ, Blocks.lava);
-                    }
-                }
-            }
-        }
-        
         return true;
     }
 
@@ -83,7 +63,20 @@ public class WorldGenVolcano extends WorldGeneratorGlacios {
         this.generate(world, rand, randX, randY, randZ);
     }
     
-    private double radius(boolean[] trigFunctions, double[] phaseShifts, double theta) {
+    private int minHeightForRadius(World world, double radius, int x, int y, int z) {
+        return y;
+    }
+    
+    private double radiusAtHeight(double height) {
+        if (height < 0)
+            return 1;
+        if (height > 1)
+            return 0;
+        
+        return (3./5.) * (((2./3.) * (height - (5./3.))) + Math.pow(height - (5./3.), 2));
+    }
+    
+    private double boundary(boolean[] trigFunctions, double[] phaseShifts, double theta) {
         double submissive = 0.45;
         double dominant = 0.45;
         double noise = 0.1;
@@ -107,15 +100,5 @@ public class WorldGenVolcano extends WorldGeneratorGlacios {
         }
         
         return ((submissive + dominant + noise) / 6.) + (5. / 6.);
-    }
-
-    private class TopLayerBlock {
-        public final int x;
-        public final int z;
-        
-        public TopLayerBlock(int x, int z) {
-            this.x = x;
-            this.z = z;
-        }
     }
 }
