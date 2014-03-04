@@ -42,7 +42,7 @@ public class WorldGenVolcano extends WorldGeneratorGlacios {
                     if (radius <= adjustedBoundary) {
                         world.setBlock(posX, posY, posZ, GlaciosBlocks.ashStone, 0, 3);
                         
-                        if (radius == adjustedBoundary || radius == adjustedBoundary - 1) {
+                        if (adjustedBoundary - radius >= 2) {
                             topLayer.add(new TopLayerBlock(posX, posZ));
                         }
                     }
@@ -105,8 +105,6 @@ public class WorldGenVolcano extends WorldGeneratorGlacios {
         } else {
             noise *= Math.sin(12*theta + Math.PI*phaseShifts[2]);
         }
-        
-        
         
         return ((submissive + dominant + noise) / 6.) + (5. / 6.);
     }
