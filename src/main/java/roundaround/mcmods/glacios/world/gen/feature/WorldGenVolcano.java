@@ -4,6 +4,7 @@ import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.Random;
 
+import net.minecraft.init.Blocks;
 import net.minecraft.world.World;
 import net.minecraft.world.biome.BiomeGenBase;
 import roundaround.mcmods.glacios.GlaciosBlocks;
@@ -21,8 +22,8 @@ public class WorldGenVolcano extends WorldGeneratorGlacios {
         
         int radiusScaler = rand.nextInt(16) + 35;
         int height = rand.nextInt(16) + 20;
-        int capDiameter = rand.nextInt(7) + 8;
-        int capHeight = (int)Math.round(height * (1 - (double)capDiameter / radiusScaler));
+        int capRadius = rand.nextInt(7) + 8;
+        int capHeight = (int)Math.round(height * (1 - (double)capRadius / radiusScaler));
         ArrayList<TopLayerBlock> topLayer = new ArrayList<TopLayerBlock>();
         
         for (int posX = x - radiusScaler; posX <= x + radiusScaler; posX++) {
@@ -49,7 +50,7 @@ public class WorldGenVolcano extends WorldGeneratorGlacios {
             }
         }
         
-        return genLavaTop(world, rand, topLayer.toArray(new TopLayerBlock[] {}), (int)Math.ceil(capDiameter / 2.), x, y + capHeight, z);
+        return genLavaTop(world, rand, topLayer.toArray(new TopLayerBlock[] {}), capRadius, x, y + capHeight, z);
     }
     
     private boolean genLavaTop(World world, Random rand, TopLayerBlock[] topLayer, int capRadius, int x, int y, int z) {
@@ -62,8 +63,9 @@ public class WorldGenVolcano extends WorldGeneratorGlacios {
                 }
                 
                 if (!isBoundary && world.getBlock(posX, y, posZ) == GlaciosBlocks.ashStone) {
-                    for (int posY = y - rand.nextInt(3) - 1; posY <= y; posY++) {
-                        world.setBlockToAir(posX, posY, posZ);
+                    world.setBlockToAir(posX, y, posZ);
+                    for (int posY = y - rand.nextInt(3) - 1; posY < y; posY++) {
+                        world.setBlock(posX, posY, posZ, Blocks.lava);
                     }
                 }
             }
