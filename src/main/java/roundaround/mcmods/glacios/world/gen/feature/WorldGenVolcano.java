@@ -29,7 +29,7 @@ public class WorldGenVolcano extends WorldGeneratorGlacios {
         int capHeight = (int)Math.round(height * radiusAtHeight((double)capRadius / (double)radiusScaler));
         int lavaHeight = (int)Math.round(capHeight * ((rand.nextDouble() * 0.5) + 0.5)) - 1;
         
-        y = minHeightForRadius(world, radiusScaler, x, y, z) - 2;
+//        y = minHeightForRadius(world, radiusScaler, x, y, z) - 2;
         
         for (int posX = x - radiusScaler; posX <= x + radiusScaler; posX++) {
             for (int posZ = z - radiusScaler; posZ <= z + radiusScaler; posZ++) {
