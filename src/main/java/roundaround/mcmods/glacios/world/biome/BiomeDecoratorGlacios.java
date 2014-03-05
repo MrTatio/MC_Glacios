@@ -4,6 +4,7 @@ import static net.minecraftforge.event.terraingen.DecorateBiomeEvent.Decorate.Ev
 
 import java.util.Random;
 
+import net.minecraft.init.Blocks;
 import net.minecraft.world.World;
 import net.minecraft.world.biome.BiomeDecorator;
 import net.minecraft.world.biome.BiomeGenBase;
@@ -11,6 +12,7 @@ import net.minecraft.world.gen.feature.WorldGenAbstractTree;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.terraingen.DecorateBiomeEvent;
 import net.minecraftforge.event.terraingen.TerrainGen;
+import roundaround.mcmods.glacios.GlaciosBlocks;
 import roundaround.mcmods.glacios.world.gen.feature.WorldGenVolcano;
 
 public class BiomeDecoratorGlacios extends BiomeDecorator {
@@ -56,7 +58,7 @@ public class BiomeDecoratorGlacios extends BiomeDecorator {
         
         for (int i = 0; doGen && i < this.volcanosPerChunk; i++) {
             if (randomGenerator.nextInt(100) == 0) {
-                WorldGenVolcano worldGen = new WorldGenVolcano();
+                WorldGenVolcano worldGen = new WorldGenVolcano(GlaciosBlocks.ashStone, Blocks.lava);
                 try {
                     worldGen.doGeneration(currentWorld, randomGenerator, null, biome, chunk_X, chunk_Z);
                 } catch (Exception ignore) {

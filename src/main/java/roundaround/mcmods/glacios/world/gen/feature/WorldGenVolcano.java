@@ -3,15 +3,19 @@ package roundaround.mcmods.glacios.world.gen.feature;
 import java.lang.reflect.Field;
 import java.util.Random;
 
-import net.minecraft.init.Blocks;
+import net.minecraft.block.Block;
 import net.minecraft.world.World;
 import net.minecraft.world.biome.BiomeGenBase;
-import roundaround.mcmods.glacios.GlaciosBlocks;
 
 public class WorldGenVolcano extends WorldGeneratorGlacios {
+    
+    private final Block structure;
+    private final Block magma;
 
-    public WorldGenVolcano() {
+    public WorldGenVolcano(Block structure, Block magma) {
         super(false);
+        this.structure = structure;
+        this.magma = magma;
     }
 
     @Override
@@ -23,6 +27,7 @@ public class WorldGenVolcano extends WorldGeneratorGlacios {
         int height = rand.nextInt(16) + 20;
         int capRadius = rand.nextInt(5) + 10;
         int capHeight = (int)Math.round(height * radiusAtHeight((double)capRadius / (double)radiusScaler));
+        int lavaHeight = (int)Math.round(capHeight * ((rand.nextDouble() * 0.5) + 0.5)) - 1;
         
         y = minHeightForRadius(world, radiusScaler, x, y, z) - 2;
         
@@ -43,10 +48,14 @@ public class WorldGenVolcano extends WorldGeneratorGlacios {
                         if (adjustedBoundary - radius >= 2 && posY == y + capHeight) {
                             world.setBlockToAir(posX, posY, posZ);
                         } else if (adjustedBoundary - radius >= 4) {
-                            for (int carveY = posY - rand.nextInt(3) - 1; carveY <= posY; carveY++)
-                                world.setBlock(posX, carveY, posZ, Blocks.lava);
+                            if (posY <= y + lavaHeight) {
+                                for (int carveY = posY - rand.nextInt(3) - 1; carveY <= posY; carveY++)
+                                    world.setBlock(posX, carveY, posZ, this.magma, 0, 2);
+                            } else {
+                                world.setBlockToAir(posX, posY, posZ);
+                            }
                         } else {
-                            world.setBlock(posX, posY, posZ, GlaciosBlocks.ashStone, 0, 3);
+                            world.setBlock(posX, posY, posZ, this.structure, 0, 2);
                         }
                     }
                 }
@@ -64,8 +73,25 @@ public class WorldGenVolcano extends WorldGeneratorGlacios {
         this.generate(world, rand, randX, randY, randZ);
     }
     
-    private int minHeightForRadius(World world, double radius, int x, int y, int z) {
-        return y;
+    private int minHeightForRadius(World world, int radius, int x, int y, int z) {
+        int minY = y;
+        
+        for (int searchX = x - radius; searchX <= x + radius; searchX++) {
+            for (int searchZ = z - radius; searchZ <= z + radius; searchZ++) {
+                int currRadius = (int)Math.round(Math.sqrt(Math.pow(searchX - x, 2) + Math.pow(searchZ - z,  2)));
+                
+                if (currRadius <= radius) {
+                    int height = world.getHeightValue(searchX, searchZ);
+                    if (height < minY - 4) {
+                        minY = height + (int)((minY - height) / 2.);
+                    } else if (height < minY) {
+                        minY = height;
+                    }
+                }
+            }
+        }
+        
+        return minY;
     }
     
     private double radiusAtHeight(double height) {
