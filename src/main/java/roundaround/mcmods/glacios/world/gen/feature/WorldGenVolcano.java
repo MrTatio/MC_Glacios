@@ -34,7 +34,7 @@ public class WorldGenVolcano extends WorldGeneratorGlacios {
     }
     
     private boolean generate(World world, ChunkCoordinates coords) {
-        return generate(world, coords, (coords.posX << 4) * 16, (coords.posZ << 4) * 16);
+        return generate(world, coords, (coords.posX >> 4) * 16, (coords.posZ >> 4) * 16);
     }
 
     private boolean generate(World world, ChunkCoordinates coords, int chunkX, int chunkZ) {
@@ -57,7 +57,7 @@ public class WorldGenVolcano extends WorldGeneratorGlacios {
         }
         
         int y = heightMap[(x % 16) * 16 + (z % 16)];
-        System.out.println("Generating a volcano at " + x + "," + y + "," + z + "!");
+        System.out.println("Generating a volcano at " + x + "," + y + "," + z + " for the chunk at " + chunkX + "," + chunkZ + "!");
 
         boolean[] trigFunctions = new boolean[] { rand.nextBoolean(), rand.nextBoolean(), rand.nextBoolean() };
         double[] phaseShifts = new double[] { rand.nextInt(24) / 12., rand.nextInt(24) / 12., rand.nextInt(24) / 12. };
@@ -117,8 +117,10 @@ public class WorldGenVolcano extends WorldGeneratorGlacios {
 
     @Override
     public void doGeneration(World world, Random rand, Field worldGeneratorField, BiomeGenBase biome, int chunkX, int chunkZ) {
-        for (ChunkCoordinates volcano : getVolcanosNear(world, chunkX, chunkZ))
-            this.generate(world, volcano, chunkX, chunkZ);
+        int chunkNumX = chunkX >> 4;
+        int chunkNumZ = chunkZ >> 4;
+        for (ChunkCoordinates volcano : getVolcanosNear(world, chunkNumX, chunkNumZ))
+            this.generate(world, volcano, chunkNumX, chunkNumZ);
     }
 
     private double radiusAtHeight(double height) {
@@ -157,8 +159,8 @@ public class WorldGenVolcano extends WorldGeneratorGlacios {
     }
 
     public int canGenVolcanoAtCoords(World world, int chunkX, int chunkZ) {
-        byte numChunks = 32;
-        byte offsetChunks = 8;
+        byte numChunks = 1;
+        byte offsetChunks = 1;
         int oldChunkX = chunkX;
         int oldChunkZ = chunkZ;
 
@@ -191,15 +193,15 @@ public class WorldGenVolcano extends WorldGeneratorGlacios {
         return 0;
     }
 
-    public ChunkCoordinates[] getVolcanosNear(World world, int chunkX, int chunkZ) {
+    public ChunkCoordinates[] getVolcanosNear(World world, int startNumX, int startNumZ) {
         HashSet<ChunkCoordinates> volcanos = new HashSet<ChunkCoordinates>();
         
         int range = 3;
-        for (int x = chunkX - range; x <= chunkX + range; x++) {
-            for (int z = chunkZ - range; z <= chunkZ + range; z++) {
-                int genStatus = canGenVolcanoAtCoords(world, x, z);
+        for (int chunkNumX = startNumX - range; chunkNumX <= startNumX + range; chunkNumX++) {
+            for (int chunkNumZ = startNumZ - range; chunkNumZ <= startNumZ + range; chunkNumZ++) {
+                int genStatus = canGenVolcanoAtCoords(world, chunkNumX, chunkNumZ);
                 if (genStatus != 0)
-                    volcanos.add(new ChunkCoordinates(x * 16 + 8, genStatus, z * 16 + 8));
+                    volcanos.add(new ChunkCoordinates(chunkNumX * 16 + 8, genStatus, chunkNumZ * 16 + 8));
             }
         }
 
