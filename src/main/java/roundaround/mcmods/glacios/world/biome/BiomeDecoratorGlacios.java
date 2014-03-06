@@ -56,15 +56,20 @@ public class BiomeDecoratorGlacios extends BiomeDecorator {
             }
         }
         
-        for (int i = 0; doGen && i < this.volcanosPerChunk; i++) {
-            if (randomGenerator.nextInt(100) == 0) {
-                WorldGenVolcano worldGen = new WorldGenVolcano(GlaciosBlocks.ashStone, Blocks.lava);
-                try {
-                    worldGen.doGeneration(currentWorld, randomGenerator, null, biome, chunk_X, chunk_Z);
-                } catch (Exception ignore) {
-                }
-            }
+        if (doGen) {
+            WorldGenVolcano worldGen = new WorldGenVolcano(GlaciosBlocks.ashStone, Blocks.lava);
+            worldGen.doGeneration(currentWorld, null, null, null, chunk_X, chunk_Z);
         }
+        
+//        for (int i = 0; doGen && i < this.volcanosPerChunk; i++) {
+//            if (randomGenerator.nextInt(100) == 0) {
+//                WorldGenVolcano worldGen = new WorldGenVolcano(GlaciosBlocks.ashStone, Blocks.lava);
+//                try {
+//                    worldGen.doGeneration(currentWorld, randomGenerator, null, biome, chunk_X, chunk_Z);
+//                } catch (Exception ignore) {
+//                }
+//            }
+//        }
         
         
 
