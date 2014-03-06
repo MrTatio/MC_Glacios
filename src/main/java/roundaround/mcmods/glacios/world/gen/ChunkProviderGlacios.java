@@ -6,8 +6,6 @@ import static net.minecraftforge.event.terraingen.InitMapGenEvent.EventType.RAVI
 import static net.minecraftforge.event.terraingen.InitMapGenEvent.EventType.SCATTERED_FEATURE;
 import static net.minecraftforge.event.terraingen.InitMapGenEvent.EventType.STRONGHOLD;
 import static net.minecraftforge.event.terraingen.InitMapGenEvent.EventType.VILLAGE;
-import static net.minecraftforge.event.terraingen.PopulateChunkEvent.Populate.EventType.DUNGEON;
-import static net.minecraftforge.event.terraingen.PopulateChunkEvent.Populate.EventType.LAKE;
 
 import java.util.List;
 import java.util.Random;
@@ -30,8 +28,6 @@ import net.minecraft.world.gen.MapGenRavine;
 import net.minecraft.world.gen.NoiseGenerator;
 import net.minecraft.world.gen.NoiseGeneratorOctaves;
 import net.minecraft.world.gen.NoiseGeneratorPerlin;
-import net.minecraft.world.gen.feature.WorldGenDungeons;
-import net.minecraft.world.gen.feature.WorldGenLakes;
 import net.minecraft.world.gen.structure.MapGenMineshaft;
 import net.minecraft.world.gen.structure.MapGenScatteredFeature;
 import net.minecraft.world.gen.structure.MapGenStronghold;
@@ -389,28 +385,28 @@ public class ChunkProviderGlacios implements IChunkProvider {
 
         MinecraftForge.EVENT_BUS.post(new PopulateChunkEvent.Pre(chunkProvider, worldObj, rand, chunkX, chunkZ, generateStructures));
 
-        if (this.mapFeaturesEnabled) {
-            this.mineshaftGenerator.generateStructuresInChunk(this.worldObj, this.rand, chunkX, chunkZ);
-            generateStructures = this.villageGenerator.generateStructuresInChunk(this.worldObj, this.rand, chunkX, chunkZ);
-            this.strongholdGenerator.generateStructuresInChunk(this.worldObj, this.rand, chunkX, chunkZ);
-            this.scatteredFeatureGenerator.generateStructuresInChunk(this.worldObj, this.rand, chunkX, chunkZ);
-        }
-
-        if (!generateStructures && this.rand.nextInt(4) == 0
-                && TerrainGen.populate(chunkProvider, worldObj, rand, chunkX, chunkZ, generateStructures, LAKE)) {
-            int randX = posX + this.rand.nextInt(16) + 8;
-            int randY = this.rand.nextInt(256);
-            int randZ = posZ + this.rand.nextInt(16) + 8;
-            (new WorldGenLakes(GlaciosBlocks.crystalWater)).generate(this.worldObj, this.rand, randX, randY, randZ);
-        }
-
-        boolean doGen = TerrainGen.populate(chunkProvider, worldObj, rand, chunkX, chunkZ, generateStructures, DUNGEON);
-        for (int i = 0; doGen && i < 8; ++i) {
-            int randX = posX + this.rand.nextInt(16) + 8;
-            int randY = this.rand.nextInt(256);
-            int randZ = posZ + this.rand.nextInt(16) + 8;
-            (new WorldGenDungeons()).generate(this.worldObj, this.rand, randX, randY, randZ);
-        }
+//        if (this.mapFeaturesEnabled) {
+//            this.mineshaftGenerator.generateStructuresInChunk(this.worldObj, this.rand, chunkX, chunkZ);
+//            generateStructures = this.villageGenerator.generateStructuresInChunk(this.worldObj, this.rand, chunkX, chunkZ);
+//            this.strongholdGenerator.generateStructuresInChunk(this.worldObj, this.rand, chunkX, chunkZ);
+//            this.scatteredFeatureGenerator.generateStructuresInChunk(this.worldObj, this.rand, chunkX, chunkZ);
+//        }
+//
+//        if (!generateStructures && this.rand.nextInt(4) == 0
+//                && TerrainGen.populate(chunkProvider, worldObj, rand, chunkX, chunkZ, generateStructures, LAKE)) {
+//            int randX = posX + this.rand.nextInt(16) + 8;
+//            int randY = this.rand.nextInt(256);
+//            int randZ = posZ + this.rand.nextInt(16) + 8;
+//            (new WorldGenLakes(GlaciosBlocks.crystalWater)).generate(this.worldObj, this.rand, randX, randY, randZ);
+//        }
+//
+//        boolean doGen = TerrainGen.populate(chunkProvider, worldObj, rand, chunkX, chunkZ, generateStructures, DUNGEON);
+//        for (int i = 0; doGen && i < 8; ++i) {
+//            int randX = posX + this.rand.nextInt(16) + 8;
+//            int randY = this.rand.nextInt(256);
+//            int randZ = posZ + this.rand.nextInt(16) + 8;
+//            (new WorldGenDungeons()).generate(this.worldObj, this.rand, randX, randY, randZ);
+//        }
 
         biomegenbase.decorate(this.worldObj, this.rand, posX, posZ);
         SpawnerAnimals.performWorldGenSpawning(this.worldObj, biomegenbase, posX + 8, posZ + 8, 16, 16, this.rand);

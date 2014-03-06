@@ -25,6 +25,7 @@ public class GlaciosBiomes {
     public static final BiomeGenBase.Height height_LowHills = new BiomeGenBase.Height(0.45F, 0.3F);
     public static final BiomeGenBase.Height height_MidHills = new BiomeGenBase.Height(0.8F, 0.4F);
     public static final BiomeGenBase.Height height_HugeHills = new BiomeGenBase.Height(1.0F, 0.8F);
+    public static final BiomeGenBase.Height height_MidPlateausSuperFlat = new BiomeGenBase.Height(1.2F, 0.005F);
     public static final BiomeGenBase.Height height_MidPlateaus = new BiomeGenBase.Height(1.2F, 0.025F);
     public static final BiomeGenBase.Height height_HighPlateaus = new BiomeGenBase.Height(1.5F, 0.025F);
     public static final BiomeGenBase.Height height_Shores = new BiomeGenBase.Height(0.0F, 0.025F);
@@ -43,11 +44,11 @@ public class GlaciosBiomes {
         plateau = (BiomeGenGlacios) new BiomeGenGlaciosPlateau(GlaciosConfig.biome_plateau).setHeight(height_MidPlateaus).setBiomeName("Plateau");
         lake = (BiomeGenGlacios) new BiomeGenGlaciosLake(GlaciosConfig.biome_lake).setHeight(height_ShallowWaters).setBiomeName("Lake");
         ocean = (BiomeGenGlacios) new BiomeGenGlaciosOcean(GlaciosConfig.biome_ocean).setHeight(height_Oceans).setBiomeName("Ocean");
-        volcano = (BiomeGenGlacios) new BiomeGenGlaciosVolcano(GlaciosConfig.biome_volcano).setHeight(height_HugeHills).setBiomeName("Volcano");
+        volcano = (BiomeGenGlacios) new BiomeGenGlaciosVolcano(GlaciosConfig.biome_volcano).setHeight(height_MidPlateausSuperFlat).setBiomeName("Volcano");
         taiga = (BiomeGenGlacios) new BiomeGenGlaciosTaiga(GlaciosConfig.biome_taiga).setHeight(height_MidHills).setBiomeName("Taiga");
         hills = (BiomeGenGlacios) new BiomeGenGlaciosHills(GlaciosConfig.biome_hills).setHeight(height_MidHills).setBiomeName("Hills");
         
-        registerBiome(plateau);
+        registerBiome(volcano);
 //        registerBiome(plateau, 3);
 //        registerBiome(lake, 6);
 //        registerBiome(ocean, 10);

@@ -23,13 +23,11 @@ public class WorldGenVolcano extends WorldGeneratorGlacios {
         boolean[] trigFunctions = new boolean[] { rand.nextBoolean(), rand.nextBoolean(), rand.nextBoolean() };
         double[] phaseShifts = new double[] { rand.nextInt(24) / 12., rand.nextInt(24) / 12., rand.nextInt(24) / 12. };
         
-        int radiusScaler = rand.nextInt(16) + 35;
-        int height = rand.nextInt(16) + 20;
+        int radiusScaler = rand.nextInt(21) + 30;
+        int height = rand.nextInt(16) + 25;
         int capRadius = rand.nextInt(5) + 10;
         int capHeight = (int)Math.round(height * radiusAtHeight((double)capRadius / (double)radiusScaler));
-        int lavaHeight = (int)Math.round(capHeight * ((rand.nextDouble() * 0.5) + 0.5)) - 1;
-        
-//        y = minHeightForRadius(world, radiusScaler, x, y, z) - 2;
+        int lavaHeight = (int)Math.round(capHeight * (rand.nextBoolean() ? (rand.nextDouble() * 0.5) + 0.5 : (rand.nextDouble() * 0.15) + 0.85)) - (rand.nextBoolean() ? 1 : 0);
         
         for (int posX = x - radiusScaler; posX <= x + radiusScaler; posX++) {
             for (int posZ = z - radiusScaler; posZ <= z + radiusScaler; posZ++) {
@@ -40,22 +38,36 @@ public class WorldGenVolcano extends WorldGeneratorGlacios {
                 
                 double boundary = boundary(trigFunctions, phaseShifts, theta);
                 
-                for (int posY = y; posY <= y + capHeight; posY++) {
-                    double heightScaler = radiusAtHeight((double)(posY - y) / (double)height);
+                int groundHeight = world.getHeightValue(posX, posZ);
+                int heightDiff = y - groundHeight;
+                
+                for (int posY = groundHeight; posY <= groundHeight + capHeight; posY++) {
+                    double heightScaler = radiusAtHeight((double)(posY - groundHeight) / (double)height);
                     int adjustedBoundary = (int)Math.round(heightScaler * radiusScaler * boundary);
                     
                     if (radius <= adjustedBoundary) {
-                        if (adjustedBoundary - radius >= 2 && posY == y + capHeight) {
+                        if (adjustedBoundary - radius >= 2 && posY == groundHeight + capHeight) {
                             world.setBlockToAir(posX, posY, posZ);
                         } else if (adjustedBoundary - radius >= 4) {
                             if (posY <= y + lavaHeight) {
-                                for (int carveY = posY - rand.nextInt(3) - 1; carveY <= posY; carveY++)
-                                    world.setBlock(posX, carveY, posZ, this.magma, 0, 2);
+                                for (int magmaY = posY - rand.nextInt(3) - 1; magmaY <= posY; magmaY++) {
+                                    world.setBlock(posX, magmaY, posZ, this.magma, 0, 2);
+                                    for (int magmaX = posX - 1; magmaX <= posX + 1; magmaX++) {
+                                        for (int magmaZ = posZ - 1; magmaZ <= posZ + 1; magmaZ++) {
+                                            if (world.isAirBlock(magmaX, magmaY, magmaZ))
+                                                world.setBlock(magmaX, magmaY, magmaZ, this.magma, 0, 2);
+                                        }
+                                    }
+                                }
                             } else {
                                 world.setBlockToAir(posX, posY, posZ);
                             }
                         } else {
                             world.setBlock(posX, posY, posZ, this.structure, 0, 2);
+                            if (Math.abs(heightDiff) > 2) {
+                                for (int padY = posY + Integer.signum(heightDiff); padY <= posY + (Integer.signum(heightDiff) * 3); padY += Integer.signum(heightDiff))
+                                    world.setBlock(posX, padY, posZ, this.structure, 0, 2);
+                            }
                         }
                     }
                 }
@@ -71,27 +83,6 @@ public class WorldGenVolcano extends WorldGeneratorGlacios {
         int randY = world.getHeightValue(randX, randZ);
 
         this.generate(world, rand, randX, randY, randZ);
-    }
-    
-    private int minHeightForRadius(World world, int radius, int x, int y, int z) {
-        int minY = y;
-        
-        for (int searchX = x - radius; searchX <= x + radius; searchX++) {
-            for (int searchZ = z - radius; searchZ <= z + radius; searchZ++) {
-                int currRadius = (int)Math.round(Math.sqrt(Math.pow(searchX - x, 2) + Math.pow(searchZ - z,  2)));
-                
-                if (currRadius <= radius) {
-                    int height = world.getHeightValue(searchX, searchZ);
-                    if (height < minY - 4) {
-                        minY = height + (int)((minY - height) / 2.);
-                    } else if (height < minY) {
-                        minY = height;
-                    }
-                }
-            }
-        }
-        
-        return minY;
     }
     
     private double radiusAtHeight(double height) {
