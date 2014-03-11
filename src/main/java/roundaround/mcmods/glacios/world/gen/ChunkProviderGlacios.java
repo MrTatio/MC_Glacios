@@ -1,12 +1,5 @@
 package roundaround.mcmods.glacios.world.gen;
 
-import static net.minecraftforge.event.terraingen.InitMapGenEvent.EventType.CAVE;
-import static net.minecraftforge.event.terraingen.InitMapGenEvent.EventType.MINESHAFT;
-import static net.minecraftforge.event.terraingen.InitMapGenEvent.EventType.RAVINE;
-import static net.minecraftforge.event.terraingen.InitMapGenEvent.EventType.SCATTERED_FEATURE;
-import static net.minecraftforge.event.terraingen.InitMapGenEvent.EventType.STRONGHOLD;
-import static net.minecraftforge.event.terraingen.InitMapGenEvent.EventType.VILLAGE;
-
 import java.util.List;
 import java.util.Random;
 
@@ -22,16 +15,9 @@ import net.minecraft.world.WorldType;
 import net.minecraft.world.biome.BiomeGenBase;
 import net.minecraft.world.chunk.Chunk;
 import net.minecraft.world.chunk.IChunkProvider;
-import net.minecraft.world.gen.MapGenBase;
-import net.minecraft.world.gen.MapGenCaves;
-import net.minecraft.world.gen.MapGenRavine;
 import net.minecraft.world.gen.NoiseGenerator;
 import net.minecraft.world.gen.NoiseGeneratorOctaves;
 import net.minecraft.world.gen.NoiseGeneratorPerlin;
-import net.minecraft.world.gen.structure.MapGenMineshaft;
-import net.minecraft.world.gen.structure.MapGenScatteredFeature;
-import net.minecraft.world.gen.structure.MapGenStronghold;
-import net.minecraft.world.gen.structure.MapGenVillage;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.terraingen.ChunkProviderEvent;
 import net.minecraftforge.event.terraingen.PopulateChunkEvent;
@@ -69,24 +55,6 @@ public class ChunkProviderGlacios implements IChunkProvider {
     private final double[] field_147434_q;
     private final float[] parabolicField;
     private double[] stoneNoise = new double[256];
-    private MapGenBase caveGenerator = new MapGenCaves();
-    /**
-     * Holds Stronghold Generator
-     */
-    private MapGenStronghold strongholdGenerator = new MapGenStronghold();
-    /**
-     * Holds Village Generator
-     */
-    private MapGenVillage villageGenerator = new MapGenVillage();
-    /**
-     * Holds Mineshaft Generator
-     */
-    private MapGenMineshaft mineshaftGenerator = new MapGenMineshaft();
-    private MapGenScatteredFeature scatteredFeatureGenerator = new MapGenScatteredFeature();
-    /**
-     * Holds ravine generator
-     */
-    private MapGenBase ravineGenerator = new MapGenRavine();
     /**
      * The biomes that are used to generate the chunk
      */
@@ -96,15 +64,6 @@ public class ChunkProviderGlacios implements IChunkProvider {
     double[] noiseData3;
     double[] noiseData4;
     int[][] field_73219_j = new int[32][32];
-
-    {
-        caveGenerator = TerrainGen.getModdedMapGen(caveGenerator, CAVE);
-        strongholdGenerator = (MapGenStronghold) TerrainGen.getModdedMapGen(strongholdGenerator, STRONGHOLD);
-        villageGenerator = (MapGenVillage) TerrainGen.getModdedMapGen(villageGenerator, VILLAGE);
-        mineshaftGenerator = (MapGenMineshaft) TerrainGen.getModdedMapGen(mineshaftGenerator, MINESHAFT);
-        scatteredFeatureGenerator = (MapGenScatteredFeature) TerrainGen.getModdedMapGen(scatteredFeatureGenerator, SCATTERED_FEATURE);
-        ravineGenerator = TerrainGen.getModdedMapGen(ravineGenerator, RAVINE);
-    }
 
     public ChunkProviderGlacios(World world, long seed, boolean mapFeaturesEnabled) {
         this.worldObj = world;
@@ -240,15 +199,6 @@ public class ChunkProviderGlacios implements IChunkProvider {
         this.func_147424_a(chunkX, chunkZ, blockArray);
         this.biomesForGeneration = this.worldObj.getWorldChunkManager().loadBlockGeneratorData(this.biomesForGeneration, chunkX * 16, chunkZ * 16, 16, 16);
         this.func_147422_a(chunkX, chunkZ, blockArray, metaArray, this.biomesForGeneration);
-        this.caveGenerator.func_151539_a(this, this.worldObj, chunkX, chunkZ, blockArray);
-        this.ravineGenerator.func_151539_a(this, this.worldObj, chunkX, chunkZ, blockArray);
-
-        if (this.mapFeaturesEnabled) {
-            this.mineshaftGenerator.func_151539_a(this, this.worldObj, chunkX, chunkZ, blockArray);
-            this.villageGenerator.func_151539_a(this, this.worldObj, chunkX, chunkZ, blockArray);
-            this.strongholdGenerator.func_151539_a(this, this.worldObj, chunkX, chunkZ, blockArray);
-            this.scatteredFeatureGenerator.func_151539_a(this, this.worldObj, chunkX, chunkZ, blockArray);
-        }
 
         Chunk chunk = new Chunk(this.worldObj, blockArray, metaArray, chunkX, chunkZ);
         byte[] biomeArray = chunk.getBiomeArray();
@@ -385,29 +335,6 @@ public class ChunkProviderGlacios implements IChunkProvider {
 
         MinecraftForge.EVENT_BUS.post(new PopulateChunkEvent.Pre(chunkProvider, worldObj, rand, chunkX, chunkZ, generateStructures));
 
-//        if (this.mapFeaturesEnabled) {
-//            this.mineshaftGenerator.generateStructuresInChunk(this.worldObj, this.rand, chunkX, chunkZ);
-//            generateStructures = this.villageGenerator.generateStructuresInChunk(this.worldObj, this.rand, chunkX, chunkZ);
-//            this.strongholdGenerator.generateStructuresInChunk(this.worldObj, this.rand, chunkX, chunkZ);
-//            this.scatteredFeatureGenerator.generateStructuresInChunk(this.worldObj, this.rand, chunkX, chunkZ);
-//        }
-//
-//        if (!generateStructures && this.rand.nextInt(4) == 0
-//                && TerrainGen.populate(chunkProvider, worldObj, rand, chunkX, chunkZ, generateStructures, LAKE)) {
-//            int randX = posX + this.rand.nextInt(16) + 8;
-//            int randY = this.rand.nextInt(256);
-//            int randZ = posZ + this.rand.nextInt(16) + 8;
-//            (new WorldGenLakes(GlaciosBlocks.crystalWater)).generate(this.worldObj, this.rand, randX, randY, randZ);
-//        }
-//
-//        boolean doGen = TerrainGen.populate(chunkProvider, worldObj, rand, chunkX, chunkZ, generateStructures, DUNGEON);
-//        for (int i = 0; doGen && i < 8; ++i) {
-//            int randX = posX + this.rand.nextInt(16) + 8;
-//            int randY = this.rand.nextInt(256);
-//            int randZ = posZ + this.rand.nextInt(16) + 8;
-//            (new WorldGenDungeons()).generate(this.worldObj, this.rand, randX, randY, randZ);
-//        }
-
         biomegenbase.decorate(this.worldObj, this.rand, posX, posZ);
         SpawnerAnimals.performWorldGenSpawning(this.worldObj, biomegenbase, posX + 8, posZ + 8, 16, 16, this.rand);
 
@@ -461,13 +388,12 @@ public class ChunkProviderGlacios implements IChunkProvider {
     @Override
     public List getPossibleCreatures(EnumCreatureType creatureType, int posX, int posY, int posZ) {
         BiomeGenBase biomegenbase = this.worldObj.getBiomeGenForCoords(posX, posZ);
-        return creatureType == EnumCreatureType.monster && this.scatteredFeatureGenerator.func_143030_a(posX, posY, posZ) ? this.scatteredFeatureGenerator
-                .getScatteredFeatureSpawnList() : biomegenbase.getSpawnableList(creatureType);
+        return biomegenbase.getSpawnableList(creatureType);
     }
 
     @Override
     public ChunkPosition func_147416_a(World world, String p_147416_2_, int chunkX, int chunkY, int chunkZ) {
-        return "Stronghold".equals(p_147416_2_) && this.strongholdGenerator != null ? this.strongholdGenerator.func_151545_a(world, chunkX, chunkY, chunkZ) : null;
+        return null;
     }
 
     @Override
@@ -476,13 +402,6 @@ public class ChunkProviderGlacios implements IChunkProvider {
     }
 
     @Override
-    public void recreateStructures(int chunkX, int chunkZ) {
-        if (this.mapFeaturesEnabled) {
-            this.mineshaftGenerator.func_151539_a(this, this.worldObj, chunkX, chunkZ, (Block[]) null);
-            this.villageGenerator.func_151539_a(this, this.worldObj, chunkX, chunkZ, (Block[]) null);
-            this.strongholdGenerator.func_151539_a(this, this.worldObj, chunkX, chunkZ, (Block[]) null);
-            this.scatteredFeatureGenerator.func_151539_a(this, this.worldObj, chunkX, chunkZ, (Block[]) null);
-        }
-    }
+    public void recreateStructures(int chunkX, int chunkZ) { }
 
 }

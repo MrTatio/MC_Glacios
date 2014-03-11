@@ -16,8 +16,6 @@ import roundaround.mcmods.glacios.GlaciosBlocks;
 import roundaround.mcmods.glacios.world.gen.feature.WorldGenVolcano;
 
 public class BiomeDecoratorGlacios extends BiomeDecorator {
-    
-    protected int volcanosPerChunk = 0;
 
     public BiomeDecoratorGlacios() {
         this.treesPerChunk = 0;

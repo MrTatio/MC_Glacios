@@ -3,6 +3,7 @@ package roundaround.mcmods.glacios.world.gen.feature;
 import java.lang.reflect.Field;
 import java.util.Arrays;
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Random;
 
@@ -17,7 +18,7 @@ import roundaround.mcmods.glacios.GlaciosBlocks;
 public class WorldGenVolcano extends WorldGeneratorGlacios {
 
     public static List biomesLand = Arrays.asList(new BiomeGenBase[] { GlaciosBiomes.volcano });
-    public static List biomesOcean = Arrays.asList(new BiomeGenBase[] { });
+    public static List biomesOcean = Arrays.asList(new BiomeGenBase[] {});
 
     private final Block structure;
     private final Block magma;
@@ -32,22 +33,21 @@ public class WorldGenVolcano extends WorldGeneratorGlacios {
     public boolean generate(World world, Random rand, int x, int y, int z) {
         return generate(world, new ChunkCoordinates(x, y, z));
     }
-    
+
     private boolean generate(World world, ChunkCoordinates coords) {
         return generate(world, coords, (coords.posX >> 4) * 16, (coords.posZ >> 4) * 16);
     }
 
     private boolean generate(World world, ChunkCoordinates coords, int chunkX, int chunkZ) {
-        Random rand = new Random(coords.hashCode());
+        Random rand = new Random(coords.hashCode() + world.getSeed());
         int x = coords.posX;
         int z = coords.posZ;
-        
-        int[] heightMap = new int[256];
 
+        int[] heightMap = new int[256];
         for (int heightX = 0; heightX < 16; heightX++) {
             for (int heightZ = 0; heightZ < 16; heightZ++) {
-                for (int heightY = world.getActualHeight(); heightY > 0; heightY--) {
-                    Block block = world.getBlock(heightX, heightY, heightZ);
+                for (int heightY = 255; heightY > 0; heightY--) {
+                    Block block = world.getBlock(chunkX + heightX, heightY, chunkZ + heightZ);
                     if (block != Blocks.air && block != GlaciosBlocks.crystalWater) {
                         heightMap[heightX * 16 + heightZ] = heightY;
                         break;
@@ -55,9 +55,8 @@ public class WorldGenVolcano extends WorldGeneratorGlacios {
                 }
             }
         }
-        
-        int y = heightMap[(x % 16) * 16 + (z % 16)];
-        System.out.println("Generating a volcano at " + x + "," + y + "," + z + " for the chunk at " + chunkX + "," + chunkZ + "!");
+
+        int y = heightMap[(x >= 0 ? (x % 16) : 15 - (x % 16)) * 16 + (z >= 0 ? (z % 16) : 15 - (z % 16))];
 
         boolean[] trigFunctions = new boolean[] { rand.nextBoolean(), rand.nextBoolean(), rand.nextBoolean() };
         double[] phaseShifts = new double[] { rand.nextInt(24) / 12., rand.nextInt(24) / 12., rand.nextInt(24) / 12. };
@@ -77,7 +76,7 @@ public class WorldGenVolcano extends WorldGeneratorGlacios {
 
                 double boundary = boundary(trigFunctions, phaseShifts, theta);
 
-                int groundHeight = heightMap[(posX % 16) * 16 + (posZ % 16)];
+                int groundHeight = heightMap[(posX >= 0 ? (posX % 16) : 15 - (posX % 16)) * 16 + (posZ >= 0 ? (posZ % 16) : 15 - (posZ % 16))];
                 int heightDiff = y - groundHeight;
 
                 for (int posY = groundHeight; posY <= groundHeight + capHeight; posY++) {
@@ -112,6 +111,7 @@ public class WorldGenVolcano extends WorldGeneratorGlacios {
                 }
             }
         }
+
         return true;
     }
 
@@ -120,7 +120,7 @@ public class WorldGenVolcano extends WorldGeneratorGlacios {
         int chunkNumX = chunkX >> 4;
         int chunkNumZ = chunkZ >> 4;
         for (ChunkCoordinates volcano : getVolcanosNear(world, chunkNumX, chunkNumZ))
-            this.generate(world, volcano, chunkNumX, chunkNumZ);
+            this.generate(world, volcano, chunkX, chunkZ);
     }
 
     private double radiusAtHeight(double height) {
@@ -159,34 +159,38 @@ public class WorldGenVolcano extends WorldGeneratorGlacios {
     }
 
     public int canGenVolcanoAtCoords(World world, int chunkX, int chunkZ) {
-        byte numChunks = 1;
-        byte offsetChunks = 1;
-        int oldChunkX = chunkX;
-        int oldChunkZ = chunkZ;
+        int maxDist = 8;
+        int minDist = 2;
+
+        int k = chunkX;
+        int l = chunkZ;
 
         if (chunkX < 0) {
-            chunkX -= numChunks - 1;
+            chunkX -= maxDist - 1;
         }
 
         if (chunkZ < 0) {
-            chunkZ -= numChunks - 1;
+            chunkZ -= maxDist - 1;
         }
 
-        int randX = chunkX / numChunks;
-        int randZ = chunkZ / numChunks;
-        long seed = randX * 341873128712L + randZ * 132897987541L + world.getSeed() + 4291726;
-        Random rand = new Random(seed);
-        randX *= numChunks;
-        randZ *= numChunks;
-        randX += rand.nextInt(numChunks - offsetChunks);
-        randZ += rand.nextInt(numChunks - offsetChunks);
+        int i1 = chunkX / maxDist;
+        int j1 = chunkZ / maxDist;
+        Random random = world.setRandomSeed(i1, j1, 14357617);
+        i1 *= maxDist;
+        j1 *= maxDist;
+        i1 += random.nextInt(maxDist - minDist);
+        j1 += random.nextInt(maxDist - minDist);
 
-        if (oldChunkX == randX && oldChunkZ == randZ) {
-            if (world.getWorldChunkManager().areBiomesViable(oldChunkX * 16 + 8, oldChunkZ * 16 + 8, 0, biomesLand)) {
-                return 1;
-            }
-            if (world.getWorldChunkManager().areBiomesViable(oldChunkX * 16 + 8, oldChunkZ * 16 + 8, 0, biomesOcean)) {
-                return 2;
+        if (k == i1 && l == j1) {
+            BiomeGenBase biomegenbase = world.getWorldChunkManager().getBiomeGenAt(k * 16 + 8, l * 16 + 8);
+            Iterator iterator = biomesLand.iterator();
+
+            while (iterator.hasNext()) {
+                BiomeGenBase biomegenbase1 = (BiomeGenBase) iterator.next();
+
+                if (biomegenbase == biomegenbase1) {
+                    return 1;
+                }
             }
         }
 
@@ -195,13 +199,17 @@ public class WorldGenVolcano extends WorldGeneratorGlacios {
 
     public ChunkCoordinates[] getVolcanosNear(World world, int startNumX, int startNumZ) {
         HashSet<ChunkCoordinates> volcanos = new HashSet<ChunkCoordinates>();
-        
+
         int range = 3;
         for (int chunkNumX = startNumX - range; chunkNumX <= startNumX + range; chunkNumX++) {
             for (int chunkNumZ = startNumZ - range; chunkNumZ <= startNumZ + range; chunkNumZ++) {
                 int genStatus = canGenVolcanoAtCoords(world, chunkNumX, chunkNumZ);
-                if (genStatus != 0)
-                    volcanos.add(new ChunkCoordinates(chunkNumX * 16 + 8, genStatus, chunkNumZ * 16 + 8));
+                if (genStatus != 0) {
+                    long seed = chunkNumX * 341873128712L + chunkNumZ * 132897987541L + world.getSeed() + 4291726;
+                    Random rand = new Random(seed);
+
+                    volcanos.add(new ChunkCoordinates(chunkNumX * 16 + rand.nextInt(16) + 8, genStatus, chunkNumZ * 16 + rand.nextInt(16) + 8));
+                }
             }
         }
 
