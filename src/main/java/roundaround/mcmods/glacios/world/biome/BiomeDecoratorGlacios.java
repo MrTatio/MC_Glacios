@@ -1,5 +1,6 @@
 package roundaround.mcmods.glacios.world.biome;
 
+import static net.minecraftforge.event.terraingen.DecorateBiomeEvent.Decorate.EventType.LAKE;
 import static net.minecraftforge.event.terraingen.DecorateBiomeEvent.Decorate.EventType.TREE;
 
 import java.util.Random;
@@ -9,6 +10,7 @@ import net.minecraft.world.World;
 import net.minecraft.world.biome.BiomeDecorator;
 import net.minecraft.world.biome.BiomeGenBase;
 import net.minecraft.world.gen.feature.WorldGenAbstractTree;
+import net.minecraft.world.gen.feature.WorldGenLiquids;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.terraingen.DecorateBiomeEvent;
 import net.minecraftforge.event.terraingen.TerrainGen;
@@ -58,18 +60,17 @@ public class BiomeDecoratorGlacios extends BiomeDecorator {
             WorldGenVolcano worldGen = new WorldGenVolcano(GlaciosBlocks.ashStone, Blocks.lava);
             worldGen.doGeneration(currentWorld, null, null, null, chunk_X, chunk_Z);
         }
-        
-//        for (int i = 0; doGen && i < this.volcanosPerChunk; i++) {
-//            if (randomGenerator.nextInt(100) == 0) {
-//                WorldGenVolcano worldGen = new WorldGenVolcano(GlaciosBlocks.ashStone, Blocks.lava);
-//                try {
-//                    worldGen.doGeneration(currentWorld, randomGenerator, null, biome, chunk_X, chunk_Z);
-//                } catch (Exception ignore) {
-//                }
-//            }
-//        }
-        
-        
+
+
+        doGen = TerrainGen.decorate(currentWorld, randomGenerator, chunk_X, chunk_Z, LAKE);
+        if (doGen && biome instanceof BiomeGenGlaciosVolcano) {
+            for (int i = 0; i < 60; ++i) {
+                int posX = this.chunk_X + this.randomGenerator.nextInt(16) + 8;
+                int posY = this.randomGenerator.nextInt(this.randomGenerator.nextInt(this.randomGenerator.nextInt(240) + 8) + 8);
+                int posZ = this.chunk_Z + this.randomGenerator.nextInt(16) + 8;
+                (new WorldGenLiquids(Blocks.flowing_lava)).generate(this.currentWorld, this.randomGenerator, posX, posY, posZ);
+            }
+        }
 
         MinecraftForge.EVENT_BUS.post(new DecorateBiomeEvent.Post(currentWorld, randomGenerator, chunk_X, chunk_Z));
     }

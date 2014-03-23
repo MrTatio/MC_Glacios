@@ -11,8 +11,8 @@ public class RenderArcticFox extends RenderLiving {
 
     private static final ResourceLocation foxTexture = new ResourceLocation(Glacios.MODID, "textures/entityarcticfox/arcticfox1.png");
 
-    public RenderArcticFox(ModelBase modelBase, float scale) {
-        super(modelBase, scale);
+    public RenderArcticFox(ModelBase modelBase, float shadowSize) {
+        super(modelBase, shadowSize);
     }
 
     /**

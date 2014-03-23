@@ -1,3 +1,8 @@
+
+language.name=English
+language.region=US
+language.code=en_US
+
 tile.slate.name=Slate
 tile.portalGlacios.name=Glacios Portal
 tile.ash.name=Ash
@@ -14,3 +19,5 @@ tile.whiteObsidian.name=White Obsidian
 tile.prismShard.name=Prism Shard
 tile.gelisol.name=Gelisol
 tile.gelisolFrost.name=Frosted Gelisol
+
+entity.arcticFox.name=Arctic Fox
