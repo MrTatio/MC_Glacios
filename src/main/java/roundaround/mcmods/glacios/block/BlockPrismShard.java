@@ -1,18 +1,28 @@
 package roundaround.mcmods.glacios.block;
 
+import java.util.List;
+
 import net.minecraft.block.Block;
 import net.minecraft.block.ITileEntityProvider;
 import net.minecraft.block.material.Material;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.MathHelper;
 import net.minecraft.world.World;
 import roundaround.mcmods.glacios.client.renderer.tileentity.RendererPrismShard;
 import roundaround.mcmods.glacios.tileentity.TileEntityPrismShard;
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 
 public class BlockPrismShard extends Block implements ITileEntityProvider {
+
+    public static final float[][] colors = { { 20F / 255F, 220F / 255F, 200F / 255F }, // Teal
+            { 220F / 255F, 20F / 255F, 140F / 255F }, // Pink
+            { 30F / 255F, 30F / 255F, 240F / 255F } // Lavender
+    };
 
     public BlockPrismShard() {
         super(Material.glass);
@@ -44,16 +54,29 @@ public class BlockPrismShard extends Block implements ITileEntityProvider {
     }
 
     @Override
+    public int damageDropped(int metadata) {
+        return metadata >> 2;
+    }
+
+    @Override
     public void onBlockPlacedBy(World world, int x, int y, int z, EntityLivingBase player, ItemStack itemStack) {
         int dir = MathHelper.floor_double(player.rotationYaw * 4.0F / 360.0F + 0.5D) & 3;
-        
+        int color = itemStack.getItemDamage() << 2;
+
         if (dir == 0)
             dir = 2;
         else if (dir == 2)
             dir = 0;
-        
-        if (dir < 4)
-            world.setBlockMetadataWithNotify(x, y, z, dir, 2);
+
+        world.setBlockMetadataWithNotify(x, y, z, color | dir, 2);
+    }
+
+    @Override
+    @SideOnly(Side.CLIENT)
+    public void getSubBlocks(Item itemStack, CreativeTabs tab, List subBlocks) {
+        for (int i = 0; i < colors.length; i++) {
+            subBlocks.add(new ItemStack(itemStack, 1, i));
+        }
     }
 
 }
