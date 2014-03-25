@@ -3,25 +3,17 @@ package roundaround.mcmods.glacios;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.item.ItemBlock;
-import roundaround.mcmods.glacios.block.BlockAsh;
-import roundaround.mcmods.glacios.block.BlockAshStone;
-import roundaround.mcmods.glacios.block.BlockDynamicLiquidGlacios;
-import roundaround.mcmods.glacios.block.BlockGelisol;
-import roundaround.mcmods.glacios.block.BlockGelisolFrost;
-import roundaround.mcmods.glacios.block.BlockIceVine;
-import roundaround.mcmods.glacios.block.BlockLeavesGlacios;
-import roundaround.mcmods.glacios.block.BlockLogGlacios;
-import roundaround.mcmods.glacios.block.BlockPortalGlacios;
-import roundaround.mcmods.glacios.block.BlockPrismShard;
-import roundaround.mcmods.glacios.block.BlockRazorGrass;
-import roundaround.mcmods.glacios.block.BlockSaplingGlacios;
-import roundaround.mcmods.glacios.block.BlockSlate;
-import roundaround.mcmods.glacios.block.BlockStaticLiquidGlacios;
-import roundaround.mcmods.glacios.block.BlockWhiteObsidian;
+import roundaround.mcmods.glacios.block.*;
+import roundaround.mcmods.glacios.client.renderer.tileentity.RendererPrismShard;
 import roundaround.mcmods.glacios.item.ItemBlockLeaves;
 import roundaround.mcmods.glacios.item.ItemBlockLog;
 import roundaround.mcmods.glacios.item.ItemBlockSapling;
+import roundaround.mcmods.glacios.tileentity.TileEntityPrismShard;
+import cpw.mods.fml.client.registry.ClientRegistry;
+import cpw.mods.fml.client.registry.RenderingRegistry;
 import cpw.mods.fml.common.registry.GameRegistry;
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 
 public class GlaciosBlocks {
     public static Block razorGrass;
@@ -51,7 +43,7 @@ public class GlaciosBlocks {
         slate = new BlockSlate().setBlockName("slate").setBlockTextureName(Glacios.MODID + ":slate");
         gelisol = new BlockGelisol().setBlockName("gelisol").setBlockTextureName(Glacios.MODID + ":gelisol");
         gelisolFrost = new BlockGelisolFrost().setBlockName("gelisolFrost").setBlockTextureName(Glacios.MODID + ":gelisolFrost");
-        prismShard = new BlockPrismShard().setBlockName("prismShard").setBlockTextureName(Glacios.MODID + ":prismShard");
+        prismShard = new BlockPrismShard().setBlockName("prismShard").setBlockTextureName(Glacios.MODID + ":prismShard_square");
         whiteObsidian = new BlockWhiteObsidian().setBlockName("whiteObsidian").setBlockTextureName(Glacios.MODID + ":whiteObsidian");
         portalGlacios = new BlockPortalGlacios().setBlockName("portalGlacios").setBlockTextureName(Glacios.MODID + ":portalGlacios");
         crystalWater = new BlockStaticLiquidGlacios(Material.water).setBlockName("crystalWater_still").setBlockTextureName(Glacios.MODID + ":crystalWater_still");
@@ -72,6 +64,16 @@ public class GlaciosBlocks {
         registerBlock(portalGlacios);
         registerBlock(crystalWater);
         registerBlock(flowing_crystalWater);
+
+        GameRegistry.registerTileEntity(TileEntityPrismShard.class, "tileEntityPrismShard");
+        
+        registerRenderers();
+    }
+
+    @SideOnly(Side.CLIENT)
+    private static void registerRenderers() {
+        ClientRegistry.bindTileEntitySpecialRenderer(TileEntityPrismShard.class, new RendererPrismShard());
+        RenderingRegistry.registerBlockHandler(new RendererPrismShard());
     }
 
     private static void registerBlock(Block block) {
