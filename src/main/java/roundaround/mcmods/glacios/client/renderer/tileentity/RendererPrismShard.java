@@ -33,7 +33,7 @@ public class RendererPrismShard extends TileEntitySpecialRenderer implements ISi
         GL11.glEnable(GL11.GL_BLEND);
         GL11.glPushMatrix();
         GL11.glTranslatef((float) x + 0.5F, (float) y + 1.5F, (float) z + 0.5F);
-        GL11.glColor3f(BlockPrismShard.colors[color][0], BlockPrismShard.colors[color][1], BlockPrismShard.colors[color][2]);
+        GL11.glColor4f(BlockPrismShard.colors[color][0], BlockPrismShard.colors[color][1], BlockPrismShard.colors[color][2], BlockPrismShard.colors[color][3]);
         Minecraft.getMinecraft().renderEngine.bindTexture(texture);
         GL11.glPushMatrix();
         GL11.glRotatef(180F, 0.0F, 0.0F, 1.0F);

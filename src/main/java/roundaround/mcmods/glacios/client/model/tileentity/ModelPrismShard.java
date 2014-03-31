@@ -52,30 +52,30 @@ public class ModelPrismShard extends ModelBase {
         setRotation(Shaft5, 0F, 0.1396263F, 1.047198F);
         
         Base1 = new ModelRenderer(this, 0, 0);
-        Base1.addBox(-2F, -2F, -3.2F, 4, 2, 4);
+        Base1.addBox(-1.99F, -2F, -3.2F, 4, 2, 4);
         Base1.setRotationPoint(0F, 24F, 0F);
         Base1.setTextureSize(64, 32);
         
         Base2 = new ModelRenderer(this, 16, 0);
-        Base2.addBox(0.2F, -2F, -1F, 3, 2, 3);
+        Base2.addBox(0.2F, -2F, -0.99F, 3, 2, 3);
         Base2.setRotationPoint(0F, 24F, 0F);
         Base2.setTextureSize(64, 32);
         setRotation(Base2, 0F, -0.7853982F, 0F);
         
         Base3 = new ModelRenderer(this, 16, 0);
-        Base3.addBox(-3.6F, -2F, -1F, 3, 2, 3);
+        Base3.addBox(-3.6F, -2F, -0.99F, 3, 2, 3);
         Base3.setRotationPoint(0F, 24F, 0F);
         Base3.setTextureSize(64, 32);
         setRotation(Base3, 0F, 0.5235988F, 0F);
         
         Base4 = new ModelRenderer(this, 28, 0);
-        Base4.addBox(-3F, -1F, 0F, 2, 1, 2);
+        Base4.addBox(-3F, -1F, -0.01F, 2, 1, 2);
         Base4.setRotationPoint(0F, 24F, 0F);
         Base4.setTextureSize(64, 32);
         setRotation(Base4, 0F, -0.5235988F, 0F);
         
         Base5 = new ModelRenderer(this, 28, 0);
-        Base5.addBox(0.3F, -1F, -1F, 2, 1, 2);
+        Base5.addBox(0.3F, -1F, -0.99F, 2, 1, 2);
         Base5.setRotationPoint(0F, 24F, 0F);
         Base5.setTextureSize(64, 32);
         setRotation(Base5, 0F, 0.1396263F, 0F);

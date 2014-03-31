@@ -19,9 +19,10 @@ import cpw.mods.fml.relauncher.SideOnly;
 
 public class BlockPrismShard extends Block implements ITileEntityProvider {
 
-    public static final float[][] colors = { { 20F / 255F, 220F / 255F, 200F / 255F }, // Teal
-            { 220F / 255F, 20F / 255F, 140F / 255F }, // Pink
-            { 30F / 255F, 30F / 255F, 240F / 255F } // Lavender
+    public static final float[][] colors = {
+        {  80F / 255F, 220F / 255F, 210F / 255F, 0.9F }, // Teal
+        { 220F / 255F,  80F / 255F, 160F / 255F, 0.9F }, // Pink
+        { 120F / 255F,  80F / 255F, 220F / 255F, 0.9F }  // Lavender
     };
 
     public BlockPrismShard() {
