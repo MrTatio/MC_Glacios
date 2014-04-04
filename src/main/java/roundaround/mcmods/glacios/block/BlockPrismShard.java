@@ -32,6 +32,9 @@ public class BlockPrismShard extends Block implements ITileEntityProvider {
         this.setResistance(10.0F);
         this.setStepSound(soundTypeGlass);
         this.setCreativeTab(CreativeTabs.tabBlock);
+        
+        float radius = 0.4F;
+        this.setBlockBounds(0.5F - radius, 0.0F, 0.5F - radius, 0.5F + radius, 0.8F, 0.5F + radius);
     }
 
     @Override

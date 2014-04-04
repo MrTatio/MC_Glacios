@@ -22,13 +22,8 @@ public class RendererPrismShard extends TileEntitySpecialRenderer implements ISi
     private final ModelPrismShard model = new ModelPrismShard();
     private static final ResourceLocation texture = new ResourceLocation(Glacios.MODID, "textures/blocks/prismShard.png");
     public static final int renderID = RenderingRegistry.getNextAvailableRenderId();
-
-    @Override
-    public void renderTileEntityAt(TileEntity tileEntity, double x, double y, double z, float scale) {
-        int metadata = tileEntity.getWorldObj().getBlockMetadata(tileEntity.xCoord, tileEntity.yCoord, tileEntity.zCoord);
-        int dir = metadata & 3;
-        int color = metadata >> 2;
-        
+    
+    public void render(int direction, int color, double x, double y, double z) {
         GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
         GL11.glEnable(GL11.GL_BLEND);
         GL11.glPushMatrix();
@@ -37,7 +32,7 @@ public class RendererPrismShard extends TileEntitySpecialRenderer implements ISi
         Minecraft.getMinecraft().renderEngine.bindTexture(texture);
         GL11.glPushMatrix();
         GL11.glRotatef(180F, 0.0F, 0.0F, 1.0F);
-        GL11.glRotatef(dir * (-90F), 0.0F, 1.0F, 0.0F);
+        GL11.glRotatef(direction * (-90F), 0.0F, 1.0F, 0.0F);
         this.model.render((Entity) null, 0.0F, 0.0F, -0.1F, 0.0F, 0.0F, 0.0625F);
         GL11.glPopMatrix();
         GL11.glPopMatrix();
@@ -45,21 +40,17 @@ public class RendererPrismShard extends TileEntitySpecialRenderer implements ISi
     }
 
     @Override
-    public void renderInventoryBlock(Block block, int metadata, int modelId, RenderBlocks renderer) {
+    public void renderTileEntityAt(TileEntity tileEntity, double x, double y, double z, float scale) {
+        int metadata = tileEntity.getWorldObj().getBlockMetadata(tileEntity.xCoord, tileEntity.yCoord, tileEntity.zCoord);
+        int direction = metadata & 3;
         int color = metadata >> 2;
         
-        GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
-        GL11.glEnable(GL11.GL_BLEND);
-        GL11.glPushMatrix();
-        GL11.glTranslatef(0.5F, 1.5F, 0.5F);
-        GL11.glColor3f(BlockPrismShard.colors[color][0], BlockPrismShard.colors[color][1], BlockPrismShard.colors[color][2]);
-        Minecraft.getMinecraft().renderEngine.bindTexture(texture);
-        GL11.glPushMatrix();
-        GL11.glRotatef(180F, 0.0F, 0.0F, 1.0F);
-        this.model.render((Entity) null, 0.0F, 0.0F, -0.1F, 0.0F, 0.0F, 0.0625F);
-        GL11.glPopMatrix();
-        GL11.glPopMatrix();
-        GL11.glDisable(GL11.GL_BLEND);
+        this.render(direction, color, x, y, z);
+    }
+
+    @Override
+    public void renderInventoryBlock(Block block, int metadata, int modelId, RenderBlocks renderer) {
+        this.render(0, metadata, 0, 0, 0);
     }
 
     @Override
