@@ -11,8 +11,8 @@ import cpw.mods.fml.relauncher.SideOnly;
 
 public class GlaciosEntities {
     
-    public static void init() {
-        EntityRegistry.registerModEntity(EntityArcticFox.class, "arcticFox", 1, Glacios.instance, 80, 3, true);
+    public static void init(Glacios instance) {
+        EntityRegistry.registerModEntity(EntityArcticFox.class, "arcticFox", 0, instance, 80, 3, true);
         
         EntityRegistry.addSpawn(EntityArcticFox.class, 10, 3, 6, EnumCreatureType.creature, GlaciosBiomes.hills, GlaciosBiomes.plateau, GlaciosBiomes.taiga);
         

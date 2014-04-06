@@ -14,8 +14,6 @@ public class Glacios {
     public static final String NAME = "Glacios";
     public static final String MODID = "glacios";
     public static final String VERS = "0.15a";
-    
-    public static final Glacios instance = new Glacios();
 
     @EventHandler
     public void preload(FMLPreInitializationEvent evnt) {
@@ -24,6 +22,7 @@ public class Glacios {
         GlaciosBlocks.init();
         GlaciosItems.init();
         GlaciosBiomes.init();
+        GlaciosEntities.init(this);
 
         // FMLCommonHandler.instance().bus().register(this);
     }
@@ -36,6 +35,6 @@ public class Glacios {
 
     @SubscribeEvent
     public void onTick(ClientTickEvent tick) {
-        
+
     }
 }

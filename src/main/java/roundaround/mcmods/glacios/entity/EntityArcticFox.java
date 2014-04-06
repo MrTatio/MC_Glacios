@@ -6,8 +6,8 @@ import net.minecraft.world.World;
 
 public class EntityArcticFox extends EntityAnimal {
 
-    public EntityArcticFox(World par1World) {
-        super(par1World);
+    public EntityArcticFox(World world) {
+        super(world);
     }
 
     @Override
