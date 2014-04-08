@@ -82,12 +82,12 @@ public class ModelArcticFox extends ModelBase {
 
         // float tanslateYScale = 8.0F;
         // float translateZScale = 4.0F;
-        // float scale = 2.0F;
+        // float scale = 0.5F;
         // GL11.glPushMatrix();
         // GL11.glTranslatef(0.0F, tanslateYScale * par7, translateZScale * par7);
         // GL11.glPopMatrix();
         // GL11.glPushMatrix();
-        // GL11.glScalef(1.0F / scale, 1.0F / scale, 1.0F / scale);
+        // GL11.glScalef(scale, scale, scale);
         // GL11.glTranslatef(0.0F, 24.0F * par7, 0.0F);
         this.Head.render(par7);
         this.Ear1.render(par7);
