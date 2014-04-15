@@ -45,7 +45,7 @@ public class WorldProviderGlacios extends WorldProvider {
 
     @Override
     public IChunkProvider createChunkGenerator() {
-        return new ChunkProviderGlacios(worldObj, worldObj.getSeed(), true);
+        return new ChunkProviderGlacios(worldObj, worldObj.getSeed());
     }
 
     @Override
