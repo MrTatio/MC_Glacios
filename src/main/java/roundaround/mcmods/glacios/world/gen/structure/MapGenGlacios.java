@@ -27,9 +27,9 @@ public abstract class MapGenGlacios extends MapGenBase {
     protected void populateHeightMap(Block[] blockArray) {
         for (int x = 0; x < 16; x++) {
             for (int z = 0; z < 16; z++) {
-                for (int y = 0; y <= 127; y++) {
+                for (int y = 255; y > 0; y--) {
                     Block block = this.getBlock(blockArray, x, y, z);
-                    if (block == Blocks.air || block == GlaciosBlocks.crystalWater || y == 127) {
+                    if (block != null && !Block.isEqualTo(block, Blocks.air) && !Block.isEqualTo(block, GlaciosBlocks.crystalWater)) {
                         this.heightMap[x * 16 + z] = y;
                         break;
                     }
@@ -37,9 +37,9 @@ public abstract class MapGenGlacios extends MapGenBase {
             }
         }
     }
-    
+
     protected Block getBlock(Block[] blockArray, int x, int y, int z) {
-        return blockArray[(y << 8 | z << 4 | x)];
+        return blockArray[(((z << 4) + x) << 8) + y];
     }
 
     protected void replaceBlock(Block[] blockArray, byte[] metaArray, int x, int y, int z, Block block) {
@@ -47,12 +47,7 @@ public abstract class MapGenGlacios extends MapGenBase {
     }
 
     protected void replaceBlock(Block[] blockArray, byte[] metaArray, int x, int y, int z, Block block, byte meta) {
-        try {
-            blockArray[y << 8 | z << 4 | x] = block;
-            metaArray[y << 8 | z << 4 | x] = meta;
-        } catch (ArrayIndexOutOfBoundsException e) {
-            System.out.println(x + ", " + y + ", " + z);
-            throw e;
-        }
+        blockArray[(((z << 4) + x) << 8) + y] = block;
+        metaArray[(((z << 4) + x) << 8) + y] = meta;
     }
 }

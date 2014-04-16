@@ -111,7 +111,7 @@ public class MapGenVolcano extends MapGenGlacios {
     @Override
     public int canGenAtCoords(BiomeGenBase[] biomeArray, int chunkX, int chunkZ) {
         int maxDist = 8;
-        int minDist = 2;
+        int minDist = 4;
 
         int k = chunkX;
         int l = chunkZ;
