@@ -14,8 +14,6 @@ import net.minecraft.world.biome.BiomeGenBase;
 import roundaround.mcmods.glacios.GlaciosBiomes;
 
 public class MapGenVolcano extends MapGenGlacios {
-    
-    private static final int CHUNK_SIZE = 16;
 
     private static List biomesLand = Arrays.asList(new BiomeGenBase[] { GlaciosBiomes.volcano });
     private static List biomesOcean = Arrays.asList(new BiomeGenBase[] {});
