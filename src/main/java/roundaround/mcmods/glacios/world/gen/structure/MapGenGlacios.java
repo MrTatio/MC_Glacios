@@ -39,7 +39,7 @@ public abstract class MapGenGlacios extends MapGenBase {
     }
 
     protected Block getBlock(Block[] blockArray, int x, int y, int z) {
-        return blockArray[(((z << 4) + x) << 8) + y];
+        return blockArray[(((x << 4) + z) << 8) + y];
     }
 
     protected void replaceBlock(Block[] blockArray, byte[] metaArray, int x, int y, int z, Block block) {
@@ -47,7 +47,7 @@ public abstract class MapGenGlacios extends MapGenBase {
     }
 
     protected void replaceBlock(Block[] blockArray, byte[] metaArray, int x, int y, int z, Block block, byte meta) {
-        blockArray[(((z << 4) + x) << 8) + y] = block;
-        metaArray[(((z << 4) + x) << 8) + y] = meta;
+        blockArray[(((x << 4) + z) << 8) + y] = block;
+        metaArray[(((x << 4) + z) << 8) + y] = meta;
     }
 }

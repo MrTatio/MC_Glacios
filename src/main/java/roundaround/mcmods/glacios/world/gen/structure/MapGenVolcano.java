@@ -29,10 +29,8 @@ public class MapGenVolcano extends MapGenGlacios {
 
     @Override
     public void generateInChunk(Block[] blockArray, byte[] metaArray, BiomeGenBase[] biomeArray, int chunkX, int chunkZ) {
-        int chunkNumX = chunkX >> 4;
-        int chunkNumZ = chunkZ >> 4;
-        for (ChunkCoordinates volcano : getGenLocations(biomeArray, chunkNumX, chunkNumZ))
-            this.generate(blockArray, metaArray, biomeArray, volcano, chunkX, chunkZ);
+        for (ChunkCoordinates volcano : getGenLocations(biomeArray, chunkX, chunkZ))
+            this.generate(blockArray, metaArray, biomeArray, volcano, chunkX << 4, chunkZ << 4);
     }
 
     private boolean generate(Block[] blockArray, byte[] metaArray, BiomeGenBase[] biomeArray, ChunkCoordinates coords, int chunkMinX, int chunkMinZ) {
