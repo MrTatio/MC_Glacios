@@ -15,6 +15,7 @@ public class BiomeGenGlaciosVolcano extends BiomeGenGlacios {
         super(biomeId, register);
         this.topBlock = GlaciosBlocks.ash;
         this.fillerBlock = GlaciosBlocks.ashStone;
+        this.theGlaciosBiomeDecorator.grassPerChunk = 0;
     }
 
 }

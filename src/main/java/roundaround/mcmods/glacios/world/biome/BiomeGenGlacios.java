@@ -8,6 +8,7 @@ import net.minecraft.init.Blocks;
 import net.minecraft.world.World;
 import net.minecraft.world.biome.BiomeGenBase;
 import net.minecraft.world.gen.feature.WorldGenAbstractTree;
+import net.minecraft.world.gen.feature.WorldGenTallGrass;
 import net.minecraft.world.gen.feature.WorldGenerator;
 import roundaround.mcmods.glacios.GlaciosBlocks;
 
@@ -25,6 +26,7 @@ public abstract class BiomeGenGlacios extends BiomeGenBase {
         this.topBlock = GlaciosBlocks.gelisolFrost;
         this.fillerBlock = GlaciosBlocks.gelisol;
         this.field_150604_aj = 0;
+        this.theGlaciosBiomeDecorator.grassPerChunk = 3;
         this.spawnableCreatureList.clear();
         this.spawnableMonsterList.clear();
         this.spawnableCaveCreatureList.clear();
@@ -104,7 +106,7 @@ public abstract class BiomeGenGlacios extends BiomeGenBase {
 
     @Override
     public WorldGenerator getRandomWorldGenForGrass(Random rand) {
-        return null;
+        return new WorldGenTallGrass(GlaciosBlocks.razorGrass, 1);
     }
 
     @Override

@@ -5,6 +5,7 @@ import java.util.Random;
 import net.minecraft.block.Block;
 import net.minecraft.util.MathHelper;
 import net.minecraft.world.World;
+import net.minecraft.world.biome.BiomeGenBase;
 import net.minecraft.world.gen.feature.WorldGenAbstractTree;
 import roundaround.mcmods.glacios.GlaciosBlocks;
 import roundaround.mcmods.glacios.block.BlockSaplingGlacios;
@@ -393,16 +394,21 @@ public class WorldGenHomeTree extends WorldGenAbstractTree {
     boolean validTreeLocation() {
         int[] aint = new int[] { this.basePos[0], this.basePos[1], this.basePos[2] };
         int[] aint1 = new int[] { this.basePos[0], this.basePos[1] + this.heightLimit - 1, this.basePos[2] };
-
-        Block baseBlock = this.worldObj.getBlock(this.basePos[0], this.basePos[1] - 1, this.basePos[2]);
-        if (!BlockSaplingGlacios.isSupportedByBlock(baseBlock, this.meta))
+        
+        BiomeGenBase biome = this.worldObj.getBiomeGenForCoords(this.basePos[0], this.basePos[2]);
+        if (!BlockSaplingGlacios.isSupportedByBlock(biome.topBlock, this.meta))
             return false;
         
-        int baseMeta = this.worldObj.getBlockMetadata(this.basePos[0], this.basePos[1] - 1, this.basePos[2]);
+        for (int x = -2; x <= 2; x++) {
+            for (int z = -2; z <= 2; z++) {
+                if (this.isReplaceable(this.worldObj, this.basePos[0] + x, this.basePos[1] - 1, this.basePos[2] + z))
+                    this.worldObj.setBlock(this.basePos[0] + x, this.basePos[1] - 1, this.basePos[2] + z, biome.topBlock, biome.field_150604_aj, 3);
+            }
+        }
         for (int x = -1; x <= 1; x++) {
             for (int z = -1; z <= 1; z++) {
-                if (this.isReplaceable(this.worldObj, this.basePos[0] + x, this.basePos[1] - 1, this.basePos[2] + z))
-                    this.worldObj.setBlock(this.basePos[0] + x, this.basePos[1] - 1, this.basePos[2] + z, baseBlock, baseMeta, 3);
+                if (this.isReplaceable(this.worldObj, this.basePos[0] + x, this.basePos[1] - 2, this.basePos[2] + z))
+                    this.worldObj.setBlock(this.basePos[0] + x, this.basePos[1] - 1, this.basePos[2] + z, biome.fillerBlock, biome.field_76754_C, 3);
             }
         }
 

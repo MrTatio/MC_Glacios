@@ -48,13 +48,12 @@ public class GlaciosBiomes {
         taiga = (BiomeGenGlacios) new BiomeGenGlaciosTaiga(GlaciosConfig.biome_taiga).setHeight(height_MidHills).setBiomeName("Taiga");
         hills = (BiomeGenGlacios) new BiomeGenGlaciosHills(GlaciosConfig.biome_hills).setHeight(height_MidHills).setBiomeName("Hills");
         
-        registerBiome(volcano);
-//        registerBiome(plateau, 3);
-//        registerBiome(lake, 6);
-//        registerBiome(ocean, 10);
-//        registerBiome(volcano, 6);
-//        registerBiome(taiga);
-//        registerBiome(hills);
+        registerBiome(plateau, 3);
+        registerBiome(lake, 6);
+        registerBiome(ocean, 10);
+        registerBiome(volcano, 6);
+        registerBiome(taiga);
+        registerBiome(hills);
     }
     
     public static void registerBiome(BiomeGenBase biome) {

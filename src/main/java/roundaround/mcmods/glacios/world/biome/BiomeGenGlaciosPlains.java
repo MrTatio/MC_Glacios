@@ -10,6 +10,7 @@ public class BiomeGenGlaciosPlains extends BiomeGenGlacios {
 
     public BiomeGenGlaciosPlains(int biomeId, boolean register) {
         super(biomeId, register);
+        this.theGlaciosBiomeDecorator.grassPerChunk = 10;
     }
 
 }
