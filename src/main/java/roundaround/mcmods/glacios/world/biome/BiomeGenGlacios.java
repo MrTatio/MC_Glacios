@@ -26,7 +26,7 @@ public abstract class BiomeGenGlacios extends BiomeGenBase {
         this.topBlock = GlaciosBlocks.gelisolFrost;
         this.fillerBlock = GlaciosBlocks.gelisol;
         this.field_150604_aj = 0;
-        this.theGlaciosBiomeDecorator.grassPerChunk = 3;
+        this.theGlaciosBiomeDecorator.grassPerChunk = 1;
         this.spawnableCreatureList.clear();
         this.spawnableMonsterList.clear();
         this.spawnableCaveCreatureList.clear();

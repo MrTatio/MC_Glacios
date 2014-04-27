@@ -38,31 +38,33 @@ public class BiomeDecoratorGlacios extends BiomeDecorator {
 
     @Override
     protected void genDecorations(BiomeGenBase biome) {
-        MinecraftForge.EVENT_BUS.post(new DecorateBiomeEvent.Pre(currentWorld, randomGenerator, chunk_X, chunk_Z));
+        MinecraftForge.EVENT_BUS.post(new DecorateBiomeEvent.Pre(this.currentWorld, this.randomGenerator, this.chunk_X, this.chunk_Z));
 
-        boolean doGen = TerrainGen.decorate(currentWorld, randomGenerator, chunk_X, chunk_Z, TREE);
+        boolean doGen = TerrainGen.decorate(this.currentWorld, this.randomGenerator, this.chunk_X, this.chunk_Z, TREE);
         for (int i = 0; doGen && i < this.treesPerChunk; ++i) {
             int posX = this.chunk_X + this.randomGenerator.nextInt(16) + 8;
             int posZ = this.chunk_Z + this.randomGenerator.nextInt(16) + 8;
             int posY = this.currentWorld.getHeightValue(posX, posZ);
 
-            WorldGenAbstractTree worldgenabstracttree = biome.func_150567_a(this.randomGenerator);
-            worldgenabstracttree.setScale(1.0D, 1.0D, 1.0D);
+            WorldGenAbstractTree worldGen = biome.func_150567_a(this.randomGenerator);
+            worldGen.setScale(1.0D, 1.0D, 1.0D);
 
-            if (worldgenabstracttree.generate(this.currentWorld, this.randomGenerator, posX, posY, posZ)) {
-                worldgenabstracttree.func_150524_b(this.currentWorld, this.randomGenerator, posX, posY, posZ);
+            if (worldGen.generate(this.currentWorld, this.randomGenerator, posX, posY, posZ)) {
+                worldGen.func_150524_b(this.currentWorld, this.randomGenerator, posX, posY, posZ);
             }
         }
 
-        doGen = TerrainGen.decorate(currentWorld, randomGenerator, chunk_X, chunk_Z, GRASS);
+        doGen = TerrainGen.decorate(this.currentWorld, this.randomGenerator, this.chunk_X, this.chunk_Z, GRASS);
         for (int i = 0; doGen && i < this.grassPerChunk; ++i) {
             int posX = this.chunk_X + this.randomGenerator.nextInt(16) + 8;
             int posZ = this.chunk_Z + this.randomGenerator.nextInt(16) + 8;
-            int posY = this.randomGenerator.nextInt(this.currentWorld.getHeightValue(posX, posZ) * 2);
-            WorldGenerator worldgenerator = biome.getRandomWorldGenForGrass(this.randomGenerator);
-            worldgenerator.generate(this.currentWorld, this.randomGenerator, posX, posY, posZ);
+            int posY = this.currentWorld.getHeightValue(posX, posZ);
+//            int posY = this.randomGenerator.nextInt(this.currentWorld.getHeightValue(posX, posZ) * 2);
+            
+            WorldGenerator worldGen = biome.getRandomWorldGenForGrass(this.randomGenerator);
+            worldGen.generate(this.currentWorld, this.randomGenerator, posX, posY, posZ);
         }
 
-        MinecraftForge.EVENT_BUS.post(new DecorateBiomeEvent.Post(currentWorld, randomGenerator, chunk_X, chunk_Z));
+        MinecraftForge.EVENT_BUS.post(new DecorateBiomeEvent.Post(this.currentWorld, this.randomGenerator, this.chunk_X, this.chunk_Z));
     }
 }

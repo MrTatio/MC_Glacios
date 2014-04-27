@@ -19,76 +19,67 @@ public class ModelArcticFox extends ModelBase {
     private ModelRenderer Nose;
 
     public ModelArcticFox() {
-        textureWidth = 64;
-        textureHeight = 32;
+        this.textureWidth = 64;
+        this.textureHeight = 32;
 
-        Head = new ModelRenderer(this, 0, 0);
-        Head.addBox(-2.5F, -3.5F, -3.5F, 5, 5, 4);
-        Head.setRotationPoint(0F, 16F, -6F);
-        Head.setTextureSize(textureWidth, textureHeight);
+        this.Head = new ModelRenderer(this, 0, 0);
+        this.Head.addBox(-2.5F, -3.5F, -3.5F, 5, 5, 4);
+        this.Head.setRotationPoint(0F, 16F, -6F);
+        this.Head.setTextureSize(this.textureWidth, this.textureHeight);
 
-        Body = new ModelRenderer(this, 18, 0);
-        Body.addBox(-3F, -3F, -6F, 6, 6, 13);
-        Body.setRotationPoint(0F, 17F, 0F);
-        Body.setTextureSize(textureWidth, textureHeight);
+        this.Body = new ModelRenderer(this, 18, 0);
+        this.Body.addBox(-3F, -3F, -6F, 6, 6, 13);
+        this.Body.setRotationPoint(0F, 17F, 0F);
+        this.Body.setTextureSize(this.textureWidth, this.textureHeight);
 
-        Leg1 = new ModelRenderer(this, 0, 23);
-        Leg1.addBox(-1F, 0F, -1F, 2, 5, 2);
-        Leg1.setRotationPoint(-1.5F, 19F, 5F);
-        Leg1.setTextureSize(textureWidth, textureHeight);
-        Leg1.mirror = true;
+        this.Leg1 = new ModelRenderer(this, 0, 23);
+        this.Leg1.addBox(-1F, 0F, -1F, 2, 5, 2);
+        this.Leg1.setRotationPoint(-1.5F, 19F, 5F);
+        this.Leg1.setTextureSize(this.textureWidth, this.textureHeight);
+        this.Leg1.mirror = true;
 
-        Leg2 = new ModelRenderer(this, 0, 23);
-        Leg2.addBox(-1F, 0F, -1F, 2, 5, 2);
-        Leg2.setRotationPoint(1.5F, 19F, 5F);
-        Leg2.setTextureSize(textureWidth, textureHeight);
+        this.Leg2 = new ModelRenderer(this, 0, 23);
+        this.Leg2.addBox(-1F, 0F, -1F, 2, 5, 2);
+        this.Leg2.setRotationPoint(1.5F, 19F, 5F);
+        this.Leg2.setTextureSize(this.textureWidth, this.textureHeight);
 
-        Leg3 = new ModelRenderer(this, 0, 23);
-        Leg3.addBox(-1F, 0F, -1F, 2, 5, 2);
-        Leg3.setRotationPoint(-1.5F, 19F, -4F);
-        Leg3.setTextureSize(textureWidth, textureHeight);
-        Leg3.mirror = true;
+        this.Leg3 = new ModelRenderer(this, 0, 23);
+        this.Leg3.addBox(-1F, 0F, -1F, 2, 5, 2);
+        this.Leg3.setRotationPoint(-1.5F, 19F, -4F);
+        this.Leg3.setTextureSize(this.textureWidth, this.textureHeight);
+        this.Leg3.mirror = true;
 
-        Leg4 = new ModelRenderer(this, 0, 23);
-        Leg4.addBox(-1F, 0F, -1F, 2, 5, 2);
-        Leg4.setRotationPoint(1.5F, 19F, -4F);
-        Leg4.setTextureSize(textureWidth, textureHeight);
+        this.Leg4 = new ModelRenderer(this, 0, 23);
+        this.Leg4.addBox(-1F, 0F, -1F, 2, 5, 2);
+        this.Leg4.setRotationPoint(1.5F, 19F, -4F);
+        this.Leg4.setTextureSize(this.textureWidth, this.textureHeight);
 
-        Tail = new ModelRenderer(this, 0, 9);
-        Tail.addBox(-2F, 0F, -2F, 4, 10, 4);
-        Tail.setRotationPoint(0F, 16.5F, 6F);
-        Tail.setTextureSize(textureWidth, textureHeight);
+        this.Tail = new ModelRenderer(this, 0, 9);
+        this.Tail.addBox(-2F, 0F, -2F, 4, 10, 4);
+        this.Tail.setRotationPoint(0F, 16.5F, 6F);
+        this.Tail.setTextureSize(this.textureWidth, this.textureHeight);
 
-        Ear1 = new ModelRenderer(this, 18, 6);
-        Ear1.addBox(-3F, -5.5F, -1F, 2, 2, 1);
-        Ear1.setRotationPoint(0F, 16F, -6F);
-        Ear1.setTextureSize(textureWidth, textureHeight);
+        this.Ear1 = new ModelRenderer(this, 18, 6);
+        this.Ear1.addBox(-3F, -5.5F, -1F, 2, 2, 1);
+        this.Ear1.setRotationPoint(0F, 16F, -6F);
+        this.Ear1.setTextureSize(this.textureWidth, this.textureHeight);
 
-        Ear2 = new ModelRenderer(this, 18, 6);
-        Ear2.addBox(1F, -5F, 0F, 2, 2, 1);
-        Ear2.setRotationPoint(0F, 15.5F, -7F);
-        Ear2.setTextureSize(textureWidth, textureHeight);
-        Ear2.mirror = true;
+        this.Ear2 = new ModelRenderer(this, 18, 6);
+        this.Ear2.addBox(1F, -5F, 0F, 2, 2, 1);
+        this.Ear2.setRotationPoint(0F, 15.5F, -7F);
+        this.Ear2.setTextureSize(this.textureWidth, this.textureHeight);
+        this.Ear2.mirror = true;
 
-        Nose = new ModelRenderer(this, 18, 0);
-        Nose.addBox(-1F, -1F, -6F, 2, 2, 4);
-        Nose.setRotationPoint(0F, 16F, -6F);
-        Nose.setTextureSize(textureWidth, textureHeight);
+        this.Nose = new ModelRenderer(this, 18, 0);
+        this.Nose.addBox(-1F, -1F, -6F, 2, 2, 4);
+        this.Nose.setRotationPoint(0F, 16F, -6F);
+        this.Nose.setTextureSize(this.textureWidth, this.textureHeight);
     }
 
     @Override
     public void render(Entity entity, float par2, float par3, float par4, float par5, float par6, float par7) {
         this.setRotationAngles(par2, par3, par4, par5, par6, par7, entity);
 
-        // float tanslateYScale = 8.0F;
-        // float translateZScale = 4.0F;
-        // float scale = 0.5F;
-        // GL11.glPushMatrix();
-        // GL11.glTranslatef(0.0F, tanslateYScale * par7, translateZScale * par7);
-        // GL11.glPopMatrix();
-        // GL11.glPushMatrix();
-        // GL11.glScalef(scale, scale, scale);
-        // GL11.glTranslatef(0.0F, 24.0F * par7, 0.0F);
         this.Head.render(par7);
         this.Ear1.render(par7);
         this.Ear2.render(par7);
@@ -99,7 +90,6 @@ public class ModelArcticFox extends ModelBase {
         this.Leg3.render(par7);
         this.Leg4.render(par7);
         this.Tail.render(par7);
-        // GL11.glPopMatrix();
     }
 
     @Override
