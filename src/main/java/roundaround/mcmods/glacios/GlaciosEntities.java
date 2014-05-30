@@ -15,11 +15,11 @@ import cpw.mods.fml.relauncher.SideOnly;
 public class GlaciosEntities {
     
     public static void init(Glacios instance) {
-        EntityRegistry.registerModEntity(EntityArcticFox.class, "arcticFox", 0, instance, 80, 3, true);
-        EntityRegistry.registerModEntity(EntityIceElemental.class, "iceElemental", 1, instance, 80, 3, true);
+        EntityRegistry.registerModEntity(EntityArcticFox.class, "arcticFox", 470, instance, 80, 3, true);
+        EntityRegistry.registerModEntity(EntityIceElemental.class, "iceElemental", 471, instance, 80, 3, true);
         
         EntityRegistry.addSpawn(EntityArcticFox.class, 10, 3, 6, EnumCreatureType.creature, GlaciosBiomes.hills, GlaciosBiomes.plateau, GlaciosBiomes.taiga);
-        EntityRegistry.addSpawn(EntityIceElemental.class, 2, 1, 1, EnumCreatureType.monster, GlaciosBiomes.hills, GlaciosBiomes.plateau);
+        EntityRegistry.addSpawn(EntityIceElemental.class, 2, 1, 1, EnumCreatureType.creature, GlaciosBiomes.hills, GlaciosBiomes.plateau);
         
         registerRenderers();
     }
